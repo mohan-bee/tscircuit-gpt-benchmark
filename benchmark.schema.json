@@ -28,6 +28,15 @@
               "name": { "enum": ["tscircuit", "KiCad"] },
               "circuitJson": { "type": "string", "minLength": 1 },
               "pcb": { "type": "string", "minLength": 1 },
+              "pcbLayers": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["top", "bottom"],
+                "properties": {
+                  "top": { "type": "string", "minLength": 1 },
+                  "bottom": { "type": "string", "minLength": 1 }
+                }
+              },
               "schematic": { "type": "string", "minLength": 1 },
               "pcbSource": { "type": "string", "minLength": 1 },
               "schematicSource": { "type": "string", "minLength": 1 },

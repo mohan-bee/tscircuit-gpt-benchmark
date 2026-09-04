@@ -36,7 +36,11 @@ describe("PCB Bench", () => {
     expect(screen.queryAllByAltText(/schematic snapshot/i)).toHaveLength(0)
     expect(await screen.findByTestId("tscircuit-pcb-viewer")).toBeInTheDocument()
     expect(screen.queryByTestId("tscircuit-schematic-viewer")).not.toBeInTheDocument()
-    expect(screen.getAllByAltText("KiCad pcb snapshot")).toHaveLength(2)
+    expect(screen.getByAltText("KiCad top pcb snapshot")).toHaveAttribute("src", "/benchmarks/run-002/kicad/pcb-top.svg")
+    const layerControls = within(screen.getByRole("group", { name: "KiCad PCB layer" }))
+    expect(layerControls.getByRole("button", { name: "Top" })).toHaveAttribute("aria-pressed", "true")
+    fireEvent.click(layerControls.getByRole("button", { name: "Bottom" }))
+    expect(screen.getByAltText("KiCad bottom pcb snapshot")).toHaveAttribute("src", "/benchmarks/run-002/kicad/pcb-bottom.svg")
 
     const zoomReadout = screen.getAllByRole("button", { name: /reset .* pcb zoom/i })[0]
     expect(zoomReadout).toHaveTextContent("100%")

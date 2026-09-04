@@ -67,6 +67,20 @@ for (const file of files) {
     const schematic = publicFile(platform.schematic, file, "schematic")
     const pcbSource = publicFile(platform.pcbSource, file, "pcbSource")
     const schematicSource = publicFile(platform.schematicSource, file, "schematicSource")
+    if (platform.pcbLayers !== undefined) {
+      if (platform.name !== "KiCad" || typeof platform.pcbLayers !== "object" || platform.pcbLayers === null || Array.isArray(platform.pcbLayers)) {
+        fail(file, "pcbLayers must be a KiCad layer map")
+      }
+      const layerNames = Object.keys(platform.pcbLayers)
+      if (layerNames.length !== 2 || !layerNames.includes("top") || !layerNames.includes("bottom")) {
+        fail(file, "pcbLayers must contain exactly top and bottom")
+      }
+      for (const layer of ["top", "bottom"]) {
+        requireString(platform.pcbLayers, layer, file)
+        const snapshot = publicFile(platform.pcbLayers[layer], file, `pcbLayers.${layer}`)
+        if (!allowedSnapshots.has(extname(snapshot))) fail(file, `pcbLayers.${layer} must be an SVG or PNG file`)
+      }
+    }
     if (platform.circuitJson !== undefined) {
       requireString(platform, "circuitJson", file)
       const circuitJson = publicFile(platform.circuitJson, file, "circuitJson")

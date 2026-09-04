@@ -149,6 +149,36 @@ button { color: inherit; font: inherit; cursor: pointer; }
   backdrop-filter: blur(8px);
 }
 
+.layer-controls {
+  position: absolute;
+  z-index: 2;
+  top: 10px;
+  left: 10px;
+  display: flex;
+  gap: 3px;
+  padding: 3px;
+  background: rgb(255 255 255 / 92%);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: 0 5px 16px rgb(15 23 42 / 12%);
+  backdrop-filter: blur(8px);
+}
+
+.layer-controls button {
+  min-width: 54px;
+  height: 30px;
+  padding: 0 10px;
+  color: #475569;
+  background: transparent;
+  border: 0;
+  border-radius: 5px;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.layer-controls button:hover { color: #c2410c; background: #fff7ed; }
+.layer-controls button.active { color: #fff; background: #f97316; }
+
 .zoom-controls button {
   display: grid;
   min-width: 30px;

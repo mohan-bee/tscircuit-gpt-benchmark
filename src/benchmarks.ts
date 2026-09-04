@@ -5,6 +5,10 @@ export type AvailablePlatformOutput = {
   status: "available"
   circuitJson?: string
   pcb: string
+  pcbLayers?: {
+    top: string
+    bottom: string
+  }
   schematic: string
   pcbSource: string
   schematicSource: string
@@ -54,11 +58,23 @@ function parsePlatform(value: unknown, file: string): PlatformOutput {
   }
   if (value.status === "pending") return { name, status: "pending" }
 
+  let pcbLayers: AvailablePlatformOutput["pcbLayers"]
+  if (value.pcbLayers !== undefined) {
+    if (name !== "KiCad" || !isRecord(value.pcbLayers)) {
+      throw new Error(`${file}: pcbLayers must be a KiCad layer map`)
+    }
+    pcbLayers = {
+      top: requiredString(value.pcbLayers, "top", file),
+      bottom: requiredString(value.pcbLayers, "bottom", file),
+    }
+  }
+
   return {
     name,
     status: "available",
     circuitJson: typeof value.circuitJson === "string" && value.circuitJson.trim() !== "" ? value.circuitJson : undefined,
     pcb: requiredString(value, "pcb", file),
+    pcbLayers,
     schematic: requiredString(value, "schematic", file),
     pcbSource: requiredString(value, "pcbSource", file),
     schematicSource: requiredString(value, "schematicSource", file),
