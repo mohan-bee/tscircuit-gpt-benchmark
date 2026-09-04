@@ -19,7 +19,7 @@
     },
     {
       "name": "KiCad",
-      "pcb": "/benchmarks/run-002/kicad/pcb.png",
+      "pcb": "/benchmarks/run-002/kicad/pcb.svg",
       "schematic": "/benchmarks/run-002/kicad/schematic.svg",
       "pcbSource": "/benchmarks/run-002/kicad/esp32-c3-compact.kicad_pcb",
       "schematicSource": "/benchmarks/run-002/kicad/esp32-c3-compact.kicad_sch",
