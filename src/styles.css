@@ -52,6 +52,8 @@ h1 { margin: 0; font-size: clamp(32px, 5vw, 56px); font-weight: 500; line-height
 .view-tabs button.active { color: #fff; background: var(--primary); border-color: var(--primary); }
 
 .comparison { display: grid; grid-template-columns: 1fr 1fr; }
+.comparison--pending { grid-template-columns: minmax(0, 3fr) minmax(240px, 1fr); }
+.comparison--pending .viewer:not(.viewer--pending) .viewport { padding: 12px; }
 .viewer + .viewer { border-left: 1px solid var(--line); }
 .viewer > header { height: 54px; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; border-bottom: 1px solid var(--line); }
 .viewer > header h3 { margin: 0 0 3px; font-size: 12px; }
@@ -79,7 +81,7 @@ h1 { margin: 0; font-size: clamp(32px, 5vw, 56px); font-weight: 500; line-height
   .filter-title { display: none; }
   .filter { min-width: 150px; }
   .facts { display: none; }
-  .comparison { grid-template-columns: 1fr; }
+  .comparison, .comparison--pending { grid-template-columns: 1fr; }
   .viewer + .viewer { border-top: 1px solid var(--line); border-left: 0; }
   .viewport { height: 440px; }
 }

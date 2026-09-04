@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react"
-import { ChevronDown, Code2, Download, ExternalLink, SlidersHorizontal } from "lucide-react"
+import { ChevronDown, Code2, Download, ExternalLink, Maximize2, SlidersHorizontal } from "lucide-react"
 import { benchmarkRuns } from "./benchmarks"
 
 type View = "pcb" | "schematic"
@@ -95,7 +95,7 @@ export function App() {
                   <button className={view === "schematic" ? "active" : ""} role="tab" aria-selected={view === "schematic"} onClick={() => setView("schematic")}>Schematic</button>
                 </div>
 
-                <div className="comparison">
+                <div className={`comparison${run.platforms.some(({ status }) => status === "pending") ? " comparison--pending" : ""}`}>
                   {run.platforms.map((platform) => {
                     if (platform.status === "pending") {
                       return (
@@ -115,6 +115,7 @@ export function App() {
                         <header>
                           <div><h3>{platform.name}</h3><span>{platform.renderer}</span></div>
                           <div className="viewer-actions">
+                            <a href={image} target="_blank" rel="noreferrer" aria-label={`View ${platform.name} ${view} snapshot`}><Maximize2 size={15} /></a>
                             <a href={source} download aria-label={`Download ${platform.name} source`}><Download size={15} /></a>
                             <a href={source} target="_blank" aria-label={`Open ${platform.name} source`}><Code2 size={15} /></a>
                           </div>

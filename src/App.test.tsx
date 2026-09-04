@@ -13,10 +13,12 @@ describe("PCB Bench", () => {
     expect(screen.getByRole("heading", { name: "GPT-5" })).toBeInTheDocument()
     const availableOutputs = benchmarkRuns.flatMap(({ platforms }) => platforms).filter(({ status }) => status === "available")
     expect(screen.getAllByAltText(/pcb snapshot/i)).toHaveLength(availableOutputs.length)
+    expect(screen.getAllByRole("link", { name: /view .* pcb snapshot/i })).toHaveLength(availableOutputs.length)
     expect(screen.getByLabelText("KiCad output pending")).toBeEmptyDOMElement()
 
     fireEvent.click(screen.getAllByRole("tab", { name: "Schematic" })[0])
     expect(screen.getAllByAltText(/schematic snapshot/i)).toHaveLength(availableOutputs.length)
+    expect(screen.getAllByRole("link", { name: /view .* schematic snapshot/i })).toHaveLength(availableOutputs.length)
     expect(screen.queryByAltText(/pcb snapshot/i)).not.toBeInTheDocument()
   })
 
