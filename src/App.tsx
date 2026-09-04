@@ -203,13 +203,13 @@ export function App() {
       </header>
 
       {selectedRun && (
-        <section className="prompt-panel" aria-label={`Prompt for ${selectedRun.circuit}`}>
-          <div className="prompt-heading">
+        <details className="prompt-panel" key={selectedRun.id} aria-label={`Prompt for ${selectedRun.circuit}`}>
+          <summary className="prompt-heading">
             <span>Board prompt</span>
-            <h2>{selectedRun.circuit}</h2>
-          </div>
+            <strong>{selectedRun.circuit}</strong>
+          </summary>
           <p>{selectedRun.prompt}</p>
-        </section>
+        </details>
       )}
 
       <div className="workspace-layout">
