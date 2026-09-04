@@ -36,7 +36,7 @@ describe("PCB Bench", () => {
     expect(screen.queryAllByAltText(/schematic snapshot/i)).toHaveLength(0)
     expect(await screen.findByTestId("tscircuit-pcb-viewer")).toBeInTheDocument()
     expect(screen.queryByTestId("tscircuit-schematic-viewer")).not.toBeInTheDocument()
-    expect(screen.getByLabelText("KiCad output pending")).toBeEmptyDOMElement()
+    expect(screen.getAllByAltText("KiCad pcb snapshot")).toHaveLength(2)
 
     const zoomReadout = screen.getAllByRole("button", { name: /reset .* pcb zoom/i })[0]
     expect(zoomReadout).toHaveTextContent("100%")
