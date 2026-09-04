@@ -1,6 +1,6 @@
 import { lazy, Suspense, useEffect, useMemo, useState, type ComponentProps, type ReactNode } from "react"
 import { ChevronDown, Code2, Download, ExternalLink, Maximize2, Minus, Plus, SlidersHorizontal } from "lucide-react"
-import { benchmarkRuns } from "./benchmarks"
+import { benchmarkRuns, type BenchmarkRun } from "./benchmarks"
 
 type SnapshotKind = "pcb" | "schematic"
 
@@ -88,7 +88,7 @@ function ViewerLoader({ kind }: { kind: SnapshotKind }) {
   return <div className={`viewer-loader viewer-loader--${kind}`} role="status">Loading interactive {kind} viewer…</div>
 }
 
-function TscircuitWorkspace({ circuitJsonUrl, pcb, schematic, source, platform }: { circuitJsonUrl: string; pcb: string; schematic: string; source: string; platform: string }) {
+function TscircuitWorkspace({ kind, circuitJsonUrl, image, source, platform }: { kind: SnapshotKind; circuitJsonUrl: string; image: string; source: string; platform: string }) {
   const [circuitJson, setCircuitJson] = useState<CircuitJsonState>({ status: "loading" })
 
   useEffect(() => {
@@ -112,34 +112,86 @@ function TscircuitWorkspace({ circuitJsonUrl, pcb, schematic, source, platform }
 
   if (circuitJson.status === "error") {
     return (
-      <div className="snapshot-stack">
+      <div className="snapshot-stage">
         <p className="viewer-error" role="alert">Interactive viewer unavailable. Showing generated snapshots.</p>
-        <SnapshotViewer kind="pcb" image={pcb} source={source} platform={platform} />
-        <SnapshotViewer kind="schematic" image={schematic} source={source} platform={platform} />
+        <SnapshotViewer kind={kind} image={image} source={source} platform={platform} />
       </div>
     )
   }
 
   if (circuitJson.status === "loading") {
-    return <div className="snapshot-stack"><ViewerLoader kind="pcb" /><ViewerLoader kind="schematic" /></div>
+    return <div className="snapshot-stage"><ViewerLoader kind={kind} /></div>
   }
 
   const pcbCircuitJson = circuitJson.data as unknown as NonNullable<ComponentProps<typeof PCBViewer>["circuitJson"]>
   const schematicCircuitJson = circuitJson.data as unknown as ComponentProps<typeof SchematicViewer>["circuitJson"]
 
   return (
-    <div className="snapshot-stack">
-      <InteractiveViewerFrame kind="pcb" image={pcb} source={source} platform={platform}>
-        <Suspense fallback={<ViewerLoader kind="pcb" />}>
-          <PCBViewer circuitJson={pcbCircuitJson} height={680} allowEditing={false} focusOnHover={false} clickToInteractEnabled={false} />
-        </Suspense>
-      </InteractiveViewerFrame>
-      <InteractiveViewerFrame kind="schematic" image={schematic} source={source} platform={platform}>
-        <Suspense fallback={<ViewerLoader kind="schematic" />}>
-          <SchematicViewer circuitJson={schematicCircuitJson} containerStyle={{ width: "100%", height: "100%" }} clickToInteractEnabled={false} searchEnabled />
+    <div className="snapshot-stage">
+      <InteractiveViewerFrame kind={kind} image={image} source={source} platform={platform}>
+        <Suspense fallback={<ViewerLoader kind={kind} />}>
+          {kind === "pcb" ? (
+            <PCBViewer circuitJson={pcbCircuitJson} height={680} allowEditing={false} focusOnHover={false} clickToInteractEnabled={false} />
+          ) : (
+            <SchematicViewer circuitJson={schematicCircuitJson} containerStyle={{ width: "100%", height: "100%" }} clickToInteractEnabled={false} searchEnabled />
+          )}
         </Suspense>
       </InteractiveViewerFrame>
     </div>
+  )
+}
+
+function BenchmarkCard({ run }: { run: BenchmarkRun }) {
+  const [view, setView] = useState<SnapshotKind>("pcb")
+
+  return (
+    <section className="benchmark">
+      <header className="benchmark-header">
+        <div>
+          <div className="benchmark-title"><span className="status-dot" /><h2>{run.model}</h2><span className="tag">{run.complexity}</span></div>
+          <p>{run.prompt}</p>
+        </div>
+        <div className="facts"><span>{run.components} components</span><span>{run.boardSize}</span><span>{run.id}</span></div>
+      </header>
+
+      <div className="view-tabs" role="tablist" aria-label={`${run.id} output view`}>
+        <button className={view === "pcb" ? "active" : ""} type="button" role="tab" aria-selected={view === "pcb"} onClick={() => setView("pcb")}>PCB</button>
+        <button className={view === "schematic" ? "active" : ""} type="button" role="tab" aria-selected={view === "schematic"} onClick={() => setView("schematic")}>Schematic</button>
+      </div>
+
+      <div className={`comparison${run.platforms.some(({ status }) => status === "pending") ? " comparison--pending" : ""}`}>
+        {run.platforms.map((platform) => {
+          if (platform.status === "pending") {
+            return (
+              <article className={`viewer viewer--${platform.name.toLowerCase()} viewer--pending`} key={platform.name}>
+                <header>
+                  <div><h3>{platform.name}</h3><span>Pending</span></div>
+                </header>
+                <div className={`pending-workspace pending-workspace--${view}`} aria-label={`${platform.name} output pending`} />
+                <footer><span>PENDING</span></footer>
+              </article>
+            )
+          }
+          const image = view === "pcb" ? platform.pcb : platform.schematic
+          const source = view === "pcb" ? platform.pcbSource : platform.schematicSource
+          return (
+            <article className={`viewer viewer--${platform.name.toLowerCase()}`} key={platform.name}>
+              <header>
+                <div><h3>{platform.name}</h3><span>{platform.renderer}</span></div>
+              </header>
+              {platform.name === "tscircuit" && platform.circuitJson ? (
+                <TscircuitWorkspace kind={view} circuitJsonUrl={platform.circuitJson} image={image} source={source} platform={platform.name} />
+              ) : (
+                <div className="snapshot-stage">
+                  <SnapshotViewer kind={view} image={image} source={source} platform={platform.name} />
+                </div>
+              )}
+              <footer><span>{view.toUpperCase()}</span><span>{platform.circuitJson ? "INTERACTIVE" : "GENERATED"}</span></footer>
+            </article>
+          )
+        })}
+      </div>
+    </section>
   )
 }
 
@@ -198,49 +250,7 @@ export function App() {
 
         {visibleRuns.length > 0 ? (
           <div className="benchmark-list" id="runs">
-            {visibleRuns.map((run) => (
-              <section className="benchmark" key={run.id}>
-                <header className="benchmark-header">
-                  <div>
-                    <div className="benchmark-title"><span className="status-dot" /><h2>{run.model}</h2><span className="tag">{run.complexity}</span></div>
-                    <p>{run.prompt}</p>
-                  </div>
-                  <div className="facts"><span>{run.components} components</span><span>{run.boardSize}</span><span>{run.id}</span></div>
-                </header>
-
-                <div className={`comparison${run.platforms.some(({ status }) => status === "pending") ? " comparison--pending" : ""}`}>
-                  {run.platforms.map((platform) => {
-                    if (platform.status === "pending") {
-                      return (
-                        <article className={`viewer viewer--${platform.name.toLowerCase()} viewer--pending`} key={platform.name}>
-                          <header>
-                            <div><h3>{platform.name}</h3><span>Pending</span></div>
-                          </header>
-                          <div className="pending-workspace" aria-label={`${platform.name} output pending`} />
-                          <footer><span>PENDING</span></footer>
-                        </article>
-                      )
-                    }
-                    return (
-                      <article className={`viewer viewer--${platform.name.toLowerCase()}`} key={platform.name}>
-                        <header>
-                          <div><h3>{platform.name}</h3><span>{platform.renderer}</span></div>
-                        </header>
-                        {platform.name === "tscircuit" && platform.circuitJson ? (
-                          <TscircuitWorkspace circuitJsonUrl={platform.circuitJson} pcb={platform.pcb} schematic={platform.schematic} source={platform.pcbSource} platform={platform.name} />
-                        ) : (
-                          <div className="snapshot-stack">
-                            <SnapshotViewer kind="pcb" image={platform.pcb} source={platform.pcbSource} platform={platform.name} />
-                            <SnapshotViewer kind="schematic" image={platform.schematic} source={platform.schematicSource} platform={platform.name} />
-                          </div>
-                        )}
-                        <footer><span>2 VIEWS</span><span>{platform.circuitJson ? "INTERACTIVE" : "GENERATED"}</span></footer>
-                      </article>
-                    )
-                  })}
-                </div>
-              </section>
-            ))}
+            {visibleRuns.map((run) => <BenchmarkCard run={run} key={run.id} />)}
           </div>
         ) : (
           <section className="empty"><p>No benchmark runs match these filters.</p><button type="button" onClick={resetFilters}>Clear filters</button></section>

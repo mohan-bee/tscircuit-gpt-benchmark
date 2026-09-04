@@ -54,7 +54,8 @@ Before committing tscircuit snapshots:
 
 ## UI contract
 
-- Show PCB and schematic outputs together in separate viewers.
+- Use one shared `PCB` / `Schematic` tab control per benchmark run; do not stack both views.
+- A tab change must update both platform columns in that run.
 - Use the official tscircuit PCB and schematic viewers when Circuit JSON is available.
 - Keep filters for model, complexity, circuit, and run metadata.
 - Prefer a restrained color light theme. The snapshots, not decoration, are the focus.

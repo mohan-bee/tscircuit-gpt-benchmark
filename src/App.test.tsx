@@ -1,5 +1,5 @@
 import "@testing-library/jest-dom/vitest"
-import { cleanup, fireEvent, render, screen } from "@testing-library/react"
+import { cleanup, fireEvent, render, screen, within } from "@testing-library/react"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 import { App } from "./App"
 import { benchmarkRuns, type AvailablePlatformOutput } from "./benchmarks"
@@ -25,7 +25,7 @@ afterEach(() => {
 })
 
 describe("PCB Bench", () => {
-  it("shows official interactive tscircuit viewers and generated snapshot fallbacks", async () => {
+  it("switches PCB and schematic in one tabbed frame without stacking", async () => {
     render(<App />)
 
     expect(screen.getByRole("heading", { name: "GPT-5" })).toBeInTheDocument()
@@ -33,17 +33,27 @@ describe("PCB Bench", () => {
       .filter((platform): platform is AvailablePlatformOutput => platform.status === "available")
     const generatedOutputs = availableOutputs.filter(({ circuitJson }) => !circuitJson)
     expect(screen.getAllByAltText(/pcb snapshot/i)).toHaveLength(generatedOutputs.length)
-    expect(screen.getAllByAltText(/schematic snapshot/i)).toHaveLength(generatedOutputs.length)
+    expect(screen.queryAllByAltText(/schematic snapshot/i)).toHaveLength(0)
     expect(await screen.findByTestId("tscircuit-pcb-viewer")).toBeInTheDocument()
-    expect(await screen.findByTestId("tscircuit-schematic-viewer")).toBeInTheDocument()
+    expect(screen.queryByTestId("tscircuit-schematic-viewer")).not.toBeInTheDocument()
     expect(screen.getAllByRole("link", { name: /view .* pcb snapshot/i })).toHaveLength(availableOutputs.length)
-    expect(screen.getAllByRole("link", { name: /view .* schematic snapshot/i })).toHaveLength(availableOutputs.length)
+    expect(screen.queryAllByRole("link", { name: /view .* schematic snapshot/i })).toHaveLength(0)
     expect(screen.getByLabelText("KiCad output pending")).toBeEmptyDOMElement()
 
     const zoomReadout = screen.getAllByRole("button", { name: /reset .* pcb zoom/i })[0]
     expect(zoomReadout).toHaveTextContent("100%")
     fireEvent.click(screen.getAllByRole("button", { name: /zoom in .* pcb/i })[0])
     expect(zoomReadout).toHaveTextContent("125%")
+
+    const run002Tabs = within(screen.getByRole("tablist", { name: "run-002 output view" }))
+    fireEvent.click(run002Tabs.getByRole("tab", { name: "Schematic" }))
+    expect(await screen.findByTestId("tscircuit-schematic-viewer")).toBeInTheDocument()
+    expect(screen.queryByTestId("tscircuit-pcb-viewer")).not.toBeInTheDocument()
+
+    const run001Tabs = within(screen.getByRole("tablist", { name: "run-001 output view" }))
+    fireEvent.click(run001Tabs.getByRole("tab", { name: "Schematic" }))
+    expect(screen.getAllByAltText(/schematic snapshot/i)).toHaveLength(generatedOutputs.length)
+    expect(screen.queryAllByAltText(/pcb snapshot/i)).toHaveLength(0)
   })
 
   it("filters and restores benchmark runs", () => {
