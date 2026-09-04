@@ -1,8 +1,12 @@
 import { useMemo, useState } from "react"
-import { ChevronDown, Code2, Download, ExternalLink, Maximize2, SlidersHorizontal } from "lucide-react"
+import { ChevronDown, Code2, Download, ExternalLink, Maximize2, Minus, Plus, SlidersHorizontal } from "lucide-react"
 import { benchmarkRuns } from "./benchmarks"
 
-type View = "pcb" | "schematic"
+type SnapshotKind = "pcb" | "schematic"
+
+const MIN_ZOOM = 1
+const MAX_ZOOM = 2.5
+const ZOOM_STEP = 0.25
 
 const unique = (values: string[]) => [...new Set(values)].sort((a, b) => a.localeCompare(b))
 const modelOptions = ["All models", ...unique(benchmarkRuns.map(({ model }) => model))]
@@ -24,8 +28,35 @@ function Filter({ label, value, options, onChange }: { label: string; value: str
   )
 }
 
+function SnapshotViewer({ kind, image, source, platform }: { kind: SnapshotKind; image: string; source: string; platform: string }) {
+  const [zoom, setZoom] = useState(MIN_ZOOM)
+  const label = kind === "pcb" ? "PCB" : "Schematic"
+  const changeZoom = (amount: number) => setZoom((current) => Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, current + amount)))
+
+  return (
+    <section className={`snapshot-viewer snapshot-viewer--${kind}`}>
+      <header className="snapshot-toolbar">
+        <div><span className="snapshot-kind">{label}</span><span className="snapshot-format">SVG · GENERATED</span></div>
+        <div className="snapshot-actions">
+          <button type="button" onClick={() => changeZoom(-ZOOM_STEP)} disabled={zoom === MIN_ZOOM} aria-label={`Zoom out ${platform} ${kind}`}><Minus size={14} /></button>
+          <button className="zoom-readout" type="button" onClick={() => setZoom(MIN_ZOOM)} aria-label={`Reset ${platform} ${kind} zoom`}>{Math.round(zoom * 100)}%</button>
+          <button type="button" onClick={() => changeZoom(ZOOM_STEP)} disabled={zoom === MAX_ZOOM} aria-label={`Zoom in ${platform} ${kind}`}><Plus size={14} /></button>
+          <span className="snapshot-action-separator" />
+          <a href={image} target="_blank" rel="noreferrer" aria-label={`View ${platform} ${kind} snapshot`}><Maximize2 size={14} /></a>
+          <a href={source} download aria-label={`Download ${platform} ${kind} source`}><Download size={14} /></a>
+          <a href={source} target="_blank" rel="noreferrer" aria-label={`Open ${platform} ${kind} source`}><Code2 size={14} /></a>
+        </div>
+      </header>
+      <div className="snapshot-viewport">
+        <div className="snapshot-canvas" style={{ width: `${zoom * 100}%`, height: `${zoom * 100}%` }}>
+          <img src={image} alt={`${platform} ${kind} snapshot`} />
+        </div>
+      </div>
+    </section>
+  )
+}
+
 export function App() {
-  const [view, setView] = useState<View>("pcb")
   const [model, setModel] = useState("All models")
   const [complexity, setComplexity] = useState("All levels")
   const [circuit, setCircuit] = useState("All circuits")
@@ -90,11 +121,6 @@ export function App() {
                   <div className="facts"><span>{run.components} components</span><span>{run.boardSize}</span><span>{run.id}</span></div>
                 </header>
 
-                <div className="view-tabs" role="tablist" aria-label="Output view">
-                  <button className={view === "pcb" ? "active" : ""} role="tab" aria-selected={view === "pcb"} onClick={() => setView("pcb")}>PCB</button>
-                  <button className={view === "schematic" ? "active" : ""} role="tab" aria-selected={view === "schematic"} onClick={() => setView("schematic")}>Schematic</button>
-                </div>
-
                 <div className={`comparison${run.platforms.some(({ status }) => status === "pending") ? " comparison--pending" : ""}`}>
                   {run.platforms.map((platform) => {
                     if (platform.status === "pending") {
@@ -103,27 +129,21 @@ export function App() {
                           <header>
                             <div><h3>{platform.name}</h3><span>Pending</span></div>
                           </header>
-                          <div className={`viewport viewport--${view}`} aria-label={`${platform.name} output pending`} />
+                          <div className="pending-workspace" aria-label={`${platform.name} output pending`} />
                           <footer><span>PENDING</span></footer>
                         </article>
                       )
                     }
-                    const image = view === "pcb" ? platform.pcb : platform.schematic
-                    const source = view === "pcb" ? platform.pcbSource : platform.schematicSource
                     return (
                       <article className={`viewer viewer--${platform.name.toLowerCase()}`} key={platform.name}>
                         <header>
                           <div><h3>{platform.name}</h3><span>{platform.renderer}</span></div>
-                          <div className="viewer-actions">
-                            <a href={image} target="_blank" rel="noreferrer" aria-label={`View ${platform.name} ${view} snapshot`}><Maximize2 size={15} /></a>
-                            <a href={source} download aria-label={`Download ${platform.name} source`}><Download size={15} /></a>
-                            <a href={source} target="_blank" aria-label={`Open ${platform.name} source`}><Code2 size={15} /></a>
-                          </div>
                         </header>
-                        <div className={`viewport viewport--${view}`}>
-                          <img src={image} alt={`${platform.name} ${view} snapshot`} />
+                        <div className="snapshot-stack">
+                          <SnapshotViewer kind="pcb" image={platform.pcb} source={platform.pcbSource} platform={platform.name} />
+                          <SnapshotViewer kind="schematic" image={platform.schematic} source={platform.schematicSource} platform={platform.name} />
                         </div>
-                        <footer><span>SNAPSHOT</span><span>{view.toUpperCase()}</span><span>GENERATED</span></footer>
+                        <footer><span>2 VIEWS</span><span>GENERATED</span></footer>
                       </article>
                     )
                   })}

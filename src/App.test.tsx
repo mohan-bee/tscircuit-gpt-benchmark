@@ -7,19 +7,21 @@ import { benchmarkRuns } from "./benchmarks"
 afterEach(cleanup)
 
 describe("PCB Bench", () => {
-  it("switches both platform viewers between PCB and schematic snapshots", () => {
+  it("shows separate PCB and schematic viewers with independent zoom controls", () => {
     render(<App />)
 
     expect(screen.getByRole("heading", { name: "GPT-5" })).toBeInTheDocument()
     const availableOutputs = benchmarkRuns.flatMap(({ platforms }) => platforms).filter(({ status }) => status === "available")
     expect(screen.getAllByAltText(/pcb snapshot/i)).toHaveLength(availableOutputs.length)
+    expect(screen.getAllByAltText(/schematic snapshot/i)).toHaveLength(availableOutputs.length)
     expect(screen.getAllByRole("link", { name: /view .* pcb snapshot/i })).toHaveLength(availableOutputs.length)
+    expect(screen.getAllByRole("link", { name: /view .* schematic snapshot/i })).toHaveLength(availableOutputs.length)
     expect(screen.getByLabelText("KiCad output pending")).toBeEmptyDOMElement()
 
-    fireEvent.click(screen.getAllByRole("tab", { name: "Schematic" })[0])
-    expect(screen.getAllByAltText(/schematic snapshot/i)).toHaveLength(availableOutputs.length)
-    expect(screen.getAllByRole("link", { name: /view .* schematic snapshot/i })).toHaveLength(availableOutputs.length)
-    expect(screen.queryByAltText(/pcb snapshot/i)).not.toBeInTheDocument()
+    const zoomReadout = screen.getAllByRole("button", { name: /reset .* pcb zoom/i })[0]
+    expect(zoomReadout).toHaveTextContent("100%")
+    fireEvent.click(screen.getAllByRole("button", { name: /zoom in .* pcb/i })[0])
+    expect(zoomReadout).toHaveTextContent("125%")
   })
 
   it("filters and restores benchmark runs", () => {
