@@ -4,7 +4,7 @@
   "model": "GPT-5.6 SOL Medium",
   "complexity": "Advanced",
   "circuit": "ESP32-C3 development board",
-  "prompt": "Design and fully route a compact 30 × 58 mm, 2-layer ESP32-C3 development board with all components top-mounted, USB-C and CH340C programming, DTR/RTS auto-programming, an AP2112K 3.3 V regulator, BOOT and RESET controls, a status LED, GPIO headers, a bottom GND plane, and an antenna keepout.",
+  "prompt": "Design a compact ESP32-C3 development board with:\n\n- ESP32-C3 module\n- USB-C for power and programming\n- 3.3V regulator\n- BOOT and RESET buttons\n- One status LED\n- Auto-programming circuit\n- Decoupling capacitors\n- GPIO breakout headers\n\nUse a 2-layer PCB, top-side component placement, keep the board compact, and fully route all signals with a ground plane.",
   "components": 25,
   "boardSize": "30 × 58 mm",
   "platforms": [
