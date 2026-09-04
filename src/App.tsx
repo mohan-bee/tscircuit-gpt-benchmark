@@ -1,155 +1,133 @@
-import {
-  ChevronDown,
-  CircuitBoard,
-  Code2,
-  Download,
-  GitCompareArrows,
-  History,
-  LayoutDashboard,
-  MoreHorizontal,
-  Search,
-  Settings,
-} from "lucide-react"
+import { useMemo, useState } from "react"
+import { ChevronDown, Code2, Download, ExternalLink, SlidersHorizontal } from "lucide-react"
 
-const platforms = [
-  {
-    name: "tscircuit",
-    eyebrow: "Code-first CAD",
-    accent: "mint",
-    sourcePcb: "/examples/tscircuit/index.circuit.tsx",
-    sourceSchematic: "/examples/tscircuit/index.circuit.tsx",
-    pcb: "/assets/tscircuit-pcb.svg",
-    schematic: "/assets/tscircuit-schematic.svg",
-  },
-  {
-    name: "KiCad",
-    eyebrow: "Desktop EDA",
-    accent: "blue",
-    sourcePcb: "/examples/kicad/rc-filter.kicad_pcb",
-    sourceSchematic: "/examples/kicad/rc-filter.sch",
-    pcb: "/assets/kicad-pcb.svg",
-    schematic: "/assets/kicad-schematic.svg",
-  },
-] as const
+type View = "pcb" | "schematic"
 
-type ViewCardProps = {
-  title: string
-  subtitle: string
-  image: string
-  alt: string
-  source: string
-}
+const run = {
+  id: "run-001",
+  model: "GPT-5",
+  complexity: "Basic",
+  circuit: "RC filter",
+  prompt: "Connect a 1 kΩ resistor and 100 nF capacitor as an RC filter.",
+  platforms: [
+    {
+      name: "tscircuit",
+      pcb: "/assets/tscircuit-pcb.svg",
+      schematic: "/assets/tscircuit-schematic.svg",
+      pcbSource: "/examples/tscircuit/index.circuit.tsx",
+      schematicSource: "/examples/tscircuit/index.circuit.tsx",
+      renderer: "@tscircuit/core 0.0.1812",
+    },
+    {
+      name: "KiCad",
+      pcb: "/assets/kicad-pcb.png",
+      schematic: "/assets/kicad-schematic.svg",
+      pcbSource: "/examples/kicad/rc-filter.kicad_pcb",
+      schematicSource: "/examples/kicad/rc-filter.kicad_sch",
+      renderer: "KiCad CLI 10.0.1",
+    },
+  ],
+} as const
 
-function ViewCard({ title, subtitle, image, alt, source }: ViewCardProps) {
+function Filter({ label, value, options, onChange }: { label: string; value: string; options: string[]; onChange: (value: string) => void }) {
   return (
-    <article className="view-card">
-      <div className="view-card__header">
-        <div>
-          <p className="view-card__title">{title}</p>
-          <p className="view-card__subtitle">{subtitle}</p>
-        </div>
-        <div className="view-card__actions">
-          <a className="icon-button" href={source} download aria-label={`Download ${title} source`}>
-            <Download size={15} />
-          </a>
-          <button className="icon-button" type="button" aria-label={`More ${title} options`}>
-            <MoreHorizontal size={16} />
-          </button>
-        </div>
-      </div>
-      <div className="canvas">
-        <img src={image} alt={alt} />
-        <span className="canvas__zoom">100%</span>
-      </div>
-    </article>
+    <label className="filter">
+      <span>{label}</span>
+      <span className="select-wrap">
+        <select value={value} onChange={(event) => onChange(event.target.value)}>
+          {options.map((option) => <option key={option}>{option}</option>)}
+        </select>
+        <ChevronDown size={13} aria-hidden="true" />
+      </span>
+    </label>
   )
 }
 
 export function App() {
+  const [view, setView] = useState<View>("pcb")
+  const [model, setModel] = useState("All models")
+  const [complexity, setComplexity] = useState("All levels")
+  const [circuit, setCircuit] = useState("All circuits")
+
+  const visible = useMemo(() => (
+    (model === "All models" || model === run.model)
+    && (complexity === "All levels" || complexity === run.complexity)
+    && (circuit === "All circuits" || circuit === run.circuit)
+  ), [model, complexity, circuit])
+
   return (
-    <div className="dashboard">
-      <aside className="sidebar">
-        <a className="brand" href="#workspace" aria-label="PCB Mirror dashboard">
-          <span className="brand__mark"><CircuitBoard size={17} /></span>
-          <span>PCB Mirror</span>
-        </a>
-
-        <div className="workspace-switcher">
-          <span className="workspace-avatar">M</span>
-          <div><b>Mohan's workspace</b><small>Personal</small></div>
-          <ChevronDown size={14} />
-        </div>
-
-        <nav className="side-nav" aria-label="Dashboard navigation">
-          <a href="#overview"><LayoutDashboard size={17} /> Overview</a>
-          <a className="active" href="#workspace"><GitCompareArrows size={17} /> Compare</a>
-          <a href="#runs"><History size={17} /> Runs <span>1</span></a>
+    <div className="app">
+      <header className="topbar">
+        <a className="wordmark" href="#top">PCB<span>/</span>BENCH</a>
+        <nav>
+          <a className="active" href="#runs">Runs</a>
+          <a href="#datasets">Datasets</a>
+          <a href="#models">Models</a>
         </nav>
+        <a className="github-link" href="https://github.com/mohan-bee/pcb-cad-viewer" target="_blank" rel="noreferrer">
+          <ExternalLink size={14} /> GitHub
+        </a>
+      </header>
 
-        <div className="sidebar__section">
-          <p>Projects</p>
-          <a className="project-link" href="#workspace"><span className="project-dot" /> RC filter demo</a>
-        </div>
+      <main id="top">
+        <section className="page-heading">
+          <div>
+            <p className="kicker">MODEL OUTPUT COMPARISON</p>
+            <h1>PCB benchmark</h1>
+            <p>Compare identical prompts across electronics CAD workflows.</p>
+          </div>
+          <div className="run-id"><span>ACTIVE RUN</span><b>001</b></div>
+        </section>
 
-        <div className="sidebar__footer">
-          <a href="https://github.com/mohan-bee/pcb-cad-viewer" target="_blank" rel="noreferrer"><Code2 size={17} /> Repository</a>
-          <a href="#settings"><Settings size={17} /> Settings</a>
-        </div>
-      </aside>
+        <section className="filterbar" aria-label="Benchmark filters">
+          <div className="filter-title"><SlidersHorizontal size={15} /><span>Filters</span></div>
+          <Filter label="MODEL" value={model} options={["All models", "GPT-5"]} onChange={setModel} />
+          <Filter label="COMPLEXITY" value={complexity} options={["All levels", "Basic"]} onChange={setComplexity} />
+          <Filter label="CIRCUIT" value={circuit} options={["All circuits", "RC filter"]} onChange={setCircuit} />
+          <button className="reset" type="button" onClick={() => { setModel("All models"); setComplexity("All levels"); setCircuit("All circuits") }}>Reset</button>
+        </section>
 
-      <div className="app-shell">
-        <header className="topbar">
-          <div className="breadcrumbs"><span>Projects</span><i>/</i><b>RC filter demo</b></div>
-          <button className="search" type="button"><Search size={15} /><span>Search</span><kbd>⌘ K</kbd></button>
-          <div className="avatar">MB</div>
-        </header>
-
-        <main className="workspace" id="workspace">
-          <section className="workspace-heading">
-            <div>
-              <div className="status"><span /> Ready</div>
-              <h1>RC filter comparison</h1>
-              <p>One circuit rendered across two CAD workflows.</p>
-            </div>
-            <button className="run-button" type="button"><GitCompareArrows size={16} /> New comparison</button>
-          </section>
-
-          <section className="toolbar" aria-label="Comparison controls">
-            <div className="control"><small>PROJECT</small><button type="button">RC filter demo <ChevronDown size={14} /></button></div>
-            <div className="control"><small>REVISION</small><button type="button">Run #001 <ChevronDown size={14} /></button></div>
-            <div className="circuit-spec">
-              <span><b>R1</b> 1 kΩ</span><i />
-              <span><b>C1</b> 100 nF</span><i />
-              <span><b>Board</b> 36 × 22 mm</span>
-            </div>
-          </section>
-
-          <section className="comparison" aria-label="CAD comparison">
-            {platforms.map((platform) => (
-              <div className={`platform platform--${platform.accent}`} key={platform.name}>
-                <header className="platform__header">
-                  <div><span className="platform__dot" /><h2>{platform.name}</h2></div>
-                  <p>{platform.eyebrow}</p>
-                </header>
-                <ViewCard
-                  title="Schematic"
-                  subtitle="VIN → R1 → VOUT → C1 → GND"
-                  image={platform.schematic}
-                  alt={`${platform.name} RC filter schematic`}
-                  source={platform.sourceSchematic}
-                />
-                <ViewCard
-                  title="PCB"
-                  subtitle="0805 footprints · two-layer board"
-                  image={platform.pcb}
-                  alt={`${platform.name} RC filter PCB layout`}
-                  source={platform.sourcePcb}
-                />
+        {visible ? (
+          <section className="benchmark" id="runs">
+            <header className="benchmark-header">
+              <div>
+                <div className="benchmark-title"><span className="status-dot" /><h2>{run.model}</h2><span className="tag">{run.complexity}</span></div>
+                <p>{run.prompt}</p>
               </div>
-            ))}
+              <div className="facts"><span>2 components</span><span>36 × 22 mm</span><span>Run 001</span></div>
+            </header>
+
+            <div className="view-tabs" role="tablist" aria-label="Output view">
+              <button className={view === "pcb" ? "active" : ""} role="tab" aria-selected={view === "pcb"} onClick={() => setView("pcb")}>PCB</button>
+              <button className={view === "schematic" ? "active" : ""} role="tab" aria-selected={view === "schematic"} onClick={() => setView("schematic")}>Schematic</button>
+            </div>
+
+            <div className="comparison">
+              {run.platforms.map((platform) => {
+                const image = view === "pcb" ? platform.pcb : platform.schematic
+                const source = view === "pcb" ? platform.pcbSource : platform.schematicSource
+                return (
+                  <article className={`viewer viewer--${platform.name.toLowerCase()}`} key={platform.name}>
+                    <header>
+                      <div><h3>{platform.name}</h3><span>{platform.renderer}</span></div>
+                      <div className="viewer-actions">
+                        <a href={source} download aria-label={`Download ${platform.name} source`}><Download size={15} /></a>
+                        <a href={source} target="_blank" aria-label={`Open ${platform.name} source`}><Code2 size={15} /></a>
+                      </div>
+                    </header>
+                    <div className={`viewport viewport--${view}`}>
+                      <img src={image} alt={`${platform.name} ${view} snapshot`} />
+                    </div>
+                    <footer><span>SNAPSHOT</span><span>{view.toUpperCase()}</span><span>GENERATED</span></footer>
+                  </article>
+                )
+              })}
+            </div>
           </section>
-        </main>
-      </div>
+        ) : (
+          <section className="empty"><p>No benchmark runs match these filters.</p><button type="button" onClick={() => { setModel("All models"); setComplexity("All levels"); setCircuit("All circuits") }}>Clear filters</button></section>
+        )}
+      </main>
     </div>
   )
 }

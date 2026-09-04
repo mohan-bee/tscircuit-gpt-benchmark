@@ -1,6 +1,6 @@
-# PCB Mirror
+# PCB Bench
 
-A small, visual side-by-side viewer for the same RC circuit in tscircuit and KiCad. It deliberately avoids scores and analysis: two tools, two schematics, and two PCB views.
+A minimal benchmark viewer for comparing the same AI-generated circuit across tscircuit and KiCad. Filter by model and complexity, then switch both tool columns between PCB and schematic snapshots.
 
 ## Run locally
 
@@ -16,4 +16,10 @@ npm test
 npm run build
 ```
 
-The original circuit sources live in `public/examples`. The tscircuit SVGs are rendered from `index.circuit.tsx`; the KiCad views correspond to the included `.kicad_pcb` and legacy `.sch` files.
+Regenerate every snapshot from its committed source with:
+
+```bash
+./scripts/render-snapshots.sh
+```
+
+The KiCad images are generated locally with KiCad CLI 10.0.1. See `AGENTS.md` for the no-placeholder snapshot policy and verification workflow.
