@@ -42,6 +42,8 @@ describe("PCB Bench", () => {
     expect(kicanvasPcbViewers[1]).toHaveAttribute("src", "/benchmarks/run-002/kicad/esp32-c3-compact.kicad_pcb")
     expect(kicanvasPcbViewers[1]).toHaveAttribute("controls", "full")
     expect(kicanvasPcbViewers[1]).toHaveAttribute("controlslist", "nodownload flipview")
+    expect(kicanvasPcbViewers[1]).toHaveAttribute("zoom", "objects")
+    expect(kicanvasPcbViewers[1]).toHaveAttribute("boardlayers", "F.Cu,F.SilkS,Edge.Cuts")
 
     const zoomReadout = screen.getAllByRole("button", { name: /reset .* pcb zoom/i })[0]
     expect(zoomReadout).toHaveTextContent("100%")

@@ -9,6 +9,7 @@ declare module "react" {
         controlslist?: string
         theme?: "kicad" | "witchhazel"
         zoom?: string
+        boardlayers?: string
       }
     }
   }

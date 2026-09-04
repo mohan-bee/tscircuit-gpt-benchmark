@@ -46,6 +46,7 @@ function KicadWorkspace({ kind, source }: { kind: SnapshotKind; source: string }
           controlslist="nodownload flipview"
           theme="kicad"
           zoom="objects"
+          boardlayers={kind === "pcb" ? "F.Cu,F.SilkS,Edge.Cuts" : undefined}
           aria-label={`KiCanvas KiCad ${kind} viewer`}
         />
       </section>
