@@ -126,10 +126,20 @@ function BenchmarkCard({ run }: { run: BenchmarkRun }) {
   return (
     <section className="benchmark" aria-label={`${run.model} benchmark`}>
       <div className="visualization" aria-label={`Benchmark visualization for ${run.model}`}>
-        <div className="view-tabs" role="tablist" aria-label={`${run.id} output view`}>
-          <button className={view === "pcb" ? "active" : ""} type="button" role="tab" aria-selected={view === "pcb"} onClick={() => setView("pcb")}>PCB</button>
-          <button className={view === "schematic" ? "active" : ""} type="button" role="tab" aria-selected={view === "schematic"} onClick={() => setView("schematic")}>Schematic</button>
-        </div>
+        <header className="workspace-heading">
+          <div>
+            <h2>{run.circuit}</h2>
+            <p>{run.model} <span>·</span> {run.complexity} <span>·</span> {run.boardSize}</p>
+          </div>
+          <div className="view-tabs" role="tablist" aria-label={`${run.id} output view`}>
+            <button className={view === "pcb" ? "active" : ""} type="button" role="tab" aria-selected={view === "pcb"} onClick={() => setView("pcb")}>PCB</button>
+            <button className={view === "schematic" ? "active" : ""} type="button" role="tab" aria-selected={view === "schematic"} onClick={() => setView("schematic")}>Schematic</button>
+          </div>
+        </header>
+        <details className="prompt-panel" aria-label={`Prompt for ${run.circuit}`}>
+          <summary className="prompt-heading">Board prompt</summary>
+          <p>{run.prompt}</p>
+        </details>
 
         <div className={`comparison${run.platforms.some(({ status }) => status === "pending") ? " comparison--pending" : ""}`}>
           {run.platforms.map((platform) => {
@@ -202,20 +212,9 @@ export function App() {
         </div>
       </header>
 
-      {selectedRun && (
-        <section className="prompt-panel" aria-label={`Prompt for ${selectedRun.circuit}`}>
-          <div className="prompt-heading">
-            <span>Board prompt</span>
-            <h2>{selectedRun.circuit}</h2>
-          </div>
-          <p>{selectedRun.prompt}</p>
-        </section>
-      )}
-
       <div className="workspace-layout">
         <aside className="board-sidebar" aria-label="Board list">
           <header>
-            <span>Library</span>
             <h2>Boards</h2>
             <strong>{visibleRuns.length}</strong>
           </header>
