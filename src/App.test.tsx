@@ -11,10 +11,10 @@ describe("PCB Bench", () => {
     render(<App />)
 
     expect(screen.getByRole("heading", { name: "GPT-5" })).toBeInTheDocument()
-    expect(screen.getAllByAltText(/pcb snapshot/i)).toHaveLength(2)
+    expect(screen.getAllByAltText(/pcb snapshot/i)).toHaveLength(benchmarkRuns.length * 2)
 
-    fireEvent.click(screen.getByRole("tab", { name: "Schematic" }))
-    expect(screen.getAllByAltText(/schematic snapshot/i)).toHaveLength(2)
+    fireEvent.click(screen.getAllByRole("tab", { name: "Schematic" })[0])
+    expect(screen.getAllByAltText(/schematic snapshot/i)).toHaveLength(benchmarkRuns.length * 2)
     expect(screen.queryByAltText(/pcb snapshot/i)).not.toBeInTheDocument()
   })
 
@@ -29,7 +29,7 @@ describe("PCB Bench", () => {
   it("loads runs from benchmark metadata and exposes a run filter", () => {
     render(<App />)
 
-    expect(benchmarkRuns).toHaveLength(1)
+    expect(benchmarkRuns).toHaveLength(2)
     expect(screen.getByLabelText("RUN")).toHaveValue("All runs")
     fireEvent.change(screen.getByLabelText("RUN"), { target: { value: "run-001" } })
     expect(screen.getByRole("heading", { name: "GPT-5" })).toBeInTheDocument()

@@ -1,0 +1,28 @@
+{
+  "$schema": "../../../benchmark.schema.json",
+  "id": "run-002",
+  "model": "GPT-5.6 SOL Medium",
+  "complexity": "Advanced",
+  "circuit": "ESP32-C3 development board",
+  "prompt": "Design and fully route a compact 30 × 58 mm, 2-layer ESP32-C3 development board with all components top-mounted, USB-C and CH340C programming, DTR/RTS auto-programming, an AP2112K 3.3 V regulator, BOOT and RESET controls, a status LED, GPIO headers, a bottom GND plane, and an antenna keepout.",
+  "components": 25,
+  "boardSize": "30 × 58 mm",
+  "platforms": [
+    {
+      "name": "tscircuit",
+      "pcb": "/benchmarks/run-002/tscircuit/pcb.svg",
+      "schematic": "/benchmarks/run-002/tscircuit/schematic.svg",
+      "pcbSource": "/benchmarks/run-002/tscircuit/index.circuit.tsx",
+      "schematicSource": "/benchmarks/run-002/tscircuit/index.circuit.tsx",
+      "renderer": "tscircuit 0.0.2463"
+    },
+    {
+      "name": "KiCad",
+      "pcb": "/benchmarks/run-002/kicad/pcb.png",
+      "schematic": "/benchmarks/run-002/kicad/schematic.svg",
+      "pcbSource": "/benchmarks/run-002/kicad/board.kicad_pcb",
+      "schematicSource": "/benchmarks/run-002/kicad/board.kicad_sch",
+      "renderer": "KiCad CLI 10.0.1"
+    }
+  ]
+}

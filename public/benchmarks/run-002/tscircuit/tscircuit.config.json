@@ -1,0 +1,4 @@
+{
+  "$schema": "https://unpkg.com/@tscircuit/cli@latest/tscircuit.config.schema.json",
+  "mainEntrypoint": "index.circuit.tsx"
+}
