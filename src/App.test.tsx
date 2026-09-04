@@ -36,8 +36,6 @@ describe("PCB Bench", () => {
     expect(screen.queryAllByAltText(/schematic snapshot/i)).toHaveLength(0)
     expect(await screen.findByTestId("tscircuit-pcb-viewer")).toBeInTheDocument()
     expect(screen.queryByTestId("tscircuit-schematic-viewer")).not.toBeInTheDocument()
-    expect(screen.getAllByRole("link", { name: /view .* pcb snapshot/i })).toHaveLength(availableOutputs.length)
-    expect(screen.queryAllByRole("link", { name: /view .* schematic snapshot/i })).toHaveLength(0)
     expect(screen.getByLabelText("KiCad output pending")).toBeEmptyDOMElement()
 
     const zoomReadout = screen.getAllByRole("button", { name: /reset .* pcb zoom/i })[0]
@@ -56,20 +54,23 @@ describe("PCB Bench", () => {
     expect(screen.queryAllByAltText(/pcb snapshot/i)).toHaveLength(0)
   })
 
-  it("filters and restores benchmark runs", () => {
+  it("keeps the page focused on model, prompt, and visualization", () => {
     render(<App />)
-    fireEvent.change(screen.getByLabelText("MODEL"), { target: { value: "GPT-5" } })
-    expect(screen.getByRole("heading", { name: "GPT-5" })).toBeInTheDocument()
-    fireEvent.click(screen.getByRole("button", { name: "Reset" }))
-    expect(screen.getByRole("heading", { name: "GPT-5" })).toBeInTheDocument()
+
+    expect(screen.getAllByText("Model")).toHaveLength(benchmarkRuns.length)
+    expect(screen.getAllByText("Prompt")).toHaveLength(benchmarkRuns.length)
+    expect(screen.queryByRole("navigation")).not.toBeInTheDocument()
+    expect(screen.queryByLabelText("Benchmark filters")).not.toBeInTheDocument()
+    expect(screen.getByLabelText("Benchmark visualization for GPT-5.6 SOL Medium")).toBeInTheDocument()
   })
 
-  it("loads runs from benchmark metadata and exposes a run filter", () => {
+  it("renders every run from benchmark metadata", () => {
     render(<App />)
 
     expect(benchmarkRuns).toHaveLength(2)
-    expect(screen.getByLabelText("RUN")).toHaveValue("All runs")
-    fireEvent.change(screen.getByLabelText("RUN"), { target: { value: "run-001" } })
-    expect(screen.getByRole("heading", { name: "GPT-5" })).toBeInTheDocument()
+    for (const run of benchmarkRuns) {
+      expect(screen.getByRole("heading", { name: run.model })).toBeInTheDocument()
+      expect(screen.getByLabelText(`Benchmark visualization for ${run.model}`)).toBeInTheDocument()
+    }
   })
 })

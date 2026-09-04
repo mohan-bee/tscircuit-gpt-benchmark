@@ -54,6 +54,7 @@ Before committing tscircuit snapshots:
 
 ## UI contract
 
+- Keep each benchmark focused on only its model, prompt, and visualization.
 - Use one shared `PCB` / `Schematic` tab control per benchmark run; do not stack both views.
 - A tab change must update both platform columns in that run.
 - Use the official tscircuit PCB and schematic viewers when Circuit JSON is available.
