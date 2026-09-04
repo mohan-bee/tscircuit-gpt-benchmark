@@ -41,6 +41,7 @@ function KicadWorkspace({ kind, source }: { kind: SnapshotKind; source: string }
     <div className="snapshot-stage">
       <section className={`kicanvas-viewer kicanvas-viewer--${kind}`}>
         <kicanvas-embed
+          key={source}
           src={source}
           controls="full"
           controlslist="nodownload flipview"

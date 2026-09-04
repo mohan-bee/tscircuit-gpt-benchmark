@@ -54,7 +54,9 @@ describe("PCB Bench", () => {
     fireEvent.click(run002Tabs.getByRole("tab", { name: "Schematic" }))
     expect(await screen.findByTestId("tscircuit-schematic-viewer")).toBeInTheDocument()
     expect(screen.queryByTestId("tscircuit-pcb-viewer")).not.toBeInTheDocument()
-    expect(screen.getByLabelText("KiCanvas KiCad schematic viewer")).toHaveAttribute("src", "/benchmarks/run-002/kicad/esp32-c3-compact.kicad_sch")
+    const kicanvasSchematicViewer = screen.getByLabelText("KiCanvas KiCad schematic viewer")
+    expect(kicanvasSchematicViewer).toHaveAttribute("src", "/benchmarks/run-002/kicad/esp32-c3-compact.kicad_sch")
+    expect(kicanvasSchematicViewer).not.toBe(kicanvasPcbViewers[1])
 
     const run001Tabs = within(screen.getByRole("tablist", { name: "run-001 output view" }))
     fireEvent.click(run001Tabs.getByRole("tab", { name: "Schematic" }))
