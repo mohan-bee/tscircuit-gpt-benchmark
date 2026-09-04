@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" aria-labelledby="title desc">
+  <title id="title">KiCad RC filter PCB</title>
+  <desc id="desc">A green 36 by 22 millimeter PCB with one 0805 resistor and one 0805 capacitor connected by copper traces.</desc>
+  <defs>
+    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none" stroke="#1a2025" stroke-width="1"/></pattern>
+    <filter id="shadow"><feDropShadow dx="0" dy="16" stdDeviation="16" flood-opacity=".45"/></filter>
+  </defs>
+  <rect width="800" height="500" fill="#10161b"/>
+  <rect width="800" height="500" fill="url(#grid)"/>
+  <g filter="url(#shadow)">
+    <rect x="90" y="95" width="620" height="310" rx="8" fill="#165a46" stroke="#e9d967" stroke-width="4"/>
+    <path d="M106 111H694V389H106Z" fill="none" stroke="#63c4a3" stroke-width="1" opacity=".35"/>
+    <g fill="none" stroke="#f2df5b" stroke-width="5" opacity=".9">
+      <path d="M205 251H288"/><path d="M378 251H422"/><path d="M512 251H595"/>
+    </g>
+    <g fill="#df4f46" stroke="#ff8277" stroke-width="2">
+      <rect x="273" y="218" width="43" height="66" rx="6"/><rect x="350" y="218" width="43" height="66" rx="6"/>
+      <rect x="407" y="218" width="43" height="66" rx="6"/><rect x="484" y="218" width="43" height="66" rx="6"/>
+      <circle cx="205" cy="251" r="10"/><circle cx="595" cy="251" r="10"/>
+    </g>
+    <g fill="#d7d1bc" stroke="#6c675e" stroke-width="2">
+      <rect x="310" y="222" width="46" height="58" rx="5"/>
+      <rect x="444" y="222" width="46" height="58" rx="5"/>
+    </g>
+    <g fill="#f5ebad" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" text-anchor="middle">
+      <text x="333" y="199" font-size="21" font-weight="700">R1</text><text x="333" y="320" font-size="15">1k · 0805</text>
+      <text x="467" y="199" font-size="21" font-weight="700">C1</text><text x="467" y="320" font-size="15">100n · 0805</text>
+      <text x="155" y="235" font-size="14">VIN</text><text x="645" y="235" font-size="14">GND</text>
+    </g>
+    <g fill="none" stroke="#f5ebad" stroke-width="2" opacity=".8">
+      <path d="M125 130h95M125 130v30M580 130h95M675 130v30M125 370h95M125 370v-30M580 370h95M675 370v-30"/>
+    </g>
+  </g>
+  <g fill="#8b969d" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14">
+    <text x="28" y="38">F.Cu</text><text x="28" y="60">36 × 22 mm</text><text x="670" y="470">KiCad PCB</text>
+  </g>
+</svg>
