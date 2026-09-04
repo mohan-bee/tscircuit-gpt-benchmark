@@ -1,6 +1,6 @@
 import { lazy, Suspense, useEffect, useState, type ComponentProps, type ReactNode } from "react"
 import { Minus, Plus } from "lucide-react"
-import { benchmarkRuns, type AvailablePlatformOutput, type BenchmarkRun } from "./benchmarks"
+import { benchmarkRuns, type BenchmarkRun } from "./benchmarks"
 
 type SnapshotKind = "pcb" | "schematic"
 
@@ -16,13 +16,12 @@ type CircuitJsonState =
   | { status: "ready"; data: Array<Record<string, unknown>> }
   | { status: "error" }
 
-function SnapshotViewer({ kind, image, platform, toolbar }: { kind: SnapshotKind; image: string; platform: string; toolbar?: ReactNode }) {
+function SnapshotViewer({ kind, image, platform }: { kind: SnapshotKind; image: string; platform: string }) {
   const [zoom, setZoom] = useState(MIN_ZOOM)
   const changeZoom = (amount: number) => setZoom((current) => Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, current + amount)))
 
   return (
     <section className={`snapshot-viewer snapshot-viewer--${kind}`}>
-      {toolbar}
       <div className="zoom-controls">
         <button type="button" onClick={() => changeZoom(-ZOOM_STEP)} disabled={zoom === MIN_ZOOM} aria-label={`Zoom out ${platform} ${kind}`}><Minus size={14} /></button>
         <button className="zoom-readout" type="button" onClick={() => setZoom(MIN_ZOOM)} aria-label={`Reset ${platform} ${kind} zoom`}>{Math.round(zoom * 100)}%</button>
@@ -37,20 +36,21 @@ function SnapshotViewer({ kind, image, platform, toolbar }: { kind: SnapshotKind
   )
 }
 
-function KicadPcbViewer({ layers }: { layers: NonNullable<AvailablePlatformOutput["pcbLayers"]> }) {
-  const [layer, setLayer] = useState<keyof typeof layers>("top")
-
-  const layerToggle = (
-    <div className="layer-controls" role="group" aria-label="KiCad PCB layer">
-      {(["top", "bottom"] as const).map((name) => (
-        <button key={name} className={layer === name ? "active" : ""} type="button" aria-pressed={layer === name} onClick={() => setLayer(name)}>
-          {name[0].toUpperCase() + name.slice(1)}
-        </button>
-      ))}
+function KicadWorkspace({ kind, source }: { kind: SnapshotKind; source: string }) {
+  return (
+    <div className="snapshot-stage">
+      <section className={`kicanvas-viewer kicanvas-viewer--${kind}`}>
+        <kicanvas-embed
+          src={source}
+          controls="full"
+          controlslist="nodownload flipview"
+          theme="kicad"
+          zoom="objects"
+          aria-label={`KiCanvas KiCad ${kind} viewer`}
+        />
+      </section>
     </div>
   )
-
-  return <SnapshotViewer kind="pcb" image={layers[layer]} platform={`KiCad ${layer}`} toolbar={layerToggle} />
 }
 
 function InteractiveViewerFrame({ kind, children }: { kind: SnapshotKind; children: ReactNode }) {
@@ -149,13 +149,11 @@ function BenchmarkCard({ run }: { run: BenchmarkRun }) {
             const image = view === "pcb" ? platform.pcb : platform.schematic
             return (
               <article className={`viewer viewer--${platform.name.toLowerCase()}`} key={platform.name}>
-                <header><h2>{platform.name}</h2></header>
-                {platform.name === "tscircuit" && platform.circuitJson ? (
+                <header><h2>{platform.name}</h2>{platform.name === "KiCad" && <span>KiCanvas</span>}</header>
+                {platform.name === "KiCad" ? (
+                  <KicadWorkspace kind={view} source={view === "pcb" ? platform.pcbSource : platform.schematicSource} />
+                ) : platform.circuitJson ? (
                   <TscircuitWorkspace kind={view} circuitJsonUrl={platform.circuitJson} image={image} platform={platform.name} />
-                ) : platform.name === "KiCad" && view === "pcb" && platform.pcbLayers ? (
-                  <div className="snapshot-stage">
-                    <KicadPcbViewer layers={platform.pcbLayers} />
-                  </div>
                 ) : (
                   <div className="snapshot-stage">
                     <SnapshotViewer kind={view} image={image} platform={platform.name} />
