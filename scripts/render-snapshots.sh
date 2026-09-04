@@ -25,9 +25,10 @@ fi
   --width 1600 \
   --height 1000 \
   --side top \
-  --background opaque \
+  --background transparent \
   --quality high \
-  --zoom 1.2 \
+  --preset follow_pcb_editor \
+  --zoom 1.1 \
   "$repo_dir/public/examples/kicad/rc-filter.kicad_pcb"
 cp "$work_dir/kicad/rc-filter.svg" "$assets_dir/kicad-schematic.svg"
 

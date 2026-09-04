@@ -18,6 +18,47 @@
 		(29 "B.CrtYd" user "B.Courtyard")
 	)
 	(setup
+		(stackup
+			(layer "F.SilkS"
+				(type "Top Silk Screen")
+			)
+			(layer "F.Paste"
+				(type "Top Solder Paste")
+			)
+			(layer "F.Mask"
+				(type "Top Solder Mask")
+				(color "#23805A")
+				(thickness 0.01)
+			)
+			(layer "F.Cu"
+				(type "copper")
+				(thickness 0.035)
+			)
+			(layer "dielectric 1"
+				(type "core")
+				(thickness 1.51)
+				(material "FR4")
+				(epsilon_r 4.5)
+				(loss_tangent 0.02)
+			)
+			(layer "B.Cu"
+				(type "copper")
+				(thickness 0.035)
+			)
+			(layer "B.Mask"
+				(type "Bottom Solder Mask")
+				(color "#23805A")
+				(thickness 0.01)
+			)
+			(layer "B.Paste"
+				(type "Bottom Solder Paste")
+			)
+			(layer "B.SilkS"
+				(type "Bottom Silk Screen")
+			)
+			(copper_finish "ENIG")
+			(dielectric_constraints no)
+		)
 		(pad_to_mask_clearance 0)
 		(allow_soldermask_bridges_in_footprints no)
 		(tenting
@@ -136,6 +177,17 @@
 			(uuid "3b49a1fd-f8ad-4b93-80e3-fc0de3bd2ab4")
 		)
 		(embedded_fonts no)
+		(model "${KICAD10_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_0805_2012Metric.step"
+			(offset
+				(xyz 0 0 0)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 0 0 0)
+			)
+		)
 	)
 	(footprint "Resistor_SMD:R_0805_2012Metric"
 		(layer "F.Cu")
@@ -202,10 +254,21 @@
 			(uuid "f940ccad-e692-4805-b77a-e3337bfa339c")
 		)
 		(embedded_fonts no)
+		(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0805_2012Metric.step"
+			(offset
+				(xyz 0 0 0)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 0 0 0)
+			)
+		)
 	)
 	(gr_rect
-		(start 82 89)
-		(end 118 111)
+		(start 91 95)
+		(end 109 105)
 		(stroke
 			(width 0.2)
 			(type default)
@@ -224,14 +287,14 @@
 	)
 	(segment
 		(start 104.95 100)
-		(end 117.2 100)
+		(end 108.2 100)
 		(width 0.35)
 		(layer "F.Cu")
 		(net "GND")
 		(uuid "64206c17-ae8b-4b36-93f0-f7ac895620c2")
 	)
 	(segment
-		(start 82.8 100)
+		(start 91.8 100)
 		(end 95.05 100)
 		(width 0.35)
 		(layer "F.Cu")
