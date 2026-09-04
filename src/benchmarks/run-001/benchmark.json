@@ -6,7 +6,7 @@
   "circuit": "RC filter",
   "prompt": "Connect a 1 kΩ resistor and 100 nF capacitor as an RC filter.",
   "components": 2,
-  "boardSize": "36 × 22 mm",
+  "boardSize": "18 × 10 mm",
   "platforms": [
     {
       "name": "tscircuit",

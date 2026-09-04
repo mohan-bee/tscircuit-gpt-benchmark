@@ -3,7 +3,7 @@
 	(generator "eeschema")
 	(generator_version "10.0")
 	(uuid "ca616055-84fc-465d-9a3f-6b81ca0a91a8")
-	(paper "A4")
+	(paper "User" 60 70)
 	(lib_symbols
 		(symbol "Device:C"
 			(pin_numbers
@@ -303,7 +303,7 @@
 	)
 	(wire
 		(pts
-			(xy 100 86.19) (xy 100 82.38)
+			(xy 30 23.19) (xy 30 19.38)
 		)
 		(stroke
 			(width 0)
@@ -313,7 +313,7 @@
 	)
 	(wire
 		(pts
-			(xy 100 113.81) (xy 100 117.62)
+			(xy 30 50.81) (xy 30 54.62)
 		)
 		(stroke
 			(width 0)
@@ -323,7 +323,7 @@
 	)
 	(wire
 		(pts
-			(xy 100 93.81) (xy 100 106.19)
+			(xy 30 30.81) (xy 30 43.19)
 		)
 		(stroke
 			(width 0)
@@ -332,7 +332,7 @@
 		(uuid "e79c1320-274d-4071-a77b-61f620d2f2ee")
 	)
 	(label "GND"
-		(at 100 117.62 0)
+		(at 30 54.62 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -342,7 +342,7 @@
 		(uuid "4e36e623-6af6-4305-b142-9d50252d19f0")
 	)
 	(label "VOUT"
-		(at 100 100 0)
+		(at 30 37 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -352,7 +352,7 @@
 		(uuid "d213f480-9f77-4aaa-b9ab-1b19a89b30c1")
 	)
 	(label "VIN"
-		(at 100 82.38 0)
+		(at 30 19.38 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -363,7 +363,7 @@
 	)
 	(symbol
 		(lib_id "Device:R")
-		(at 100 90 0)
+		(at 30 27 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -374,7 +374,7 @@
 		(fields_autoplaced yes)
 		(uuid "162b44eb-4e31-44db-a773-d77482b69e2e")
 		(property "Reference" "R1"
-			(at 102.54 88.73 0)
+			(at 32.54 25.73 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -385,7 +385,7 @@
 			)
 		)
 		(property "Value" "1k"
-			(at 102.54 91.27 0)
+			(at 32.54 28.27 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -445,7 +445,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 100 110 0)
+		(at 30 47 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -456,7 +456,7 @@
 		(fields_autoplaced yes)
 		(uuid "5aef1f44-9f30-4c8c-8613-79c37eae8015")
 		(property "Reference" "C1"
-			(at 105.08 108.73 0)
+			(at 35.08 45.73 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -467,7 +467,7 @@
 			)
 		)
 		(property "Value" "100nF"
-			(at 105.08 111.27 0)
+			(at 35.08 48.27 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
