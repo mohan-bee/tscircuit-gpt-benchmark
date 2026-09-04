@@ -1,128 +1,246 @@
-import { useMemo, useState } from "react"
-import { ChevronDown, Code2, Download, ExternalLink, SlidersHorizontal } from "lucide-react"
-import { benchmarkRuns } from "./benchmarks"
+import { lazy, Suspense, useEffect, useState, type ComponentProps, type ReactNode } from "react"
+import { Minus, Plus } from "lucide-react"
+import { benchmarkRuns, type BenchmarkRun } from "./benchmarks"
 
-type View = "pcb" | "schematic"
+type SnapshotKind = "pcb" | "schematic"
 
-const unique = (values: string[]) => [...new Set(values)].sort((a, b) => a.localeCompare(b))
-const modelOptions = ["All models", ...unique(benchmarkRuns.map(({ model }) => model))]
-const complexityOptions = ["All levels", ...unique(benchmarkRuns.map(({ complexity }) => complexity))]
-const circuitOptions = ["All circuits", ...unique(benchmarkRuns.map(({ circuit }) => circuit))]
-const runOptions = ["All runs", ...benchmarkRuns.map(({ id }) => id)]
+const MIN_ZOOM = 1
+const MAX_ZOOM = 2.5
+const ZOOM_STEP = 0.25
 
-function Filter({ label, value, options, onChange }: { label: string; value: string; options: string[]; onChange: (value: string) => void }) {
+const PCBViewer = lazy(() => import("@tscircuit/pcb-viewer").then((module) => ({ default: module.PCBViewer })))
+const SchematicViewer = lazy(() => import("@tscircuit/schematic-viewer").then((module) => ({ default: module.SchematicViewer })))
+
+type CircuitJsonState =
+  | { status: "loading" }
+  | { status: "ready"; data: Array<Record<string, unknown>> }
+  | { status: "error" }
+
+function SnapshotViewer({ kind, image, platform }: { kind: SnapshotKind; image: string; platform: string }) {
+  const [zoom, setZoom] = useState(MIN_ZOOM)
+  const changeZoom = (amount: number) => setZoom((current) => Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, current + amount)))
+
   return (
-    <label className="filter">
-      <span>{label}</span>
-      <span className="select-wrap">
-        <select value={value} onChange={(event) => onChange(event.target.value)}>
-          {options.map((option) => <option key={option}>{option}</option>)}
-        </select>
-        <ChevronDown size={13} aria-hidden="true" />
-      </span>
-    </label>
+    <section className={`snapshot-viewer snapshot-viewer--${kind}`}>
+      <div className="zoom-controls">
+        <button type="button" onClick={() => changeZoom(-ZOOM_STEP)} disabled={zoom === MIN_ZOOM} aria-label={`Zoom out ${platform} ${kind}`}><Minus size={14} /></button>
+        <button className="zoom-readout" type="button" onClick={() => setZoom(MIN_ZOOM)} aria-label={`Reset ${platform} ${kind} zoom`}>{Math.round(zoom * 100)}%</button>
+        <button type="button" onClick={() => changeZoom(ZOOM_STEP)} disabled={zoom === MAX_ZOOM} aria-label={`Zoom in ${platform} ${kind}`}><Plus size={14} /></button>
+      </div>
+      <div className="snapshot-viewport">
+        <div className="snapshot-canvas" style={{ width: `${zoom * 100}%`, height: `${zoom * 100}%` }}>
+          <img src={image} alt={`${platform} ${kind} snapshot`} />
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function KicadWorkspace({ kind, source }: { kind: SnapshotKind; source: string }) {
+  return (
+    <div className="snapshot-stage">
+      <section className={`kicanvas-viewer kicanvas-viewer--${kind}`}>
+        <kicanvas-embed
+          key={source}
+          src={source}
+          controls="full"
+          controlslist="nodownload flipview"
+          theme="kicad"
+          zoom="objects"
+          boardlayers={kind === "pcb" ? "F.Cu,F.SilkS,Edge.Cuts" : undefined}
+          aria-label={`KiCanvas KiCad ${kind} viewer`}
+        />
+      </section>
+    </div>
+  )
+}
+
+function InteractiveViewerFrame({ kind, children }: { kind: SnapshotKind; children: ReactNode }) {
+  return (
+    <section className={`snapshot-viewer snapshot-viewer--${kind}`}>
+      <div className={`official-viewer official-viewer--${kind}`}>{children}</div>
+    </section>
+  )
+}
+
+function ViewerLoader({ kind }: { kind: SnapshotKind }) {
+  return <div className={`viewer-loader viewer-loader--${kind}`} role="status">Loading {kind}…</div>
+}
+
+function TscircuitWorkspace({ kind, circuitJsonUrl, image, platform }: { kind: SnapshotKind; circuitJsonUrl: string; image: string; platform: string }) {
+  const [circuitJson, setCircuitJson] = useState<CircuitJsonState>({ status: "loading" })
+
+  useEffect(() => {
+    const controller = new AbortController()
+    setCircuitJson({ status: "loading" })
+    fetch(circuitJsonUrl, { signal: controller.signal })
+      .then((response) => {
+        if (!response.ok) throw new Error(`Unable to load ${circuitJsonUrl}`)
+        return response.json()
+      })
+      .then((data: unknown) => {
+        if (!Array.isArray(data)) throw new Error("Circuit JSON must be an array")
+        setCircuitJson({ status: "ready", data: data as Array<Record<string, unknown>> })
+      })
+      .catch((error: unknown) => {
+        if (error instanceof DOMException && error.name === "AbortError") return
+        setCircuitJson({ status: "error" })
+      })
+    return () => controller.abort()
+  }, [circuitJsonUrl])
+
+  if (circuitJson.status === "error") {
+    return (
+      <div className="snapshot-stage">
+        <p className="viewer-error" role="alert">Interactive view unavailable.</p>
+        <SnapshotViewer kind={kind} image={image} platform={platform} />
+      </div>
+    )
+  }
+
+  if (circuitJson.status === "loading") {
+    return <div className="snapshot-stage"><ViewerLoader kind={kind} /></div>
+  }
+
+  const pcbCircuitJson = circuitJson.data as unknown as NonNullable<ComponentProps<typeof PCBViewer>["circuitJson"]>
+  const schematicCircuitJson = circuitJson.data as unknown as ComponentProps<typeof SchematicViewer>["circuitJson"]
+
+  return (
+    <div className="snapshot-stage">
+      <InteractiveViewerFrame kind={kind}>
+        <Suspense fallback={<ViewerLoader kind={kind} />}>
+          {kind === "pcb" ? (
+            <PCBViewer circuitJson={pcbCircuitJson} height={680} allowEditing={false} focusOnHover={false} clickToInteractEnabled={false} />
+          ) : (
+            <SchematicViewer circuitJson={schematicCircuitJson} containerStyle={{ width: "100%", height: "100%" }} clickToInteractEnabled={false} searchEnabled />
+          )}
+        </Suspense>
+      </InteractiveViewerFrame>
+    </div>
+  )
+}
+
+function BenchmarkCard({ run }: { run: BenchmarkRun }) {
+  const [view, setView] = useState<SnapshotKind>("pcb")
+
+  return (
+    <section className="benchmark" aria-label={`${run.model} benchmark`}>
+      <div className="visualization" aria-label={`Benchmark visualization for ${run.model}`}>
+        <div className="view-tabs" role="tablist" aria-label={`${run.id} output view`}>
+          <button className={view === "pcb" ? "active" : ""} type="button" role="tab" aria-selected={view === "pcb"} onClick={() => setView("pcb")}>PCB</button>
+          <button className={view === "schematic" ? "active" : ""} type="button" role="tab" aria-selected={view === "schematic"} onClick={() => setView("schematic")}>Schematic</button>
+        </div>
+
+        <div className={`comparison${run.platforms.some(({ status }) => status === "pending") ? " comparison--pending" : ""}`}>
+          {run.platforms.map((platform) => {
+            if (platform.status === "pending") {
+              return (
+                <article className={`viewer viewer--${platform.name.toLowerCase()} viewer--pending`} key={platform.name}>
+                  <header><h2>{platform.name}</h2><span>Pending</span></header>
+                  <div className={`pending-workspace pending-workspace--${view}`} aria-label={`${platform.name} output pending`} />
+                </article>
+              )
+            }
+            const image = view === "pcb" ? platform.pcb : platform.schematic
+            return (
+              <article className={`viewer viewer--${platform.name.toLowerCase()}`} key={platform.name}>
+                <header><h2>{platform.name}</h2>{platform.name === "KiCad" && <span>KiCanvas</span>}</header>
+                {platform.name === "KiCad" ? (
+                  <KicadWorkspace kind={view} source={view === "pcb" ? platform.pcbSource : platform.schematicSource} />
+                ) : platform.circuitJson ? (
+                  <TscircuitWorkspace kind={view} circuitJsonUrl={platform.circuitJson} image={image} platform={platform.name} />
+                ) : (
+                  <div className="snapshot-stage">
+                    <SnapshotViewer kind={view} image={image} platform={platform.name} />
+                  </div>
+                )}
+              </article>
+            )
+          })}
+        </div>
+      </div>
+    </section>
   )
 }
 
 export function App() {
-  const [view, setView] = useState<View>("pcb")
-  const [model, setModel] = useState("All models")
-  const [complexity, setComplexity] = useState("All levels")
-  const [circuit, setCircuit] = useState("All circuits")
-  const [runId, setRunId] = useState("All runs")
-
-  const visibleRuns = useMemo(() => benchmarkRuns.filter((run) => (
-    (model === "All models" || model === run.model)
-    && (complexity === "All levels" || complexity === run.complexity)
-    && (circuit === "All circuits" || circuit === run.circuit)
-    && (runId === "All runs" || runId === run.id)
-  )), [model, complexity, circuit, runId])
-
-  const resetFilters = () => {
-    setModel("All models")
-    setComplexity("All levels")
-    setCircuit("All circuits")
-    setRunId("All runs")
-  }
+  const [model, setModel] = useState("all")
+  const [complexity, setComplexity] = useState("all")
+  const [selectedRunId, setSelectedRunId] = useState<string | null>(null)
+  const dashboardRuns = benchmarkRuns.filter((run) => run.visible)
+  const models = [...new Set(dashboardRuns.map((run) => run.model))]
+  const complexities = [...new Set(dashboardRuns.map((run) => run.complexity))]
+  const visibleRuns = dashboardRuns.filter((run) => (
+    (model === "all" || run.model === model) &&
+    (complexity === "all" || run.complexity === complexity)
+  ))
+  const selectedRun = visibleRuns.find(({ id }) => id === selectedRunId) ?? visibleRuns[0]
 
   return (
-    <div className="app">
+    <main className="benchmark-page">
       <header className="topbar">
-        <a className="wordmark" href="#top">PCB<span>/</span>BENCH</a>
-        <nav>
-          <a className="active" href="#runs">Runs</a>
-          <a href="#datasets">Datasets</a>
-          <a href="#models">Models</a>
-        </nav>
-        <a className="github-link" href="https://github.com/mohan-bee/pcb-cad-viewer" target="_blank" rel="noreferrer">
-          <ExternalLink size={14} /> GitHub
-        </a>
+        <div className="topbar-title">
+          <span>PCB CAD Viewer</span>
+          <h1>Benchmark explorer</h1>
+        </div>
+
+        <div className="filters" aria-label="Benchmark filters">
+          <label className="filter-control">
+            <span>Model</span>
+            <select value={model} onChange={(event) => setModel(event.target.value)} aria-label="Filter by model">
+              <option value="all">All models</option>
+              {models.map((name) => <option value={name} key={name}>{name}</option>)}
+            </select>
+          </label>
+          <label className="filter-control">
+            <span>Complexity</span>
+            <select value={complexity} onChange={(event) => setComplexity(event.target.value)} aria-label="Filter by complexity">
+              <option value="all">All complexities</option>
+              {complexities.map((name) => <option value={name} key={name}>{name}</option>)}
+            </select>
+          </label>
+        </div>
       </header>
 
-      <main id="top">
-        <section className="page-heading">
-          <div>
-            <p className="kicker">MODEL OUTPUT COMPARISON</p>
-            <h1>PCB benchmark</h1>
-            <p>Compare identical prompts across electronics CAD workflows.</p>
+      {selectedRun && (
+        <section className="prompt-panel" aria-label={`Prompt for ${selectedRun.circuit}`}>
+          <div className="prompt-heading">
+            <span>Board prompt</span>
+            <h2>{selectedRun.circuit}</h2>
           </div>
-          <div className="run-id"><span>MATCHING RUNS</span><b>{String(visibleRuns.length).padStart(3, "0")}</b></div>
+          <p>{selectedRun.prompt}</p>
         </section>
+      )}
 
-        <section className="filterbar" aria-label="Benchmark filters">
-          <div className="filter-title"><SlidersHorizontal size={15} /><span>Filters</span></div>
-          <Filter label="MODEL" value={model} options={modelOptions} onChange={setModel} />
-          <Filter label="COMPLEXITY" value={complexity} options={complexityOptions} onChange={setComplexity} />
-          <Filter label="CIRCUIT" value={circuit} options={circuitOptions} onChange={setCircuit} />
-          <Filter label="RUN" value={runId} options={runOptions} onChange={setRunId} />
-          <button className="reset" type="button" onClick={resetFilters}>Reset</button>
-        </section>
-
-        {visibleRuns.length > 0 ? (
-          <div className="benchmark-list" id="runs">
+      <div className="workspace-layout">
+        <aside className="board-sidebar" aria-label="Board list">
+          <header>
+            <span>Library</span>
+            <h2>Boards</h2>
+            <strong>{visibleRuns.length}</strong>
+          </header>
+          <nav aria-label="Select a board">
             {visibleRuns.map((run) => (
-              <section className="benchmark" key={run.id}>
-                <header className="benchmark-header">
-                  <div>
-                    <div className="benchmark-title"><span className="status-dot" /><h2>{run.model}</h2><span className="tag">{run.complexity}</span></div>
-                    <p>{run.prompt}</p>
-                  </div>
-                  <div className="facts"><span>{run.components} components</span><span>{run.boardSize}</span><span>{run.id}</span></div>
-                </header>
-
-                <div className="view-tabs" role="tablist" aria-label="Output view">
-                  <button className={view === "pcb" ? "active" : ""} role="tab" aria-selected={view === "pcb"} onClick={() => setView("pcb")}>PCB</button>
-                  <button className={view === "schematic" ? "active" : ""} role="tab" aria-selected={view === "schematic"} onClick={() => setView("schematic")}>Schematic</button>
-                </div>
-
-                <div className="comparison">
-                  {run.platforms.map((platform) => {
-                    const image = view === "pcb" ? platform.pcb : platform.schematic
-                    const source = view === "pcb" ? platform.pcbSource : platform.schematicSource
-                    return (
-                      <article className={`viewer viewer--${platform.name.toLowerCase()}`} key={platform.name}>
-                        <header>
-                          <div><h3>{platform.name}</h3><span>{platform.renderer}</span></div>
-                          <div className="viewer-actions">
-                            <a href={source} download aria-label={`Download ${platform.name} source`}><Download size={15} /></a>
-                            <a href={source} target="_blank" aria-label={`Open ${platform.name} source`}><Code2 size={15} /></a>
-                          </div>
-                        </header>
-                        <div className={`viewport viewport--${view}`}>
-                          <img src={image} alt={`${platform.name} ${view} snapshot`} />
-                        </div>
-                        <footer><span>SNAPSHOT</span><span>{view.toUpperCase()}</span><span>GENERATED</span></footer>
-                      </article>
-                    )
-                  })}
-                </div>
-              </section>
+              <button
+                className={run.id === selectedRun?.id ? "active" : ""}
+                type="button"
+                aria-pressed={run.id === selectedRun?.id}
+                onClick={() => setSelectedRunId(run.id)}
+                key={run.id}
+              >
+                <span>{run.circuit}</span>
+                <small>{run.model}</small>
+                <em>{run.complexity} · {run.boardSize}</em>
+              </button>
             ))}
-          </div>
-        ) : (
-          <section className="empty"><p>No benchmark runs match these filters.</p><button type="button" onClick={resetFilters}>Clear filters</button></section>
-        )}
-      </main>
-    </div>
+          </nav>
+        </aside>
+
+        <section className="visualization-list" aria-label="Benchmark visualizations">
+          {selectedRun && <BenchmarkCard run={selectedRun} key={selectedRun.id} />}
+          {!selectedRun && <p className="empty-state">No benchmarks match these filters.</p>}
+        </section>
+      </div>
+    </main>
   )
 }

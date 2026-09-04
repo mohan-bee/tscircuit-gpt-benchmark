@@ -1,0 +1,15 @@
+{
+  "name": "compact-esp32-c3-development-board",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsci build index.circuit.tsx",
+    "check": "tsci check index.circuit.tsx",
+    "snapshot": "tsci snapshot index.circuit.tsx"
+  },
+  "dependencies": {
+    "tscircuit": "0.0.2463",
+    "typescript": "^5.9.2"
+  }
+}

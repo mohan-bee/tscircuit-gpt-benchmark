@@ -1,13 +1,26 @@
 export type PlatformName = "tscircuit" | "KiCad"
 
-export type PlatformOutput = {
+export type AvailablePlatformOutput = {
   name: PlatformName
+  status: "available"
+  circuitJson?: string
   pcb: string
+  pcbLayers?: {
+    top: string
+    bottom: string
+  }
   schematic: string
   pcbSource: string
   schematicSource: string
   renderer: string
 }
+
+export type PendingPlatformOutput = {
+  name: PlatformName
+  status: "pending"
+}
+
+export type PlatformOutput = AvailablePlatformOutput | PendingPlatformOutput
 
 export type BenchmarkRun = {
   id: string
@@ -17,6 +30,7 @@ export type BenchmarkRun = {
   prompt: string
   components: number
   boardSize: string
+  visible: boolean
   platforms: PlatformOutput[]
 }
 
@@ -43,10 +57,25 @@ function parsePlatform(value: unknown, file: string): PlatformOutput {
   if (name !== "tscircuit" && name !== "KiCad") {
     throw new Error(`${file}: platform name must be tscircuit or KiCad`)
   }
+  if (value.status === "pending") return { name, status: "pending" }
+
+  let pcbLayers: AvailablePlatformOutput["pcbLayers"]
+  if (value.pcbLayers !== undefined) {
+    if (name !== "KiCad" || !isRecord(value.pcbLayers)) {
+      throw new Error(`${file}: pcbLayers must be a KiCad layer map`)
+    }
+    pcbLayers = {
+      top: requiredString(value.pcbLayers, "top", file),
+      bottom: requiredString(value.pcbLayers, "bottom", file),
+    }
+  }
 
   return {
     name,
+    status: "available",
+    circuitJson: typeof value.circuitJson === "string" && value.circuitJson.trim() !== "" ? value.circuitJson : undefined,
     pcb: requiredString(value, "pcb", file),
+    pcbLayers,
     schematic: requiredString(value, "schematic", file),
     pcbSource: requiredString(value, "pcbSource", file),
     schematicSource: requiredString(value, "schematicSource", file),
@@ -74,6 +103,7 @@ function parseRun(value: unknown, file: string): BenchmarkRun {
     prompt: requiredString(value, "prompt", file),
     components: Number(value.components),
     boardSize: requiredString(value, "boardSize", file),
+    visible: value.visible !== false,
     platforms,
   }
 }

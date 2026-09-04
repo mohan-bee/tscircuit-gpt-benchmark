@@ -1,6 +1,6 @@
 # Add a benchmark run
 
-Each run is one metadata file plus the native CAD sources and snapshots generated from those sources. The dashboard discovers new runs automatically; do not edit `src/App.tsx`.
+Each run is one metadata file plus the available native CAD sources and snapshots generated from those sources. The dashboard discovers new runs automatically; do not edit `src/App.tsx`.
 
 ## 1. Copy the template
 
@@ -29,7 +29,7 @@ public/benchmarks/<run-id>/
     └── schematic.svg
 ```
 
-The metadata paths are public URLs, so `/benchmarks/run-002/kicad/pcb.png` points to `public/benchmarks/run-002/kicad/pcb.png`.
+The metadata paths are public URLs, so `/benchmarks/run-002/kicad/pcb.png` points to `public/benchmarks/run-002/kicad/pcb.png`. If one CAD result is not ready, keep its platform entry with only its `name` and `"status": "pending"`; the dashboard will leave that column empty.
 
 Snapshots must be renderer output from the source committed in the same run. Never add a hand-drawn approximation or placeholder.
 
@@ -46,7 +46,7 @@ For KiCad, use a local `kicad-cli` and record its exact version in `renderer`:
 
 For tscircuit, run `tsci check netlist`, `tsci check schematic-placement`, `tsci check placement`, and `tsci build`, then export the PCB and schematic snapshots from that result with the official renderer.
 
-Open all four snapshots and confirm that they match the committed source. Then run:
+Open every available snapshot and confirm that it matches the committed source. Then run:
 
 ```bash
 npm run validate:benchmarks

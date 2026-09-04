@@ -1,0 +1,33 @@
+{
+  "$schema": "../../../benchmark.schema.json",
+  "id": "run-002",
+  "model": "GPT-5.6 SOL Medium",
+  "complexity": "Advanced",
+  "circuit": "ESP32-C3 development board",
+  "prompt": "Design a compact ESP32-C3 development board with:\n\n- ESP32-C3 module\n- USB-C for power and programming\n- 3.3V regulator\n- BOOT and RESET buttons\n- One status LED\n- Auto-programming circuit\n- Decoupling capacitors\n- GPIO breakout headers\n\nUse a 2-layer PCB, top-side component placement, keep the board compact, and fully route all signals with a ground plane.",
+  "components": 25,
+  "boardSize": "30 × 58 mm",
+  "platforms": [
+    {
+      "name": "tscircuit",
+      "circuitJson": "/benchmarks/run-002/tscircuit/circuit.json",
+      "pcb": "/benchmarks/run-002/tscircuit/pcb.svg",
+      "schematic": "/benchmarks/run-002/tscircuit/schematic.svg",
+      "pcbSource": "/benchmarks/run-002/tscircuit/index.circuit.tsx",
+      "schematicSource": "/benchmarks/run-002/tscircuit/index.circuit.tsx",
+      "renderer": "tscircuit 0.0.2463"
+    },
+    {
+      "name": "KiCad",
+      "pcb": "/benchmarks/run-002/kicad/pcb-top.svg",
+      "pcbLayers": {
+        "top": "/benchmarks/run-002/kicad/pcb-top.svg",
+        "bottom": "/benchmarks/run-002/kicad/pcb-bottom.svg"
+      },
+      "schematic": "/benchmarks/run-002/kicad/schematic.svg",
+      "pcbSource": "/benchmarks/run-002/kicad/esp32-c3-compact.kicad_pcb",
+      "schematicSource": "/benchmarks/run-002/kicad/esp32-c3-compact.kicad_sch",
+      "renderer": "KiCad 10.0.1"
+    }
+  ]
+}

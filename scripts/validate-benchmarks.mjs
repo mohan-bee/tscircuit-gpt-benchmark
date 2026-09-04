@@ -43,23 +43,52 @@ for (const file of files) {
   if (ids.has(run.id)) fail(file, `duplicate id ${run.id}`)
   ids.add(run.id)
   if (!Number.isInteger(run.components) || run.components < 1) fail(file, "components must be a positive integer")
+  if (run.visible !== undefined && typeof run.visible !== "boolean") fail(file, "visible must be a boolean")
   if (!Array.isArray(run.platforms) || run.platforms.length !== 2) {
     fail(file, "platforms must contain exactly tscircuit and KiCad")
   }
 
   const names = new Set()
   for (const platform of run.platforms) {
-    for (const field of requiredPlatformStrings) requireString(platform, field, file)
+    requireString(platform, "name", file)
     if (platform.name !== "tscircuit" && platform.name !== "KiCad") {
       fail(file, "platform name must be tscircuit or KiCad")
     }
     if (names.has(platform.name)) fail(file, `duplicate ${platform.name} platform`)
     names.add(platform.name)
+    if (platform.status === "pending") {
+      const extraFields = Object.keys(platform).filter((field) => field !== "name" && field !== "status")
+      if (extraFields.length > 0) fail(file, `pending ${platform.name} platform must not include output files`)
+      continue
+    }
+    if (platform.status !== undefined) fail(file, `${platform.name} platform status must be pending or omitted`)
+    for (const field of requiredPlatformStrings.slice(1)) requireString(platform, field, file)
 
     const pcb = publicFile(platform.pcb, file, "pcb")
     const schematic = publicFile(platform.schematic, file, "schematic")
     const pcbSource = publicFile(platform.pcbSource, file, "pcbSource")
     const schematicSource = publicFile(platform.schematicSource, file, "schematicSource")
+    if (platform.pcbLayers !== undefined) {
+      if (platform.name !== "KiCad" || typeof platform.pcbLayers !== "object" || platform.pcbLayers === null || Array.isArray(platform.pcbLayers)) {
+        fail(file, "pcbLayers must be a KiCad layer map")
+      }
+      const layerNames = Object.keys(platform.pcbLayers)
+      if (layerNames.length !== 2 || !layerNames.includes("top") || !layerNames.includes("bottom")) {
+        fail(file, "pcbLayers must contain exactly top and bottom")
+      }
+      for (const layer of ["top", "bottom"]) {
+        requireString(platform.pcbLayers, layer, file)
+        const snapshot = publicFile(platform.pcbLayers[layer], file, `pcbLayers.${layer}`)
+        if (!allowedSnapshots.has(extname(snapshot))) fail(file, `pcbLayers.${layer} must be an SVG or PNG file`)
+      }
+    }
+    if (platform.circuitJson !== undefined) {
+      requireString(platform, "circuitJson", file)
+      const circuitJson = publicFile(platform.circuitJson, file, "circuitJson")
+      if (extname(circuitJson) !== ".json") fail(file, "circuitJson must be a JSON file")
+      const parsedCircuitJson = JSON.parse(readFileSync(circuitJson, "utf8"))
+      if (!Array.isArray(parsedCircuitJson)) fail(file, "circuitJson must contain a Circuit JSON array")
+    }
     if (!allowedSnapshots.has(extname(pcb)) || !allowedSnapshots.has(extname(schematic))) {
       fail(file, "snapshots must be SVG or PNG files")
     }
