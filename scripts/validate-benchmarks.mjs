@@ -43,6 +43,7 @@ for (const file of files) {
   if (ids.has(run.id)) fail(file, `duplicate id ${run.id}`)
   ids.add(run.id)
   if (!Number.isInteger(run.components) || run.components < 1) fail(file, "components must be a positive integer")
+  if (run.visible !== undefined && typeof run.visible !== "boolean") fail(file, "visible must be a boolean")
   if (!Array.isArray(run.platforms) || run.platforms.length !== 2) {
     fail(file, "platforms must contain exactly tscircuit and KiCad")
   }

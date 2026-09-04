@@ -124,14 +124,7 @@ function BenchmarkCard({ run }: { run: BenchmarkRun }) {
   const [view, setView] = useState<SnapshotKind>("pcb")
 
   return (
-    <section className="benchmark">
-      <header className="benchmark-header">
-        <p className="field-label">Model</p>
-        <h1>{run.model}</h1>
-        <p className="field-label">Prompt</p>
-        <p className="prompt">{run.prompt}</p>
-      </header>
-
+    <section className="benchmark" aria-label={`${run.model} benchmark`}>
       <div className="visualization" aria-label={`Benchmark visualization for ${run.model}`}>
         <div className="view-tabs" role="tablist" aria-label={`${run.id} output view`}>
           <button className={view === "pcb" ? "active" : ""} type="button" role="tab" aria-selected={view === "pcb"} onClick={() => setView("pcb")}>PCB</button>
@@ -171,9 +164,46 @@ function BenchmarkCard({ run }: { run: BenchmarkRun }) {
 }
 
 export function App() {
+  const [model, setModel] = useState("all")
+  const [complexity, setComplexity] = useState("all")
+  const dashboardRuns = benchmarkRuns.filter((run) => run.visible)
+  const models = [...new Set(dashboardRuns.map((run) => run.model))]
+  const complexities = [...new Set(dashboardRuns.map((run) => run.complexity))]
+  const visibleRuns = dashboardRuns.filter((run) => (
+    (model === "all" || run.model === model) &&
+    (complexity === "all" || run.complexity === complexity)
+  ))
+
   return (
     <main className="benchmark-page">
-      {benchmarkRuns.map((run) => <BenchmarkCard run={run} key={run.id} />)}
+      <header className="topbar">
+        <div className="topbar-title">
+          <span>PCB CAD Viewer</span>
+          <h1>Benchmark explorer</h1>
+        </div>
+
+        <div className="filters" aria-label="Benchmark filters">
+          <label className="filter-control">
+            <span>Model</span>
+            <select value={model} onChange={(event) => setModel(event.target.value)} aria-label="Filter by model">
+              <option value="all">All models</option>
+              {models.map((name) => <option value={name} key={name}>{name}</option>)}
+            </select>
+          </label>
+          <label className="filter-control">
+            <span>Complexity</span>
+            <select value={complexity} onChange={(event) => setComplexity(event.target.value)} aria-label="Filter by complexity">
+              <option value="all">All complexities</option>
+              {complexities.map((name) => <option value={name} key={name}>{name}</option>)}
+            </select>
+          </label>
+        </div>
+      </header>
+
+      <section className="visualization-list" aria-label="Benchmark visualizations">
+        {visibleRuns.map((run) => <BenchmarkCard run={run} key={run.id} />)}
+        {visibleRuns.length === 0 && <p className="empty-state">No benchmarks match these filters.</p>}
+      </section>
     </main>
   )
 }

@@ -30,6 +30,7 @@ export type BenchmarkRun = {
   prompt: string
   components: number
   boardSize: string
+  visible: boolean
   platforms: PlatformOutput[]
 }
 
@@ -102,6 +103,7 @@ function parseRun(value: unknown, file: string): BenchmarkRun {
     prompt: requiredString(value, "prompt", file),
     components: Number(value.components),
     boardSize: requiredString(value, "boardSize", file),
+    visible: value.visible !== false,
     platforms,
   }
 }
