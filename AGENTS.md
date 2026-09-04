@@ -15,7 +15,7 @@ This repository compares AI-generated PCB outputs across CAD tools. Every visibl
 - Add one auto-discovered metadata file at `src/benchmarks/<run-id>/benchmark.json`; do not edit the dashboard or a central registry.
 - Start from `benchmark-template/benchmark.json` and follow `benchmark.schema.json`.
 - Commit new-run sources and generated artifacts under `public/benchmarks/<run-id>/{tscircuit,kicad}/`.
-- Each run must contain exactly one tscircuit output and one KiCad output, each with PCB, schematic, source, and renderer metadata.
+- Each run must contain one tscircuit entry and one KiCad entry. Available outputs include PCB, schematic, source, and renderer metadata; unavailable outputs use `status: "pending"` and remain empty in the dashboard.
 - Run `npm run validate:benchmarks` before committing. Missing files, duplicate IDs, invalid platform pairs, and non-native sources must fail validation.
 
 ## Snapshot policy
@@ -57,6 +57,6 @@ Before committing tscircuit snapshots:
 - Use one shared two-tab control: `PCB` and `Schematic`.
 - A tab change must update both tool columns together.
 - Keep filters for model, complexity, circuit, and run metadata.
-- Prefer a minimal black-and-white light theme. The snapshots, not decoration, are the focus.
+- Prefer a restrained color light theme. The snapshots, not decoration, are the focus.
 
 Run `npm run validate:benchmarks`, `npm test`, and `npm run build` before pushing.

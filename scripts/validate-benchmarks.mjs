@@ -49,12 +49,19 @@ for (const file of files) {
 
   const names = new Set()
   for (const platform of run.platforms) {
-    for (const field of requiredPlatformStrings) requireString(platform, field, file)
+    requireString(platform, "name", file)
     if (platform.name !== "tscircuit" && platform.name !== "KiCad") {
       fail(file, "platform name must be tscircuit or KiCad")
     }
     if (names.has(platform.name)) fail(file, `duplicate ${platform.name} platform`)
     names.add(platform.name)
+    if (platform.status === "pending") {
+      const extraFields = Object.keys(platform).filter((field) => field !== "name" && field !== "status")
+      if (extraFields.length > 0) fail(file, `pending ${platform.name} platform must not include output files`)
+      continue
+    }
+    if (platform.status !== undefined) fail(file, `${platform.name} platform status must be pending or omitted`)
+    for (const field of requiredPlatformStrings.slice(1)) requireString(platform, field, file)
 
     const pcb = publicFile(platform.pcb, file, "pcb")
     const schematic = publicFile(platform.schematic, file, "schematic")

@@ -97,6 +97,17 @@ export function App() {
 
                 <div className="comparison">
                   {run.platforms.map((platform) => {
+                    if (platform.status === "pending") {
+                      return (
+                        <article className={`viewer viewer--${platform.name.toLowerCase()} viewer--pending`} key={platform.name}>
+                          <header>
+                            <div><h3>{platform.name}</h3><span>Pending</span></div>
+                          </header>
+                          <div className={`viewport viewport--${view}`} aria-label={`${platform.name} output pending`} />
+                          <footer><span>PENDING</span></footer>
+                        </article>
+                      )
+                    }
                     const image = view === "pcb" ? platform.pcb : platform.schematic
                     const source = view === "pcb" ? platform.pcbSource : platform.schematicSource
                     return (

@@ -1,13 +1,21 @@
 export type PlatformName = "tscircuit" | "KiCad"
 
-export type PlatformOutput = {
+export type AvailablePlatformOutput = {
   name: PlatformName
+  status: "available"
   pcb: string
   schematic: string
   pcbSource: string
   schematicSource: string
   renderer: string
 }
+
+export type PendingPlatformOutput = {
+  name: PlatformName
+  status: "pending"
+}
+
+export type PlatformOutput = AvailablePlatformOutput | PendingPlatformOutput
 
 export type BenchmarkRun = {
   id: string
@@ -43,9 +51,11 @@ function parsePlatform(value: unknown, file: string): PlatformOutput {
   if (name !== "tscircuit" && name !== "KiCad") {
     throw new Error(`${file}: platform name must be tscircuit or KiCad`)
   }
+  if (value.status === "pending") return { name, status: "pending" }
 
   return {
     name,
+    status: "available",
     pcb: requiredString(value, "pcb", file),
     schematic: requiredString(value, "schematic", file),
     pcbSource: requiredString(value, "pcbSource", file),

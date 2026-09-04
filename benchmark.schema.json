@@ -19,17 +19,30 @@
       "minItems": 2,
       "maxItems": 2,
       "items": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": ["name", "pcb", "schematic", "pcbSource", "schematicSource", "renderer"],
-        "properties": {
-          "name": { "enum": ["tscircuit", "KiCad"] },
-          "pcb": { "type": "string", "minLength": 1 },
-          "schematic": { "type": "string", "minLength": 1 },
-          "pcbSource": { "type": "string", "minLength": 1 },
-          "schematicSource": { "type": "string", "minLength": 1 },
-          "renderer": { "type": "string", "minLength": 1 }
-        }
+        "oneOf": [
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "pcb", "schematic", "pcbSource", "schematicSource", "renderer"],
+            "properties": {
+              "name": { "enum": ["tscircuit", "KiCad"] },
+              "pcb": { "type": "string", "minLength": 1 },
+              "schematic": { "type": "string", "minLength": 1 },
+              "pcbSource": { "type": "string", "minLength": 1 },
+              "schematicSource": { "type": "string", "minLength": 1 },
+              "renderer": { "type": "string", "minLength": 1 }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "status"],
+            "properties": {
+              "name": { "enum": ["tscircuit", "KiCad"] },
+              "status": { "const": "pending" }
+            }
+          }
+        ]
       }
     }
   }

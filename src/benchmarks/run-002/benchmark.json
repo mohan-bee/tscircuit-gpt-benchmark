@@ -18,11 +18,7 @@
     },
     {
       "name": "KiCad",
-      "pcb": "/benchmarks/run-002/kicad/pcb.png",
-      "schematic": "/benchmarks/run-002/kicad/schematic.svg",
-      "pcbSource": "/benchmarks/run-002/kicad/board.kicad_pcb",
-      "schematicSource": "/benchmarks/run-002/kicad/board.kicad_sch",
-      "renderer": "KiCad CLI 10.0.1"
+      "status": "pending"
     }
   ]
 }
