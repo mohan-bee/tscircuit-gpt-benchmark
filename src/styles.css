@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap');
+
+:root { color: #111; background: #f4f4f1; font-family: Inter, sans-serif; font-synthesis: none; --line: #d8d8d2; --muted: #70706b; }
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; min-width: 320px; min-height: 100vh; }
+a { color: inherit; text-decoration: none; }
+button, select { color: inherit; font: inherit; }
+button { cursor: pointer; }
+
+.app { min-height: 100vh; }
+.topbar { height: 58px; display: flex; align-items: center; padding: 0 28px; background: #fff; border-bottom: 1px solid var(--line); }
+.wordmark { font: 500 13px "DM Mono", monospace; letter-spacing: .05em; }
+.wordmark span { color: #aaa; margin: 0 1px; }
+.topbar nav { display: flex; align-self: stretch; gap: 28px; margin-left: 64px; }
+.topbar nav a { position: relative; display: grid; place-items: center; color: #777; font-size: 12px; }
+.topbar nav a.active { color: #111; }
+.topbar nav a.active::after { content: ""; position: absolute; right: 0; bottom: -1px; left: 0; height: 2px; background: #111; }
+.github-link { display: flex; align-items: center; gap: 7px; margin-left: auto; font-size: 11px; }
+
+main { width: min(1440px, 100%); padding: 42px 36px 64px; margin: 0 auto; }
+.page-heading { display: flex; justify-content: space-between; align-items: end; margin-bottom: 32px; }
+.kicker { margin: 0 0 10px; font: 500 9px "DM Mono", monospace; letter-spacing: .14em; }
+h1 { margin: 0; font-size: clamp(32px, 5vw, 56px); font-weight: 500; line-height: 1; letter-spacing: -.055em; }
+.page-heading > div > p:last-child { margin: 13px 0 0; color: var(--muted); font-size: 12px; }
+.run-id { min-width: 102px; padding: 10px 12px; background: #111; color: #fff; }
+.run-id span, .run-id b { display: block; }
+.run-id span { margin-bottom: 4px; color: #aaa; font: 400 8px "DM Mono", monospace; letter-spacing: .1em; }
+.run-id b { font: 500 20px "DM Mono", monospace; }
+
+.filterbar { display: flex; align-items: end; gap: 0; margin-bottom: 24px; background: #fff; border: 1px solid var(--line); }
+.filter-title { align-self: stretch; display: flex; align-items: center; gap: 8px; padding: 0 18px; border-right: 1px solid var(--line); font-size: 11px; font-weight: 600; }
+.filter { min-width: 180px; padding: 10px 14px; border-right: 1px solid var(--line); }
+.filter > span:first-child { display: block; margin-bottom: 5px; color: #888; font: 500 8px "DM Mono", monospace; letter-spacing: .09em; }
+.select-wrap { position: relative; display: block; }
+.select-wrap select { width: 100%; padding: 0 22px 0 0; background: transparent; border: 0; outline: 0; appearance: none; font-size: 11px; font-weight: 500; }
+.select-wrap svg { position: absolute; top: 1px; right: 0; pointer-events: none; }
+.reset { align-self: stretch; padding: 0 18px; margin-left: auto; background: transparent; border: 0; color: #777; font-size: 10px; text-decoration: underline; }
+
+.benchmark { background: #fff; border: 1px solid var(--line); }
+.benchmark-header { display: flex; justify-content: space-between; align-items: center; gap: 20px; min-height: 83px; padding: 16px 20px; border-bottom: 1px solid var(--line); }
+.benchmark-title { display: flex; align-items: center; gap: 9px; }
+.status-dot { width: 7px; height: 7px; background: #111; border-radius: 50%; }
+.benchmark-title h2 { margin: 0; font-size: 15px; font-weight: 600; }
+.tag { padding: 3px 6px; background: #efefec; border: 1px solid #deded8; font: 500 8px "DM Mono", monospace; text-transform: uppercase; }
+.benchmark-header p { margin: 7px 0 0 16px; color: var(--muted); font: 400 10px "DM Mono", monospace; }
+.facts { display: flex; gap: 18px; color: #777; font: 400 9px "DM Mono", monospace; text-transform: uppercase; }
+
+.view-tabs { display: flex; justify-content: center; gap: 4px; padding: 12px; background: #fafaf8; border-bottom: 1px solid var(--line); }
+.view-tabs button { min-width: 110px; height: 32px; background: transparent; border: 1px solid transparent; font-size: 10px; font-weight: 600; }
+.view-tabs button.active { color: #fff; background: #111; border-color: #111; }
+
+.comparison { display: grid; grid-template-columns: 1fr 1fr; }
+.viewer + .viewer { border-left: 1px solid var(--line); }
+.viewer > header { height: 54px; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; border-bottom: 1px solid var(--line); }
+.viewer > header h3 { margin: 0 0 3px; font-size: 12px; }
+.viewer > header span { color: #888; font: 400 8px "DM Mono", monospace; }
+.viewer-actions { display: flex; gap: 5px; }
+.viewer-actions a { display: grid; place-items: center; width: 29px; height: 29px; border: 1px solid var(--line); }
+.viewer-actions a:hover { color: #fff; background: #111; border-color: #111; }
+.viewport { position: relative; display: grid; place-items: center; height: clamp(360px, 48vw, 650px); padding: 28px; overflow: hidden; background-color: #f7f7f4; background-image: linear-gradient(#e7e7e2 1px, transparent 1px), linear-gradient(90deg, #e7e7e2 1px, transparent 1px); background-size: 24px 24px; }
+.viewport img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.viewport--pcb img[src$=".png"] { filter: grayscale(1) contrast(1.08); }
+.viewer--kicad .viewport--schematic img { transform: scale(4.4); }
+.viewer footer { display: flex; gap: 9px; padding: 9px 13px; border-top: 1px solid var(--line); color: #888; font: 400 8px "DM Mono", monospace; }
+.viewer footer span + span::before { content: "·"; margin-right: 9px; color: #bbb; }
+
+.empty { display: grid; place-items: center; min-height: 420px; background: #fff; border: 1px solid var(--line); }
+.empty p { color: var(--muted); font-size: 12px; }
+.empty button { padding: 8px 12px; background: #111; color: #fff; border: 0; font-size: 10px; }
+
+@media (max-width: 800px) {
+  .topbar { padding: 0 16px; }
+  .topbar nav { margin-left: 32px; gap: 18px; }
+  main { padding: 30px 16px 48px; }
+  .filterbar { overflow-x: auto; }
+  .filter-title { display: none; }
+  .filter { min-width: 150px; }
+  .facts { display: none; }
+  .comparison { grid-template-columns: 1fr; }
+  .viewer + .viewer { border-top: 1px solid var(--line); border-left: 0; }
+  .viewport { height: 440px; }
+}
+
+@media (max-width: 520px) {
+  .topbar nav { display: none; }
+  .page-heading { align-items: start; }
+  .page-heading > div > p:last-child { max-width: 260px; }
+  .run-id { min-width: 74px; }
+  .benchmark-header p { max-width: 250px; line-height: 1.5; }
+  .viewport { height: 330px; padding: 16px; }
+}
+
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; transition: none !important; } }

@@ -1,0 +1,11 @@
+node_modules
+dist
+.vercel
+*.log
+*.tsbuildinfo
+vite.config.js
+vite.config.d.ts
+work/
+.history/
+*.kicad_prl
+~*.lck
