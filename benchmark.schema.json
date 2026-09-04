@@ -26,6 +26,7 @@
             "required": ["name", "pcb", "schematic", "pcbSource", "schematicSource", "renderer"],
             "properties": {
               "name": { "enum": ["tscircuit", "KiCad"] },
+              "circuitJson": { "type": "string", "minLength": 1 },
               "pcb": { "type": "string", "minLength": 1 },
               "schematic": { "type": "string", "minLength": 1 },
               "pcbSource": { "type": "string", "minLength": 1 },

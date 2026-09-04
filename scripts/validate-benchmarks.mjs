@@ -67,6 +67,13 @@ for (const file of files) {
     const schematic = publicFile(platform.schematic, file, "schematic")
     const pcbSource = publicFile(platform.pcbSource, file, "pcbSource")
     const schematicSource = publicFile(platform.schematicSource, file, "schematicSource")
+    if (platform.circuitJson !== undefined) {
+      requireString(platform, "circuitJson", file)
+      const circuitJson = publicFile(platform.circuitJson, file, "circuitJson")
+      if (extname(circuitJson) !== ".json") fail(file, "circuitJson must be a JSON file")
+      const parsedCircuitJson = JSON.parse(readFileSync(circuitJson, "utf8"))
+      if (!Array.isArray(parsedCircuitJson)) fail(file, "circuitJson must contain a Circuit JSON array")
+    }
     if (!allowedSnapshots.has(extname(pcb)) || !allowedSnapshots.has(extname(schematic))) {
       fail(file, "snapshots must be SVG or PNG files")
     }

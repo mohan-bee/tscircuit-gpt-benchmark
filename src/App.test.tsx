@@ -1,19 +1,41 @@
 import "@testing-library/jest-dom/vitest"
 import { cleanup, fireEvent, render, screen } from "@testing-library/react"
-import { afterEach, describe, expect, it } from "vitest"
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 import { App } from "./App"
-import { benchmarkRuns } from "./benchmarks"
+import { benchmarkRuns, type AvailablePlatformOutput } from "./benchmarks"
 
-afterEach(cleanup)
+vi.mock("@tscircuit/pcb-viewer", () => ({
+  PCBViewer: () => <div data-testid="tscircuit-pcb-viewer">Interactive PCB</div>,
+}))
+
+vi.mock("@tscircuit/schematic-viewer", () => ({
+  SchematicViewer: () => <div data-testid="tscircuit-schematic-viewer">Interactive schematic</div>,
+}))
+
+beforeEach(() => {
+  vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
+    ok: true,
+    json: async () => [{ type: "pcb_board", pcb_board_id: "board" }],
+  }))
+})
+
+afterEach(() => {
+  cleanup()
+  vi.unstubAllGlobals()
+})
 
 describe("PCB Bench", () => {
-  it("shows separate PCB and schematic viewers with independent zoom controls", () => {
+  it("shows official interactive tscircuit viewers and generated snapshot fallbacks", async () => {
     render(<App />)
 
     expect(screen.getByRole("heading", { name: "GPT-5" })).toBeInTheDocument()
-    const availableOutputs = benchmarkRuns.flatMap(({ platforms }) => platforms).filter(({ status }) => status === "available")
-    expect(screen.getAllByAltText(/pcb snapshot/i)).toHaveLength(availableOutputs.length)
-    expect(screen.getAllByAltText(/schematic snapshot/i)).toHaveLength(availableOutputs.length)
+    const availableOutputs = benchmarkRuns.flatMap(({ platforms }) => platforms)
+      .filter((platform): platform is AvailablePlatformOutput => platform.status === "available")
+    const generatedOutputs = availableOutputs.filter(({ circuitJson }) => !circuitJson)
+    expect(screen.getAllByAltText(/pcb snapshot/i)).toHaveLength(generatedOutputs.length)
+    expect(screen.getAllByAltText(/schematic snapshot/i)).toHaveLength(generatedOutputs.length)
+    expect(await screen.findByTestId("tscircuit-pcb-viewer")).toBeInTheDocument()
+    expect(await screen.findByTestId("tscircuit-schematic-viewer")).toBeInTheDocument()
     expect(screen.getAllByRole("link", { name: /view .* pcb snapshot/i })).toHaveLength(availableOutputs.length)
     expect(screen.getAllByRole("link", { name: /view .* schematic snapshot/i })).toHaveLength(availableOutputs.length)
     expect(screen.getByLabelText("KiCad output pending")).toBeEmptyDOMElement()

@@ -3,6 +3,7 @@ export type PlatformName = "tscircuit" | "KiCad"
 export type AvailablePlatformOutput = {
   name: PlatformName
   status: "available"
+  circuitJson?: string
   pcb: string
   schematic: string
   pcbSource: string
@@ -56,6 +57,7 @@ function parsePlatform(value: unknown, file: string): PlatformOutput {
   return {
     name,
     status: "available",
+    circuitJson: typeof value.circuitJson === "string" && value.circuitJson.trim() !== "" ? value.circuitJson : undefined,
     pcb: requiredString(value, "pcb", file),
     schematic: requiredString(value, "schematic", file),
     pcbSource: requiredString(value, "pcbSource", file),

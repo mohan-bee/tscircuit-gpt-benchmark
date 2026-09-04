@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react"
+import { lazy, Suspense, useEffect, useMemo, useState, type ComponentProps, type ReactNode } from "react"
 import { ChevronDown, Code2, Download, ExternalLink, Maximize2, Minus, Plus, SlidersHorizontal } from "lucide-react"
 import { benchmarkRuns } from "./benchmarks"
 
@@ -7,6 +7,14 @@ type SnapshotKind = "pcb" | "schematic"
 const MIN_ZOOM = 1
 const MAX_ZOOM = 2.5
 const ZOOM_STEP = 0.25
+
+const PCBViewer = lazy(() => import("@tscircuit/pcb-viewer").then((module) => ({ default: module.PCBViewer })))
+const SchematicViewer = lazy(() => import("@tscircuit/schematic-viewer").then((module) => ({ default: module.SchematicViewer })))
+
+type CircuitJsonState =
+  | { status: "loading" }
+  | { status: "ready"; data: Array<Record<string, unknown>> }
+  | { status: "error" }
 
 const unique = (values: string[]) => [...new Set(values)].sort((a, b) => a.localeCompare(b))
 const modelOptions = ["All models", ...unique(benchmarkRuns.map(({ model }) => model))]
@@ -53,6 +61,85 @@ function SnapshotViewer({ kind, image, source, platform }: { kind: SnapshotKind;
         </div>
       </div>
     </section>
+  )
+}
+
+function InteractiveViewerFrame({ kind, image, source, platform, children }: { kind: SnapshotKind; image: string; source: string; platform: string; children: ReactNode }) {
+  const label = kind === "pcb" ? "PCB" : "Schematic"
+
+  return (
+    <section className={`snapshot-viewer snapshot-viewer--${kind}`}>
+      <header className="snapshot-toolbar">
+        <div><span className="snapshot-kind">{label}</span><span className="snapshot-format">CIRCUIT JSON · INTERACTIVE</span></div>
+        <div className="snapshot-actions">
+          <span className="interaction-hint">PAN · ZOOM{kind === "pcb" ? " · LAYERS" : " · SEARCH"}</span>
+          <span className="snapshot-action-separator" />
+          <a href={image} target="_blank" rel="noreferrer" aria-label={`View ${platform} ${kind} snapshot`}><Maximize2 size={14} /></a>
+          <a href={source} download aria-label={`Download ${platform} ${kind} source`}><Download size={14} /></a>
+          <a href={source} target="_blank" rel="noreferrer" aria-label={`Open ${platform} ${kind} source`}><Code2 size={14} /></a>
+        </div>
+      </header>
+      <div className={`official-viewer official-viewer--${kind}`}>{children}</div>
+    </section>
+  )
+}
+
+function ViewerLoader({ kind }: { kind: SnapshotKind }) {
+  return <div className={`viewer-loader viewer-loader--${kind}`} role="status">Loading interactive {kind} viewer…</div>
+}
+
+function TscircuitWorkspace({ circuitJsonUrl, pcb, schematic, source, platform }: { circuitJsonUrl: string; pcb: string; schematic: string; source: string; platform: string }) {
+  const [circuitJson, setCircuitJson] = useState<CircuitJsonState>({ status: "loading" })
+
+  useEffect(() => {
+    const controller = new AbortController()
+    setCircuitJson({ status: "loading" })
+    fetch(circuitJsonUrl, { signal: controller.signal })
+      .then((response) => {
+        if (!response.ok) throw new Error(`Unable to load ${circuitJsonUrl}`)
+        return response.json()
+      })
+      .then((data: unknown) => {
+        if (!Array.isArray(data)) throw new Error("Circuit JSON must be an array")
+        setCircuitJson({ status: "ready", data: data as Array<Record<string, unknown>> })
+      })
+      .catch((error: unknown) => {
+        if (error instanceof DOMException && error.name === "AbortError") return
+        setCircuitJson({ status: "error" })
+      })
+    return () => controller.abort()
+  }, [circuitJsonUrl])
+
+  if (circuitJson.status === "error") {
+    return (
+      <div className="snapshot-stack">
+        <p className="viewer-error" role="alert">Interactive viewer unavailable. Showing generated snapshots.</p>
+        <SnapshotViewer kind="pcb" image={pcb} source={source} platform={platform} />
+        <SnapshotViewer kind="schematic" image={schematic} source={source} platform={platform} />
+      </div>
+    )
+  }
+
+  if (circuitJson.status === "loading") {
+    return <div className="snapshot-stack"><ViewerLoader kind="pcb" /><ViewerLoader kind="schematic" /></div>
+  }
+
+  const pcbCircuitJson = circuitJson.data as unknown as NonNullable<ComponentProps<typeof PCBViewer>["circuitJson"]>
+  const schematicCircuitJson = circuitJson.data as unknown as ComponentProps<typeof SchematicViewer>["circuitJson"]
+
+  return (
+    <div className="snapshot-stack">
+      <InteractiveViewerFrame kind="pcb" image={pcb} source={source} platform={platform}>
+        <Suspense fallback={<ViewerLoader kind="pcb" />}>
+          <PCBViewer circuitJson={pcbCircuitJson} height={680} allowEditing={false} focusOnHover={false} clickToInteractEnabled={false} />
+        </Suspense>
+      </InteractiveViewerFrame>
+      <InteractiveViewerFrame kind="schematic" image={schematic} source={source} platform={platform}>
+        <Suspense fallback={<ViewerLoader kind="schematic" />}>
+          <SchematicViewer circuitJson={schematicCircuitJson} containerStyle={{ width: "100%", height: "100%" }} clickToInteractEnabled={false} searchEnabled />
+        </Suspense>
+      </InteractiveViewerFrame>
+    </div>
   )
 }
 
@@ -139,11 +226,15 @@ export function App() {
                         <header>
                           <div><h3>{platform.name}</h3><span>{platform.renderer}</span></div>
                         </header>
-                        <div className="snapshot-stack">
-                          <SnapshotViewer kind="pcb" image={platform.pcb} source={platform.pcbSource} platform={platform.name} />
-                          <SnapshotViewer kind="schematic" image={platform.schematic} source={platform.schematicSource} platform={platform.name} />
-                        </div>
-                        <footer><span>2 VIEWS</span><span>GENERATED</span></footer>
+                        {platform.name === "tscircuit" && platform.circuitJson ? (
+                          <TscircuitWorkspace circuitJsonUrl={platform.circuitJson} pcb={platform.pcb} schematic={platform.schematic} source={platform.pcbSource} platform={platform.name} />
+                        ) : (
+                          <div className="snapshot-stack">
+                            <SnapshotViewer kind="pcb" image={platform.pcb} source={platform.pcbSource} platform={platform.name} />
+                            <SnapshotViewer kind="schematic" image={platform.schematic} source={platform.schematicSource} platform={platform.name} />
+                          </div>
+                        )}
+                        <footer><span>2 VIEWS</span><span>{platform.circuitJson ? "INTERACTIVE" : "GENERATED"}</span></footer>
                       </article>
                     )
                   })}

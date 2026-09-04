@@ -70,11 +70,19 @@ h1 { margin: 0; font-size: clamp(32px, 5vw, 56px); font-weight: 500; line-height
 .snapshot-actions button:hover:not(:disabled), .snapshot-actions a:hover { color: #fff; background: var(--primary); border-color: var(--primary); }
 .snapshot-actions button:disabled { cursor: default; opacity: .38; }
 .snapshot-actions .zoom-readout { min-width: 50px; color: var(--primary-dark); font: 500 9px "DM Mono", monospace; }
+.interaction-hint { margin-right: 3px; color: #64748b; font: 500 8px "DM Mono", monospace; letter-spacing: .06em; white-space: nowrap; }
 .snapshot-action-separator { width: 1px; height: 20px; margin: 0 3px; background: var(--line); }
 .snapshot-viewport { position: relative; height: clamp(440px, 54vw, 680px); overflow: auto; overscroll-behavior: contain; background-color: #101827; background-image: radial-gradient(circle, #32425c 1px, transparent 1px), radial-gradient(circle at 50% 0%, rgb(37 99 235 / 20%), transparent 55%); background-size: 22px 22px, 100% 100%; scrollbar-color: #52647c #172033; }
 .snapshot-viewer--schematic .snapshot-viewport { height: clamp(360px, 38vw, 520px); }
 .snapshot-canvas { display: grid; place-items: center; min-width: 100%; min-height: 100%; padding: 16px; transition: width 160ms ease, height 160ms ease; }
 .snapshot-canvas img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.official-viewer { position: relative; height: 680px; overflow: hidden; background: #101827; }
+.official-viewer--schematic { height: 520px; background: #fff; }
+.official-viewer > * { width: 100%; }
+.viewer-loader { display: grid; place-items: center; min-height: 420px; color: #66809f; background-color: #101827; background-image: radial-gradient(circle, #32425c 1px, transparent 1px); background-size: 22px 22px; font: 500 10px "DM Mono", monospace; text-transform: uppercase; }
+.viewer-loader--schematic { min-height: 360px; color: #64748b; background-color: #f8fbff; background-image: linear-gradient(#dce8f6 1px, transparent 1px), linear-gradient(90deg, #dce8f6 1px, transparent 1px); background-size: 24px 24px; }
+.official-viewer .viewer-loader { min-height: 100%; }
+.viewer-error { margin: 0; padding: 10px 13px; color: #9a3412; background: #fff7ed; border: 1px solid #fed7aa; border-radius: 8px; font: 500 9px "DM Mono", monospace; }
 .pending-workspace { min-height: 1120px; background-color: #f8fbff; background-image: linear-gradient(#dce8f6 1px, transparent 1px), linear-gradient(90deg, #dce8f6 1px, transparent 1px); background-size: 24px 24px; }
 
 .empty { display: grid; place-items: center; min-height: 420px; background: #fff; border: 1px solid var(--line); }
@@ -93,6 +101,8 @@ h1 { margin: 0; font-size: clamp(32px, 5vw, 56px); font-weight: 500; line-height
   .viewer + .viewer { border-top: 1px solid var(--line); border-left: 0; }
   .snapshot-viewport { height: 520px; }
   .snapshot-viewer--schematic .snapshot-viewport { height: 420px; }
+  .official-viewer { height: 560px; }
+  .official-viewer--schematic { height: 440px; }
   .pending-workspace { min-height: 360px; }
 }
 
@@ -105,8 +115,10 @@ h1 { margin: 0; font-size: clamp(32px, 5vw, 56px); font-weight: 500; line-height
   .snapshot-stack { padding: 10px; }
   .snapshot-toolbar { align-items: start; }
   .snapshot-actions { flex-wrap: wrap; justify-content: end; }
+  .interaction-hint { display: none; }
   .snapshot-action-separator { display: none; }
   .snapshot-viewport, .snapshot-viewer--schematic .snapshot-viewport { height: 350px; }
+  .official-viewer, .official-viewer--schematic { height: 390px; }
 }
 
 @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; transition: none !important; } }

@@ -10,6 +10,7 @@
   "platforms": [
     {
       "name": "tscircuit",
+      "circuitJson": "/benchmarks/run-002/tscircuit/circuit.json",
       "pcb": "/benchmarks/run-002/tscircuit/pcb.svg",
       "schematic": "/benchmarks/run-002/tscircuit/schematic.svg",
       "pcbSource": "/benchmarks/run-002/tscircuit/index.circuit.tsx",
