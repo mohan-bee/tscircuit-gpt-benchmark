@@ -166,6 +166,7 @@ function BenchmarkCard({ run }: { run: BenchmarkRun }) {
 export function App() {
   const [model, setModel] = useState("all")
   const [complexity, setComplexity] = useState("all")
+  const [selectedRunId, setSelectedRunId] = useState<string | null>(null)
   const dashboardRuns = benchmarkRuns.filter((run) => run.visible)
   const models = [...new Set(dashboardRuns.map((run) => run.model))]
   const complexities = [...new Set(dashboardRuns.map((run) => run.complexity))]
@@ -173,6 +174,7 @@ export function App() {
     (model === "all" || run.model === model) &&
     (complexity === "all" || run.complexity === complexity)
   ))
+  const selectedRun = visibleRuns.find(({ id }) => id === selectedRunId) ?? visibleRuns[0]
 
   return (
     <main className="benchmark-page">
@@ -200,10 +202,45 @@ export function App() {
         </div>
       </header>
 
-      <section className="visualization-list" aria-label="Benchmark visualizations">
-        {visibleRuns.map((run) => <BenchmarkCard run={run} key={run.id} />)}
-        {visibleRuns.length === 0 && <p className="empty-state">No benchmarks match these filters.</p>}
-      </section>
+      {selectedRun && (
+        <section className="prompt-panel" aria-label={`Prompt for ${selectedRun.circuit}`}>
+          <div className="prompt-heading">
+            <span>Board prompt</span>
+            <h2>{selectedRun.circuit}</h2>
+          </div>
+          <p>{selectedRun.prompt}</p>
+        </section>
+      )}
+
+      <div className="workspace-layout">
+        <aside className="board-sidebar" aria-label="Board list">
+          <header>
+            <span>Library</span>
+            <h2>Boards</h2>
+            <strong>{visibleRuns.length}</strong>
+          </header>
+          <nav aria-label="Select a board">
+            {visibleRuns.map((run) => (
+              <button
+                className={run.id === selectedRun?.id ? "active" : ""}
+                type="button"
+                aria-pressed={run.id === selectedRun?.id}
+                onClick={() => setSelectedRunId(run.id)}
+                key={run.id}
+              >
+                <span>{run.circuit}</span>
+                <small>{run.model}</small>
+                <em>{run.complexity} · {run.boardSize}</em>
+              </button>
+            ))}
+          </nav>
+        </aside>
+
+        <section className="visualization-list" aria-label="Benchmark visualizations">
+          {selectedRun && <BenchmarkCard run={selectedRun} key={selectedRun.id} />}
+          {!selectedRun && <p className="empty-state">No benchmarks match these filters.</p>}
+        </section>
+      </div>
     </main>
   )
 }

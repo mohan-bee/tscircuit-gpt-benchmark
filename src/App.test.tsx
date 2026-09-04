@@ -41,6 +41,7 @@ describe("PCB Bench", () => {
     expect(kicanvasPcbViewers[0]).toHaveAttribute("src", "/benchmarks/run-002/kicad/esp32-c3-compact.kicad_pcb")
     expect(kicanvasPcbViewers[0]).toHaveAttribute("controls", "full")
     expect(kicanvasPcbViewers[0]).toHaveAttribute("controlslist", "nodownload flipview")
+    expect(kicanvasPcbViewers[0]).toHaveAttribute("theme", "kicad")
     expect(kicanvasPcbViewers[0]).toHaveAttribute("zoom", "objects")
     expect(kicanvasPcbViewers[0]).toHaveAttribute("boardlayers", "F.Cu,F.SilkS,Edge.Cuts")
 
@@ -55,7 +56,7 @@ describe("PCB Bench", () => {
     expect(screen.queryAllByAltText(/pcb snapshot/i)).toHaveLength(0)
   })
 
-  it("keeps model and complexity filters above the visualization", () => {
+  it("keeps filters and the selected board prompt above the visualization", () => {
     render(<App />)
 
     expect(screen.getByRole("heading", { name: "Benchmark explorer" })).toBeInTheDocument()
@@ -64,7 +65,10 @@ describe("PCB Bench", () => {
     expect(screen.getByLabelText("Filter by model")).toHaveValue("all")
     expect(screen.getByLabelText("Filter by complexity")).toHaveValue("all")
     expect(screen.queryByRole("option", { name: /^GPT-5$/ })).not.toBeInTheDocument()
-    expect(screen.queryByText("Prompt")).not.toBeInTheDocument()
+    expect(screen.getByLabelText("Board list")).toBeInTheDocument()
+    expect(within(screen.getByLabelText("Select a board")).getAllByRole("button")).toHaveLength(1)
+    expect(screen.getByText("Board prompt")).toBeInTheDocument()
+    expect(screen.getByLabelText("Prompt for ESP32-C3 development board")).toHaveTextContent("USB-C for power and programming")
     expect(screen.queryByText("Connect a 1 kΩ resistor and 100 nF capacitor as an RC filter.")).not.toBeInTheDocument()
     expect(screen.getByLabelText("Benchmark visualization for GPT-5.6 SOL Medium")).toBeInTheDocument()
   })
