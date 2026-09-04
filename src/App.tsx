@@ -1,33 +1,14 @@
 import { useMemo, useState } from "react"
 import { ChevronDown, Code2, Download, ExternalLink, SlidersHorizontal } from "lucide-react"
+import { benchmarkRuns } from "./benchmarks"
 
 type View = "pcb" | "schematic"
 
-const run = {
-  id: "run-001",
-  model: "GPT-5",
-  complexity: "Basic",
-  circuit: "RC filter",
-  prompt: "Connect a 1 kΩ resistor and 100 nF capacitor as an RC filter.",
-  platforms: [
-    {
-      name: "tscircuit",
-      pcb: "/assets/tscircuit-pcb.svg",
-      schematic: "/assets/tscircuit-schematic.svg",
-      pcbSource: "/examples/tscircuit/index.circuit.tsx",
-      schematicSource: "/examples/tscircuit/index.circuit.tsx",
-      renderer: "@tscircuit/core 0.0.1812",
-    },
-    {
-      name: "KiCad",
-      pcb: "/assets/kicad-pcb.png",
-      schematic: "/assets/kicad-schematic.svg",
-      pcbSource: "/examples/kicad/rc-filter.kicad_pcb",
-      schematicSource: "/examples/kicad/rc-filter.kicad_sch",
-      renderer: "KiCad CLI 10.0.1",
-    },
-  ],
-} as const
+const unique = (values: string[]) => [...new Set(values)].sort((a, b) => a.localeCompare(b))
+const modelOptions = ["All models", ...unique(benchmarkRuns.map(({ model }) => model))]
+const complexityOptions = ["All levels", ...unique(benchmarkRuns.map(({ complexity }) => complexity))]
+const circuitOptions = ["All circuits", ...unique(benchmarkRuns.map(({ circuit }) => circuit))]
+const runOptions = ["All runs", ...benchmarkRuns.map(({ id }) => id)]
 
 function Filter({ label, value, options, onChange }: { label: string; value: string; options: string[]; onChange: (value: string) => void }) {
   return (
@@ -48,12 +29,21 @@ export function App() {
   const [model, setModel] = useState("All models")
   const [complexity, setComplexity] = useState("All levels")
   const [circuit, setCircuit] = useState("All circuits")
+  const [runId, setRunId] = useState("All runs")
 
-  const visible = useMemo(() => (
+  const visibleRuns = useMemo(() => benchmarkRuns.filter((run) => (
     (model === "All models" || model === run.model)
     && (complexity === "All levels" || complexity === run.complexity)
     && (circuit === "All circuits" || circuit === run.circuit)
-  ), [model, complexity, circuit])
+    && (runId === "All runs" || runId === run.id)
+  )), [model, complexity, circuit, runId])
+
+  const resetFilters = () => {
+    setModel("All models")
+    setComplexity("All levels")
+    setCircuit("All circuits")
+    setRunId("All runs")
+  }
 
   return (
     <div className="app">
@@ -76,56 +66,61 @@ export function App() {
             <h1>PCB benchmark</h1>
             <p>Compare identical prompts across electronics CAD workflows.</p>
           </div>
-          <div className="run-id"><span>ACTIVE RUN</span><b>001</b></div>
+          <div className="run-id"><span>MATCHING RUNS</span><b>{String(visibleRuns.length).padStart(3, "0")}</b></div>
         </section>
 
         <section className="filterbar" aria-label="Benchmark filters">
           <div className="filter-title"><SlidersHorizontal size={15} /><span>Filters</span></div>
-          <Filter label="MODEL" value={model} options={["All models", "GPT-5"]} onChange={setModel} />
-          <Filter label="COMPLEXITY" value={complexity} options={["All levels", "Basic"]} onChange={setComplexity} />
-          <Filter label="CIRCUIT" value={circuit} options={["All circuits", "RC filter"]} onChange={setCircuit} />
-          <button className="reset" type="button" onClick={() => { setModel("All models"); setComplexity("All levels"); setCircuit("All circuits") }}>Reset</button>
+          <Filter label="MODEL" value={model} options={modelOptions} onChange={setModel} />
+          <Filter label="COMPLEXITY" value={complexity} options={complexityOptions} onChange={setComplexity} />
+          <Filter label="CIRCUIT" value={circuit} options={circuitOptions} onChange={setCircuit} />
+          <Filter label="RUN" value={runId} options={runOptions} onChange={setRunId} />
+          <button className="reset" type="button" onClick={resetFilters}>Reset</button>
         </section>
 
-        {visible ? (
-          <section className="benchmark" id="runs">
-            <header className="benchmark-header">
-              <div>
-                <div className="benchmark-title"><span className="status-dot" /><h2>{run.model}</h2><span className="tag">{run.complexity}</span></div>
-                <p>{run.prompt}</p>
-              </div>
-              <div className="facts"><span>2 components</span><span>36 × 22 mm</span><span>Run 001</span></div>
-            </header>
+        {visibleRuns.length > 0 ? (
+          <div className="benchmark-list" id="runs">
+            {visibleRuns.map((run) => (
+              <section className="benchmark" key={run.id}>
+                <header className="benchmark-header">
+                  <div>
+                    <div className="benchmark-title"><span className="status-dot" /><h2>{run.model}</h2><span className="tag">{run.complexity}</span></div>
+                    <p>{run.prompt}</p>
+                  </div>
+                  <div className="facts"><span>{run.components} components</span><span>{run.boardSize}</span><span>{run.id}</span></div>
+                </header>
 
-            <div className="view-tabs" role="tablist" aria-label="Output view">
-              <button className={view === "pcb" ? "active" : ""} role="tab" aria-selected={view === "pcb"} onClick={() => setView("pcb")}>PCB</button>
-              <button className={view === "schematic" ? "active" : ""} role="tab" aria-selected={view === "schematic"} onClick={() => setView("schematic")}>Schematic</button>
-            </div>
+                <div className="view-tabs" role="tablist" aria-label="Output view">
+                  <button className={view === "pcb" ? "active" : ""} role="tab" aria-selected={view === "pcb"} onClick={() => setView("pcb")}>PCB</button>
+                  <button className={view === "schematic" ? "active" : ""} role="tab" aria-selected={view === "schematic"} onClick={() => setView("schematic")}>Schematic</button>
+                </div>
 
-            <div className="comparison">
-              {run.platforms.map((platform) => {
-                const image = view === "pcb" ? platform.pcb : platform.schematic
-                const source = view === "pcb" ? platform.pcbSource : platform.schematicSource
-                return (
-                  <article className={`viewer viewer--${platform.name.toLowerCase()}`} key={platform.name}>
-                    <header>
-                      <div><h3>{platform.name}</h3><span>{platform.renderer}</span></div>
-                      <div className="viewer-actions">
-                        <a href={source} download aria-label={`Download ${platform.name} source`}><Download size={15} /></a>
-                        <a href={source} target="_blank" aria-label={`Open ${platform.name} source`}><Code2 size={15} /></a>
-                      </div>
-                    </header>
-                    <div className={`viewport viewport--${view}`}>
-                      <img src={image} alt={`${platform.name} ${view} snapshot`} />
-                    </div>
-                    <footer><span>SNAPSHOT</span><span>{view.toUpperCase()}</span><span>GENERATED</span></footer>
-                  </article>
-                )
-              })}
-            </div>
-          </section>
+                <div className="comparison">
+                  {run.platforms.map((platform) => {
+                    const image = view === "pcb" ? platform.pcb : platform.schematic
+                    const source = view === "pcb" ? platform.pcbSource : platform.schematicSource
+                    return (
+                      <article className={`viewer viewer--${platform.name.toLowerCase()}`} key={platform.name}>
+                        <header>
+                          <div><h3>{platform.name}</h3><span>{platform.renderer}</span></div>
+                          <div className="viewer-actions">
+                            <a href={source} download aria-label={`Download ${platform.name} source`}><Download size={15} /></a>
+                            <a href={source} target="_blank" aria-label={`Open ${platform.name} source`}><Code2 size={15} /></a>
+                          </div>
+                        </header>
+                        <div className={`viewport viewport--${view}`}>
+                          <img src={image} alt={`${platform.name} ${view} snapshot`} />
+                        </div>
+                        <footer><span>SNAPSHOT</span><span>{view.toUpperCase()}</span><span>GENERATED</span></footer>
+                      </article>
+                    )
+                  })}
+                </div>
+              </section>
+            ))}
+          </div>
         ) : (
-          <section className="empty"><p>No benchmark runs match these filters.</p><button type="button" onClick={() => { setModel("All models"); setComplexity("All levels"); setCircuit("All circuits") }}>Clear filters</button></section>
+          <section className="empty"><p>No benchmark runs match these filters.</p><button type="button" onClick={resetFilters}>Clear filters</button></section>
         )}
       </main>
     </div>

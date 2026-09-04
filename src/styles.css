@@ -37,6 +37,7 @@ h1 { margin: 0; font-size: clamp(32px, 5vw, 56px); font-weight: 500; line-height
 .select-wrap svg { position: absolute; top: 1px; right: 0; pointer-events: none; }
 .reset { align-self: stretch; padding: 0 18px; margin-left: auto; background: transparent; border: 0; color: #777; font-size: 10px; text-decoration: underline; }
 
+.benchmark-list { display: grid; gap: 24px; }
 .benchmark { background: #fff; border: 1px solid var(--line); }
 .benchmark-header { display: flex; justify-content: space-between; align-items: center; gap: 20px; min-height: 83px; padding: 16px 20px; border-bottom: 1px solid var(--line); }
 .benchmark-title { display: flex; align-items: center; gap: 9px; }
