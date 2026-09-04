@@ -1,0 +1,28 @@
+{
+  "$schema": "../../../benchmark.schema.json",
+  "id": "run-001",
+  "model": "GPT-5",
+  "complexity": "Basic",
+  "circuit": "RC filter",
+  "prompt": "Connect a 1 kΩ resistor and 100 nF capacitor as an RC filter.",
+  "components": 2,
+  "boardSize": "36 × 22 mm",
+  "platforms": [
+    {
+      "name": "tscircuit",
+      "pcb": "/assets/tscircuit-pcb.svg",
+      "schematic": "/assets/tscircuit-schematic.svg",
+      "pcbSource": "/examples/tscircuit/index.circuit.tsx",
+      "schematicSource": "/examples/tscircuit/index.circuit.tsx",
+      "renderer": "@tscircuit/core 0.0.1812"
+    },
+    {
+      "name": "KiCad",
+      "pcb": "/assets/kicad-pcb.png",
+      "schematic": "/assets/kicad-schematic.svg",
+      "pcbSource": "/examples/kicad/rc-filter.kicad_pcb",
+      "schematicSource": "/examples/kicad/rc-filter.kicad_sch",
+      "renderer": "KiCad CLI 10.0.1"
+    }
+  ]
+}
