@@ -41,7 +41,10 @@
               "schematic": { "type": "string", "minLength": 1 },
               "pcbSource": { "type": "string", "minLength": 1 },
               "schematicSource": { "type": "string", "minLength": 1 },
-              "renderer": { "type": "string", "minLength": 1 }
+              "renderer": { "type": "string", "minLength": 1 },
+              "activeTime": { "type": "string", "minLength": 1 },
+              "boardDetails": { "type": "string", "minLength": 1 },
+              "boardFeatures": { "type": "string", "minLength": 1 }
             }
           },
           {

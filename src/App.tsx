@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useState, type ComponentProps, type ReactNode } from "react"
-import { Minus, Plus } from "lucide-react"
+import { CircuitBoard, Download, Minus, Plus, Workflow } from "lucide-react"
 import { benchmarkRuns, type BenchmarkRun } from "./benchmarks"
 
 type SnapshotKind = "pcb" | "schematic"
@@ -154,7 +154,31 @@ function BenchmarkCard({ run }: { run: BenchmarkRun }) {
             const image = view === "pcb" ? platform.pcb : platform.schematic
             return (
               <article className={`viewer viewer--${platform.name.toLowerCase()}`} key={platform.name}>
-                <header><h2>{platform.name}</h2>{platform.name === "KiCad" && <span>KiCanvas</span>}</header>
+                <header>
+                  <h2>{platform.name}</h2>
+                  <div className="viewer-actions">
+                    <span>{platform.name === "KiCad" && "KiCanvas · "}{platform.renderer}</span>
+                    {platform.name === "KiCad" && (
+                      <a className="source-download" href={view === "pcb" ? platform.pcbSource : platform.schematicSource} download aria-label={`Download KiCad ${view === "pcb" ? "PCB" : "schematic"}`}>
+                        {view === "pcb" ? <CircuitBoard size={15} aria-hidden="true" /> : <Workflow size={15} aria-hidden="true" />}
+                        Download {view === "pcb" ? "PCB" : "schematic"}
+                        <Download size={13} aria-hidden="true" />
+                      </a>
+                    )}
+                  </div>
+                </header>
+                {(platform.activeTime || platform.boardDetails) && (
+                  <dl className="board-details" aria-label={`${platform.name} benchmark details`}>
+                    {platform.activeTime && <div><dt>Active time</dt><dd>{platform.activeTime}</dd></div>}
+                    {platform.boardDetails && <div><dt>Board</dt><dd>{platform.boardDetails}</dd></div>}
+                  </dl>
+                )}
+                {platform.boardFeatures && (
+                  <details className="prompt-panel board-features" aria-label={`${platform.name} board features`}>
+                    <summary className="prompt-heading">Board features</summary>
+                    <p>{platform.boardFeatures}</p>
+                  </details>
+                )}
                 {platform.name === "KiCad" ? (
                   <KicadWorkspace kind={view} source={view === "pcb" ? platform.pcbSource : platform.schematicSource} />
                 ) : platform.circuitJson ? (
@@ -190,7 +214,7 @@ export function App() {
     <main className="benchmark-page">
       <header className="topbar">
         <div className="topbar-title">
-          <span>PCB CAD Viewer</span>
+          <span>One Shot Prompt Boards</span>
           <h1>Benchmark explorer</h1>
         </div>
 

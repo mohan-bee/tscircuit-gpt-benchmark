@@ -1,0 +1,7 @@
+{
+  "copper_objects": 605,
+  "nets_checked": 27,
+  "shorts": [],
+  "disconnected_nets": [],
+  "method": "Shapely copper polygons per layer; through-hole barrel connectivity; 1 nm contact tolerance. Trace width uses the smaller adjacent width. This audit complements tscircuit DRC."
+}

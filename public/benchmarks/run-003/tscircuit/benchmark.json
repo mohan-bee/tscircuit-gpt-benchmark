@@ -1,0 +1,26 @@
+{
+  "tool_versions": {
+    "tscircuit": "0.0.2463",
+    "@tscircuit/cli": "0.1.2021",
+    "@tscircuit/core": "0.0.1837",
+    "@tscircuit/capacity-autorouter": "0.0.866",
+    "circuit-json": "0.0.479",
+    "typescript": "5.9.3"
+  },
+  "routing_seconds": 17.7,
+  "timing_scope": "Successful final autorouting phase only; rounded CLI elapsed duration. Excludes setup, design work, failed attempts, DRC and image export.",
+  "timing_source": "reports/routing-fix-5.txt",
+  "active_design_seconds": null,
+  "one_shot": false,
+  "workflow": "User requested continuation after initial routing failure; final result required revisions.",
+  "board": {
+    "width_mm": 60,
+    "height_mm": 44,
+    "layers": 2,
+    "components": 41,
+    "nets": 27,
+    "traces": 125,
+    "vias": 106
+  },
+  "circuit_json_sha256": "292a0f03476e54eca7ed4831f909204e97e9604bbd08e28e548c720eb70e52e7"
+}
