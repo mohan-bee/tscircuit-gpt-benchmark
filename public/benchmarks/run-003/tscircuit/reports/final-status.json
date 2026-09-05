@@ -1,0 +1,21 @@
+{
+  "status": "fully_routed_digitally_validated",
+  "board_mm": [
+    60,
+    44
+  ],
+  "layers": 2,
+  "tscircuit_drc_errors": 0,
+  "netlist": "passed",
+  "schematic_placement": "passed",
+  "pcb_placement": "passed",
+  "typescript": "passed",
+  "nets_checked": 27,
+  "shorts": 0,
+  "disconnected_nets": 0,
+  "traces": 125,
+  "vias": 106,
+  "hardware_validated": false,
+  "remaining_review": "RF impedance, USB signal integrity, thermal/power budget and assembly BOM verification",
+  "circuit_json_sha256": "292a0f03476e54eca7ed4831f909204e97e9604bbd08e28e548c720eb70e52e7"
+}

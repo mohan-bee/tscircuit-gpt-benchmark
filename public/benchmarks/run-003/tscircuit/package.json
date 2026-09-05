@@ -1,0 +1,27 @@
+{
+  "name": "esp32-lora-isolated",
+  "version": "1.0.0",
+  "description": "Two-layer ESP32-C3 LoRa temperature and motion sensor board",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsci dev index.circuit.tsx",
+    "build": "tsci build index.circuit.tsx --pcb-png --svgs",
+    "check": "tsc --noEmit && tsci check netlist index.circuit.tsx && tsci check schematic-placement index.circuit.tsx && tsci check placement index.circuit.tsx"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@tscircuit/cli": "^0.1.2021",
+    "@types/react": "^19.2.18",
+    "circuit-json": "0.0.479",
+    "react": "^19.2.8",
+    "tscircuit": "^0.0.2463",
+    "typescript": "^5.9.3",
+    "@tscircuit/capacity-autorouter": "0.0.866"
+  },
+  "overrides": {
+    "circuit-json": "0.0.479"
+  }
+}

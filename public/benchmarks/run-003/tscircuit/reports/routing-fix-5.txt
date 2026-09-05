@@ -1,0 +1,57 @@
+Building 1 file(s)...
+Building index.circuit.tsx...
+Generating circuit JSON...
+Each child in a list should have a unique "key" prop.
+
+Check the render method of `board`. It was passed a child from SensorBoard. See https://react.dev/link/warning-keys for more information.
+trace: `key` is not a prop. Trying to access it will result in `undefined` being returned. If you need to access the same value within the child component, you should pass it as a different prop. (https://react.dev/link/special-props)
+Wrote debug artifact: dist/autorouter-debug/placement-unrouted.png
+Autorouting <board#691 /> phase 1 start: connections=26, obstacles=189, previous_traces=0 
+  connections: net.VBUS, net.BAT, net.VIN, net.V3V3, net.GND, net.CC1, net.CC2, net.USB_DP, net.USB_DM, net.MCU_DP, net.MCU_DM, net.EN, net.BOOT, net.SDA, net.SCL, net.MOTION_INT, net.SCK, net.MOSI, net.MISO, net.LORA_CS, net.LORA_RST, net.LORA_IRQ, net.STATUS, net.LED_A, net.GPIO1, net.GPIO21
+  phase 1 progress: solver_phase=topologyPlanningSolver steps=44 progress=0% elapsed=441ms
+  phase 1 progress: solver_phase=highDensityRepairSolver steps=181983 progress=0% elapsed=10.5s
+  phase 1 done: routed_traces=124, jumpers=0, errors=0, elapsed=17.7s
+Wrote debug artifact: dist/autorouter-debug/phase-0-routed.png
+Wrote debug artifact: dist/autorouter-debug/board.meta.json
+Circuit JSON written to dist/index/circuit.json
+The "J" prefix is being used with a <chip />, try using it with a <connector /> or <jumper />
+<trace#92(from:.U2 > .ANT to:.J5 > .SIN) /> is missing a name. Add a name prop to make the trace easier to identify.
+Port SBU2 on J1 is missing a trace
+Port SBU1 on J1 is missing a trace
+No <schematicsheet> was found. Add a <schematicsheet> to define the schematic drawing area.
+component has no courtyard
+component has no courtyard
+component has no courtyard
+component has no courtyard
+component has no courtyard
+component has no courtyard
+component has no courtyard
+component has no courtyard
+component has no courtyard
+component has no courtyard
+<led#121 name=".LED1" /> footprint "0603" does not match supplier footprint jlcpcb:C965799 (copper IoU 0.7966).
+All pins on U6 are underspecified (no pinAttributes set)
+All pins on U2 are underspecified (no pinAttributes set)
+U6 has no pin with requires_power=true
+U1 has no pin with requires_power=true
+U2 has no pin with requires_power=true
+J5 has no pin with requires_power=true
+U4 has no pin with requires_power=true
+U5 has no pin with requires_power=true
+U6 has no pin with requires_ground=true
+U2 has no pin with requires_ground=true
+Generating preview images...
+[index] Generating PCB SVG...
+[index] Written pcb.svg
+[index] Generating PCB PNG...
+[index] Written pcb.png
+[index] Generating schematic SVG...
+[index] Written schematic.svg
+
+Build complete
+  Circuits  1 passed
+  Options   pcb-png, svgs, autorouter-debug, autorouter-timeout
+  Output    dist
+
+✓ Done
+Build exiting with code 0: build finished successfully

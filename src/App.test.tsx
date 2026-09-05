@@ -86,7 +86,7 @@ describe("PCB Bench", () => {
     expect(screen.queryByLabelText("Benchmark visualization for GPT-5")).not.toBeInTheDocument()
   })
 
-  it("shows the LoRa KiCad benchmark details and keeps tscircuit pending in both views", () => {
+  it("shows both LoRa outputs with platform-specific details and versions", async () => {
     render(<App />)
     fireEvent.click(within(screen.getByLabelText("Select a board")).getByRole("button", { name: /ESP32 LoRa sensor board/ }))
 
@@ -105,17 +105,19 @@ describe("PCB Bench", () => {
     expect(screen.getByLabelText("KiCanvas KiCad pcb viewer")).toHaveAttribute("src", "/benchmarks/run-003/kicad/sensor-node.kicad_pcb")
     expect(screen.getByRole("link", { name: "Download KiCad PCB" })).toHaveAttribute("href", "/benchmarks/run-003/kicad/sensor-node.kicad_pcb")
     expect(screen.getByRole("link", { name: "Download KiCad PCB" })).toHaveAttribute("download")
-    expect(screen.getByLabelText("tscircuit output pending")).toBeEmptyDOMElement()
-    expect(screen.queryByLabelText("tscircuit benchmark details")).not.toBeInTheDocument()
-    expect(screen.queryByTestId("tscircuit-pcb-viewer")).not.toBeInTheDocument()
+    expect(screen.queryByLabelText("tscircuit output pending")).not.toBeInTheDocument()
+    expect(screen.getByLabelText("tscircuit benchmark details")).toHaveTextContent("60 × 44 mm · 2 layers · 41 components · 27 nets · 106 vias")
+    expect(screen.getByLabelText("tscircuit benchmark details")).toHaveTextContent("final autorouting phase: 17.7 s")
+    expect(screen.getByText("tscircuit 0.0.2463 · CLI 0.1.2021")).toBeInTheDocument()
+    expect(await screen.findByTestId("tscircuit-pcb-viewer")).toBeInTheDocument()
+    expect(fetch).toHaveBeenCalledWith("/benchmarks/run-003/tscircuit/circuit.json", expect.any(Object))
 
     fireEvent.click(within(screen.getByRole("tablist", { name: "run-003 output view" })).getByRole("tab", { name: "Schematic" }))
     expect(screen.getByLabelText("KiCanvas KiCad schematic viewer")).toHaveAttribute("src", "/benchmarks/run-003/kicad/sensor-node.kicad_sch")
     expect(screen.getByRole("link", { name: "Download KiCad schematic" })).toHaveAttribute("href", "/benchmarks/run-003/kicad/sensor-node.kicad_sch")
     expect(screen.getByRole("link", { name: "Download KiCad schematic" })).toHaveAttribute("download")
     expect(screen.queryByRole("link", { name: "Download KiCad PCB" })).not.toBeInTheDocument()
-    expect(screen.getByLabelText("tscircuit output pending")).toBeEmptyDOMElement()
-    expect(screen.queryByTestId("tscircuit-schematic-viewer")).not.toBeInTheDocument()
+    expect(await screen.findByTestId("tscircuit-schematic-viewer")).toBeInTheDocument()
 
     fireEvent.change(screen.getByLabelText("Filter by model"), { target: { value: "GPT-5.6 SOL Medium" } })
     expect(screen.queryByLabelText("KiCad benchmark details")).not.toBeInTheDocument()

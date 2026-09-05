@@ -6,7 +6,7 @@
   "circuit": "ESP32 LoRa sensor board",
   "prompt": "Build a compact ESP32 LoRa sensor board with USB-C power and programming, a LoRa module, temperature and motion sensors, one status LED, reset and boot buttons, battery input, and a few GPIO headers. Use a 2-layer PCB, keep the RF section clean, place sensors away from noisy power parts, and fully route the board neatly with a ground plane.",
   "components": 44,
-  "boardSize": "54 × 50 mm",
+  "boardSize": "KiCad 54 × 50 mm / tscircuit 60 × 44 mm",
   "platforms": [
     {
       "name": "KiCad",
@@ -21,7 +21,15 @@
     },
     {
       "name": "tscircuit",
-      "status": "pending"
+      "circuitJson": "/benchmarks/run-003/tscircuit/circuit.json",
+      "pcb": "/benchmarks/run-003/tscircuit/pcb.svg",
+      "schematic": "/benchmarks/run-003/tscircuit/schematic.svg",
+      "pcbSource": "/benchmarks/run-003/tscircuit/index.circuit.tsx",
+      "schematicSource": "/benchmarks/run-003/tscircuit/index.circuit.tsx",
+      "renderer": "tscircuit 0.0.2463 · CLI 0.1.2021",
+      "activeTime": "Not measured; final autorouting phase: 17.7 s (CLI log; excludes design work and retries)",
+      "boardDetails": "60 × 44 mm · 2 layers · 41 components · 27 nets · 106 vias",
+      "boardFeatures": "ESP32-C3-WROOM-02U with native USB-C programming; RFM95W-868S2 LoRa and U.FL; TMP102 temperature and ADXL345 motion sensors; status LED; reset/boot buttons; GPIO and I²C headers. AP2112 3.3 V regulator with USB/battery diode ORing; battery input 4–5.5 V, no charger or undervoltage protection. Ground pours on both layers; 125 routed traces. Digital checks: 0 DRC errors, 0 shorts, 0 disconnected nets across 27 nets. Hardware, RF impedance, USB signal integrity, thermal budget and assembly BOM remain unverified. Resumed iterative design; total active design time not recorded."
     }
   ]
 }
