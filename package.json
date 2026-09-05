@@ -10,8 +10,7 @@
     "test": "vitest run",
     "validate:benchmarks": "node scripts/validate-benchmarks.mjs",
     "benchmark": "node --import tsx scripts/run-benchmark.ts",
-    "validate:evaluations": "node --import tsx scripts/validate-evaluations.ts",
-    "benchmark:smoke": "node --import tsx scripts/smoke-benchmark.ts"
+    "validate:evaluations": "node --import tsx scripts/validate-evaluations.ts"
   },
   "dependencies": {
     "@tscircuit/pcb-viewer": "^1.11.393",
