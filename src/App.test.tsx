@@ -95,12 +95,17 @@ describe("PCB Bench", () => {
     expect(details).toHaveTextContent("Board54 × 50 mm · 2 layers · 44 components · 31 nets")
     expect(screen.getByText("KiCanvas · KiCad CLI 10.0.1")).toBeInTheDocument()
     expect(screen.getByLabelText("KiCanvas KiCad pcb viewer")).toHaveAttribute("src", "/benchmarks/run-003/kicad/sensor-node.kicad_pcb")
+    expect(screen.getByRole("link", { name: "Download KiCad PCB" })).toHaveAttribute("href", "/benchmarks/run-003/kicad/sensor-node.kicad_pcb")
+    expect(screen.getByRole("link", { name: "Download KiCad PCB" })).toHaveAttribute("download")
     expect(screen.getByLabelText("tscircuit output pending")).toBeEmptyDOMElement()
     expect(screen.queryByLabelText("tscircuit benchmark details")).not.toBeInTheDocument()
     expect(screen.queryByTestId("tscircuit-pcb-viewer")).not.toBeInTheDocument()
 
     fireEvent.click(within(screen.getByRole("tablist", { name: "run-003 output view" })).getByRole("tab", { name: "Schematic" }))
     expect(screen.getByLabelText("KiCanvas KiCad schematic viewer")).toHaveAttribute("src", "/benchmarks/run-003/kicad/sensor-node.kicad_sch")
+    expect(screen.getByRole("link", { name: "Download KiCad schematic" })).toHaveAttribute("href", "/benchmarks/run-003/kicad/sensor-node.kicad_sch")
+    expect(screen.getByRole("link", { name: "Download KiCad schematic" })).toHaveAttribute("download")
+    expect(screen.queryByRole("link", { name: "Download KiCad PCB" })).not.toBeInTheDocument()
     expect(screen.getByLabelText("tscircuit output pending")).toBeEmptyDOMElement()
     expect(screen.queryByTestId("tscircuit-schematic-viewer")).not.toBeInTheDocument()
 

@@ -42,7 +42,11 @@ button:focus-visible, select:focus-visible, summary:focus-visible { outline: 2px
 .comparison { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
 .comparison--pending { grid-template-columns: minmax(0, 3fr) minmax(200px, 1fr); }
 .viewer { display: flex; min-width: 0; flex-direction: column; overflow: hidden; border: 1px solid var(--line); border-radius: 6px; }
-.viewer > header { display: flex; height: 40px; align-items: center; justify-content: space-between; padding: 0 12px; border-bottom: 1px solid var(--line); }
+.viewer > header { display: flex; min-height: 40px; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; padding: 6px 12px; border-bottom: 1px solid var(--line); }
+.viewer-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.source-download { display: inline-flex; align-items: center; gap: 6px; padding: 5px 8px; border: 1px solid var(--line); border-radius: 5px; color: inherit; font-size: 11px; text-decoration: none; }
+.source-download:hover { background: #f1f5f9; }
+.source-download:focus-visible { outline: 2px solid #2563eb; outline-offset: 2px; }
 .viewer > header h2 { margin: 0; font-size: 12px; font-weight: 550; }
 .viewer > header span { color: var(--muted); font-size: 11px; }
 .board-details { display: flex; flex-wrap: wrap; gap: 12px 28px; margin: 0; padding: 12px; border-bottom: 1px solid var(--line); font-size: 12px; line-height: 1.6; }
