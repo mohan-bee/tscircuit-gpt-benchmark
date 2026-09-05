@@ -239,7 +239,10 @@ export function App() {
       <div className="workspace-layout">
         <aside className="board-sidebar" aria-label="Board list">
           <header>
-            <h2>Boards</h2>
+            <div>
+              <h2>Benchmarks</h2>
+              <p className="sidebar-description">Existing board runs</p>
+            </div>
             <strong>{visibleRuns.length}</strong>
           </header>
           <nav aria-label="Select a board">

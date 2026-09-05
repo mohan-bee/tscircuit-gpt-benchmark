@@ -5,10 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && tsc -p tsconfig.benchmark.json && vite build",
     "preview": "vite preview",
     "test": "vitest run",
-    "validate:benchmarks": "node scripts/validate-benchmarks.mjs"
+    "validate:benchmarks": "node scripts/validate-benchmarks.mjs",
+    "benchmark": "node --import tsx scripts/run-benchmark.ts",
+    "validate:evaluations": "node --import tsx scripts/validate-evaluations.ts"
   },
   "dependencies": {
     "@tscircuit/pcb-viewer": "^1.11.393",
@@ -18,7 +20,9 @@
     "lucide-react": "latest",
     "react": "19.2.8",
     "react-dom": "19.2.8",
-    "vite": "latest"
+    "tscircuit": "0.0.2463",
+    "vite": "latest",
+    "zod": "3.25.76"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "latest",
@@ -26,6 +30,7 @@
     "@types/react": "latest",
     "@types/react-dom": "latest",
     "jsdom": "latest",
+    "tsx": "4.20.5",
     "typescript": "latest",
     "vitest": "latest"
   }

@@ -9,3 +9,4 @@ work/
 .history/
 *.kicad_prl
 ~*.lck
+.tscircuit/
