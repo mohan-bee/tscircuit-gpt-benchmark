@@ -1,0 +1,75 @@
+{
+  "id": "rc-filter",
+  "version": 1,
+  "title": "RC low-pass filter",
+  "prompt": "Create a fully routed, two-layer 36 mm wide by 22 mm high PCB and matching schematic for an RC low-pass filter. Use exactly R1 (1 kohm, 0805) and C1 (100 nF, 0805). R1 pin 2 connects to C1 pin 1 (VOUT). R1 pin 1 is VIN. C1 pin 2 is GND. Keep VIN, VOUT and GND electrically distinct. Minimum copper clearance is 0.2 mm. Place components inside the board without overlapping, keep the connection short, and show readable R1/C1 labels. Produce both a self-contained tscircuit index.circuit.tsx using built-in footprints and native KiCad board.kicad_pcb and board.kicad_sch with embedded footprints/symbols. Do not use external libraries, imports other than tscircuit, network autorouting, scripts, or external files. Return only a JSON object with a files object mapping those three filenames to their complete text contents. No markdown fences.",
+  "requirements": {
+    "components": [
+      {
+        "reference": "R1",
+        "allowedValues": ["1k", "1kΩ", "1kohm", "1000", "1 kΩ"]
+      },
+      {
+        "reference": "C1",
+        "allowedValues": ["100nF", "100 nF", "0.1uF", "0.1µF"]
+      }
+    ],
+    "nets": [
+      {
+        "name": "VIN",
+        "pins": [
+          {
+            "reference": "R1",
+            "pin": "1"
+          }
+        ]
+      },
+      {
+        "name": "VOUT",
+        "pins": [
+          {
+            "reference": "R1",
+            "pin": "2"
+          },
+          {
+            "reference": "C1",
+            "pin": "1"
+          }
+        ]
+      },
+      {
+        "name": "GND",
+        "pins": [
+          {
+            "reference": "C1",
+            "pin": "2"
+          }
+        ]
+      }
+    ],
+    "widthMm": 36,
+    "heightMm": 22,
+    "toleranceMm": 0.25,
+    "clearanceMm": 0.2,
+    "layers": 2
+  },
+  "scoring": {
+    "version": 1,
+    "weights": {
+      "drcErrors": 20,
+      "unroutedNets": 10,
+      "componentOverlaps": 10,
+      "missingConnections": 25,
+      "components": 10,
+      "boardDimensions": 5,
+      "traceClearance": 10,
+      "routingCompletion": 10
+    },
+    "regressionThreshold": 0.5
+  },
+  "generation": {
+    "temperature": 0,
+    "seed": 42,
+    "maxTokens": 16000
+  }
+}

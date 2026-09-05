@@ -1,0 +1,112 @@
+.scored-benchmarks {
+  margin: 24px 0;
+  padding: 24px;
+  background: #fff;
+  border: 1px solid #dce2e8;
+  border-radius: 12px;
+}
+.score-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin: 18px 0;
+}
+.score-filters label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  max-width: 100%;
+}
+.score-filters select {
+  padding: 9px;
+  border: 1px solid #ccd3dd;
+  border-radius: 6px;
+  max-width: 440px;
+  background: white;
+}
+.scored-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+.scored-result {
+  min-width: 0;
+  border: 1px solid #dce2e8;
+  padding: 18px;
+  border-radius: 8px;
+}
+.scored-result header {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+.scored-result h3 {
+  margin: 0;
+}
+.scored-result p {
+  font-size: 13px;
+  line-height: 1.6;
+}
+.scored-preview {
+  width: 100%;
+  height: 320px;
+  object-fit: contain;
+  background: #fafbfc;
+}
+.scored-result table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.scored-result th,
+.scored-result td {
+  text-align: left;
+  padding: 8px;
+  border-bottom: 1px solid #edf0f4;
+}
+.scored-result details,
+.fixed-prompt {
+  margin: 16px 0;
+}
+.scored-result summary,
+.fixed-prompt summary {
+  cursor: pointer;
+}
+.checksum {
+  overflow-wrap: anywhere;
+}
+.measurement-list div {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  padding: 4px;
+}
+.score-change {
+  padding: 12px;
+  background: #eef2f6;
+  border-radius: 6px;
+}
+.score-change--improved {
+  color: #12613a;
+  background: #e8f6ed;
+}
+.score-change--regressed {
+  color: #9e2633;
+  background: #ffedf0;
+}
+.replay-label {
+  color: #775216;
+}
+.fixed-prompt pre {
+  overflow: auto;
+  font-size: 12px;
+}
+@media (max-width: 900px) {
+  .scored-grid {
+    grid-template-columns: 1fr;
+  }
+  .score-filters select {
+    max-width: 100%;
+  }
+}

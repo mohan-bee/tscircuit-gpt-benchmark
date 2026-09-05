@@ -1,0 +1,50 @@
+name: benchmark validation
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  checks:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci
+      - run: npm run validate:benchmarks
+      - run: npm run validate:evaluations
+        env:
+          BENCHMARK_BASE_REF: origin/main
+      - run: npm test
+      - run: npm run build
+  native-smoke:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci
+      - name: Install native KiCad
+        run: |
+          sudo add-apt-repository --yes ppa:kicad/kicad-10.0-releases
+          sudo apt-get update
+          sudo apt-get install --yes --no-install-recommends kicad xvfb
+      - name: Build, validate and render both native formats
+        run: xvfb-run -a npm run benchmark:smoke
+        env:
+          KICAD_CLI: /usr/bin/kicad-cli
+          KICAD_PYTHON: /usr/bin/python3
+      - run: npm run validate:evaluations
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: native-benchmark-results
+          path: public/evaluations

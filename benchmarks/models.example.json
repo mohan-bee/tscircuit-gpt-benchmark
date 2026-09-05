@@ -1,0 +1,17 @@
+{
+  "benchmark": "rc-filter/v1/benchmark.json",
+  "models": [
+    {
+      "name": "your-model-version",
+      "implementation": "baseline",
+      "endpoint": "https://api.openai.com/v1/chat/completions",
+      "apiKeyEnv": "BENCHMARK_API_KEY"
+    },
+    {
+      "name": "your-newer-model-version",
+      "implementation": "candidate",
+      "endpoint": "https://api.openai.com/v1/chat/completions",
+      "apiKeyEnv": "BENCHMARK_API_KEY"
+    }
+  ]
+}

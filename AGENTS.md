@@ -12,6 +12,14 @@ This repository compares AI-generated PCB outputs across CAD tools. Every visibl
 
 ## Adding benchmark runs
 
+The legacy example gallery uses the metadata layout below. Automatically scored
+attempts use `public/evaluations/<batch>/<attempt>/{tscircuit,kicad}/result.json`
+and are auto-discovered separately. Each attempt must retain both platform results,
+including failures, frozen definition and protocol hashes, original sources,
+raw measurements and DRC reports. Follow `benchmarks/README.md` and run
+`npm run validate:evaluations` as well as the legacy validator. Scores are entirely
+automatic; do not add AI grading or synthetic PCB previews.
+
 - Add one auto-discovered metadata file at `src/benchmarks/<run-id>/benchmark.json`; do not edit the dashboard or a central registry.
 - Start from `benchmark-template/benchmark.json` and follow `benchmark.schema.json`.
 - Commit new-run sources and generated artifacts under `public/benchmarks/<run-id>/{tscircuit,kicad}/`.

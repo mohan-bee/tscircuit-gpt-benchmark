@@ -1,6 +1,8 @@
 import { lazy, Suspense, useEffect, useState, type ComponentProps, type ReactNode } from "react"
 import { CircuitBoard, Download, Minus, Plus, Workflow } from "lucide-react"
 import { benchmarkRuns, type BenchmarkRun } from "./benchmarks"
+import { ScoredComparison } from "./evaluation/ScoredComparison"
+import { definitions, evaluationResults } from "./evaluation/results"
 
 type SnapshotKind = "pcb" | "schematic"
 
@@ -236,6 +238,7 @@ export function App() {
         </div>
       </header>
 
+      <ScoredComparison results={evaluationResults} definitions={definitions} renderCircuit={({ url, image, kind }) => <TscircuitWorkspace kind={kind} circuitJsonUrl={url} image={image} platform="tscircuit" />} />
       <div className="workspace-layout">
         <aside className="board-sidebar" aria-label="Board list">
           <header>
