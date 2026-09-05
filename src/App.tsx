@@ -214,7 +214,7 @@ export function App() {
     <main className="benchmark-page">
       <header className="topbar">
         <div className="topbar-title">
-          <span>PCB CAD Viewer</span>
+          <span>One Shot Prompt Boards</span>
           <h1>Benchmark explorer</h1>
         </div>
 
