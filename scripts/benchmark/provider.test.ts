@@ -1,6 +1,6 @@
 // @vitest-environment node
 import { afterEach, expect, it, vi } from "vitest"
-import { mkdtemp, readFile, rm } from "node:fs/promises"
+import { mkdir, mkdtemp, readFile, rm } from "node:fs/promises"
 import { join } from "node:path"
 import { generate, responseSchema } from "./provider"
 import { definitionSchema } from "../../src/evaluation/schema"
@@ -11,6 +11,7 @@ afterEach(() => {
   vi.unstubAllEnvs()
 })
 it("sends identical prompts and settings to each model and saves responses", async () => {
+  await mkdir(join(process.cwd(), "work"), { recursive: true })
   const directory = await mkdtemp(join(process.cwd(), "work/provider-test-"))
   try {
     vi.stubEnv("TEST_BENCH_KEY", "secret")

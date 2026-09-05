@@ -48,12 +48,6 @@ export async function runBenchmark({
     cwd: repository,
     log: join(batch, "tools.log"),
   })
-  const tscircuitVersion = await command({
-    executable: join(repository, "node_modules/.bin/tsci"),
-    args: ["--version"],
-    cwd: repository,
-    log: join(batch, "tools.log"),
-  })
   const evaluatorFiles = [
     ...(await listFiles(join(repository, "scripts/benchmark"))),
     join(repository, "src/evaluation/schema.ts"),
@@ -68,7 +62,6 @@ export async function runBenchmark({
     evaluatorHash,
     lockHash: hash(await readFile(join(repository, "package-lock.json"))),
     kicadVersion,
-    tscircuitVersion,
     nodeVersion: process.version,
     os: process.platform,
     architecture: process.arch,
