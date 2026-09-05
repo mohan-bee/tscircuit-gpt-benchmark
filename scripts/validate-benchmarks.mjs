@@ -63,6 +63,9 @@ for (const file of files) {
     }
     if (platform.status !== undefined) fail(file, `${platform.name} platform status must be pending or omitted`)
     for (const field of requiredPlatformStrings.slice(1)) requireString(platform, field, file)
+    for (const field of ["activeTime", "boardDetails"]) {
+      if (platform[field] !== undefined) requireString(platform, field, file)
+    }
 
     const pcb = publicFile(platform.pcb, file, "pcb")
     const schematic = publicFile(platform.schematic, file, "schematic")

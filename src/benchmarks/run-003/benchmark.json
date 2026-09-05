@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../benchmark.schema.json",
+  "id": "run-003",
+  "model": "GPT-6 (Codex)",
+  "complexity": "Advanced",
+  "circuit": "ESP32 LoRa sensor board",
+  "prompt": "Build a compact ESP32 LoRa sensor board with USB-C power and programming, a LoRa module, temperature and motion sensors, one status LED, reset and boot buttons, battery input, and a few GPIO headers. Use a 2-layer PCB, keep the RF section clean, place sensors away from noisy power parts, and fully route the board neatly with a ground plane.\n\nuse kicad-cli and any open source to build this ,, IMPORTANT you are not allowed to use any tscircuit and browser use tools and refrences",
+  "components": 44,
+  "boardSize": "54 × 50 mm",
+  "platforms": [
+    {
+      "name": "KiCad",
+      "pcb": "/benchmarks/run-003/kicad/pcb.png",
+      "schematic": "/benchmarks/run-003/kicad/sensor-node.svg",
+      "pcbSource": "/benchmarks/run-003/kicad/sensor-node.kicad_pcb",
+      "schematicSource": "/benchmarks/run-003/kicad/sensor-node.kicad_sch",
+      "renderer": "KiCad CLI 10.0.1",
+      "activeTime": "35–40 minutes (estimated; excludes interruption)",
+      "boardDetails": "54 × 50 mm · 2 layers · 44 components · 31 nets"
+    },
+    {
+      "name": "tscircuit",
+      "status": "pending"
+    }
+  ]
+}

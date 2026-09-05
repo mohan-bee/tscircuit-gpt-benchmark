@@ -31,6 +31,8 @@ public/benchmarks/<run-id>/
 
 The metadata paths are public URLs, so `/benchmarks/run-002/kicad/pcb.png` points to `public/benchmarks/run-002/kicad/pcb.png`. If one CAD result is not ready, keep its platform entry with only its `name` and `"status": "pending"`; the dashboard will leave that column empty.
 
+Available platform entries may include `activeTime` and `boardDetails` strings, displayed above that platform's viewer. Mark estimated times explicitly and state any excluded interruptions; do not report estimates as measured durations. Keep these details on the platform entry so they are not attributed to a pending comparison.
+
 Snapshots must be renderer output from the source committed in the same run. Never add a hand-drawn approximation or placeholder.
 
 ## 3. Generate and verify

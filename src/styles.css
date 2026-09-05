@@ -45,6 +45,9 @@ button:focus-visible, select:focus-visible, summary:focus-visible { outline: 2px
 .viewer > header { display: flex; height: 40px; align-items: center; justify-content: space-between; padding: 0 12px; border-bottom: 1px solid var(--line); }
 .viewer > header h2 { margin: 0; font-size: 12px; font-weight: 550; }
 .viewer > header span { color: var(--muted); font-size: 11px; }
+.board-details { display: flex; flex-wrap: wrap; gap: 12px 28px; margin: 0; padding: 12px; border-bottom: 1px solid var(--line); font-size: 12px; line-height: 1.6; }
+.board-details dt { color: var(--muted); }
+.board-details dd { margin: 2px 0 0; }
 
 .snapshot-stage {
   display: grid;

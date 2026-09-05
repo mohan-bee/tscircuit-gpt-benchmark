@@ -37,7 +37,7 @@ describe("PCB Bench", () => {
     expect(screen.queryByTestId("tscircuit-schematic-viewer")).not.toBeInTheDocument()
     const kicanvasPcbViewers = screen.getAllByLabelText("KiCanvas KiCad pcb viewer")
     expect(kicanvasPcbViewers).toHaveLength(1)
-    expect(screen.getByText("KiCanvas")).toBeInTheDocument()
+    expect(screen.getByText("KiCanvas · KiCad 10.0.1")).toBeInTheDocument()
     expect(kicanvasPcbViewers[0]).toHaveAttribute("src", "/benchmarks/run-002/kicad/esp32-c3-compact.kicad_pcb")
     expect(kicanvasPcbViewers[0]).toHaveAttribute("controls", "full")
     expect(kicanvasPcbViewers[0]).toHaveAttribute("controlslist", "nodownload flipview")
@@ -66,7 +66,7 @@ describe("PCB Bench", () => {
     expect(screen.getByLabelText("Filter by complexity")).toHaveValue("all")
     expect(screen.queryByRole("option", { name: /^GPT-5$/ })).not.toBeInTheDocument()
     expect(screen.getByLabelText("Board list")).toBeInTheDocument()
-    expect(within(screen.getByLabelText("Select a board")).getAllByRole("button")).toHaveLength(1)
+    expect(within(screen.getByLabelText("Select a board")).getAllByRole("button")).toHaveLength(2)
     expect(screen.getByText("Board prompt")).toBeInTheDocument()
     expect(screen.getByLabelText("Prompt for ESP32-C3 development board")).toHaveTextContent("USB-C for power and programming")
     expect(screen.queryByText("Connect a 1 kΩ resistor and 100 nF capacitor as an RC filter.")).not.toBeInTheDocument()
@@ -76,12 +76,36 @@ describe("PCB Bench", () => {
   it("renders only dashboard-visible benchmark metadata", () => {
     render(<App />)
 
-    expect(benchmarkRuns).toHaveLength(2)
+    expect(benchmarkRuns).toHaveLength(3)
     const visibleRuns = benchmarkRuns.filter((run) => run.visible)
-    expect(visibleRuns).toHaveLength(1)
+    expect(visibleRuns).toHaveLength(2)
     for (const run of visibleRuns) {
+      fireEvent.click(within(screen.getByLabelText("Select a board")).getByRole("button", { name: new RegExp(run.circuit) }))
       expect(screen.getByLabelText(`Benchmark visualization for ${run.model}`)).toBeInTheDocument()
     }
     expect(screen.queryByLabelText("Benchmark visualization for GPT-5")).not.toBeInTheDocument()
+  })
+
+  it("shows the LoRa KiCad benchmark details and keeps tscircuit pending in both views", () => {
+    render(<App />)
+    fireEvent.click(within(screen.getByLabelText("Select a board")).getByRole("button", { name: /ESP32 LoRa sensor board/ }))
+
+    const details = screen.getByLabelText("KiCad benchmark details")
+    expect(details).toHaveTextContent("Active time35–40 minutes (estimated; excludes interruption)")
+    expect(details).toHaveTextContent("Board54 × 50 mm · 2 layers · 44 components · 31 nets")
+    expect(screen.getByText("KiCanvas · KiCad CLI 10.0.1")).toBeInTheDocument()
+    expect(screen.getByLabelText("KiCanvas KiCad pcb viewer")).toHaveAttribute("src", "/benchmarks/run-003/kicad/sensor-node.kicad_pcb")
+    expect(screen.getByLabelText("tscircuit output pending")).toBeEmptyDOMElement()
+    expect(screen.queryByLabelText("tscircuit benchmark details")).not.toBeInTheDocument()
+    expect(screen.queryByTestId("tscircuit-pcb-viewer")).not.toBeInTheDocument()
+
+    fireEvent.click(within(screen.getByRole("tablist", { name: "run-003 output view" })).getByRole("tab", { name: "Schematic" }))
+    expect(screen.getByLabelText("KiCanvas KiCad schematic viewer")).toHaveAttribute("src", "/benchmarks/run-003/kicad/sensor-node.kicad_sch")
+    expect(screen.getByLabelText("tscircuit output pending")).toBeEmptyDOMElement()
+    expect(screen.queryByTestId("tscircuit-schematic-viewer")).not.toBeInTheDocument()
+
+    fireEvent.change(screen.getByLabelText("Filter by model"), { target: { value: "GPT-5.6 SOL Medium" } })
+    expect(screen.queryByLabelText("KiCad benchmark details")).not.toBeInTheDocument()
+    expect(screen.getByLabelText("Prompt for ESP32-C3 development board")).toBeInTheDocument()
   })
 })

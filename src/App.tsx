@@ -154,7 +154,13 @@ function BenchmarkCard({ run }: { run: BenchmarkRun }) {
             const image = view === "pcb" ? platform.pcb : platform.schematic
             return (
               <article className={`viewer viewer--${platform.name.toLowerCase()}`} key={platform.name}>
-                <header><h2>{platform.name}</h2>{platform.name === "KiCad" && <span>KiCanvas</span>}</header>
+                <header><h2>{platform.name}</h2><span>{platform.name === "KiCad" && "KiCanvas · "}{platform.renderer}</span></header>
+                {(platform.activeTime || platform.boardDetails) && (
+                  <dl className="board-details" aria-label={`${platform.name} benchmark details`}>
+                    {platform.activeTime && <div><dt>Active time</dt><dd>{platform.activeTime}</dd></div>}
+                    {platform.boardDetails && <div><dt>Board</dt><dd>{platform.boardDetails}</dd></div>}
+                  </dl>
+                )}
                 {platform.name === "KiCad" ? (
                   <KicadWorkspace kind={view} source={view === "pcb" ? platform.pcbSource : platform.schematicSource} />
                 ) : platform.circuitJson ? (

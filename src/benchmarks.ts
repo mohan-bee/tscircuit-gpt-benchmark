@@ -13,6 +13,8 @@ export type AvailablePlatformOutput = {
   pcbSource: string
   schematicSource: string
   renderer: string
+  activeTime?: string
+  boardDetails?: string
 }
 
 export type PendingPlatformOutput = {
@@ -80,6 +82,8 @@ function parsePlatform(value: unknown, file: string): PlatformOutput {
     pcbSource: requiredString(value, "pcbSource", file),
     schematicSource: requiredString(value, "schematicSource", file),
     renderer: requiredString(value, "renderer", file),
+    activeTime: value.activeTime === undefined ? undefined : requiredString(value, "activeTime", file),
+    boardDetails: value.boardDetails === undefined ? undefined : requiredString(value, "boardDetails", file),
   }
 }
 
