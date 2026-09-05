@@ -4,7 +4,7 @@ import { mkdir, mkdtemp, readFile, rm } from "node:fs/promises"
 import { join } from "node:path"
 import { generate, responseSchema } from "./provider"
 import { definitionSchema } from "../../src/evaluation/schema"
-import rawDefinition from "../../benchmarks/rc-filter/v1/benchmark.json"
+import rawDefinition from "../../src/evaluation/fixtures/rc-filter.json"
 const definition = definitionSchema.parse(rawDefinition)
 afterEach(() => {
   vi.unstubAllGlobals()

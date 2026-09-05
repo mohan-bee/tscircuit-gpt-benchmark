@@ -20,7 +20,7 @@ await writeJson("work/fixture-response.json", {
   },
 })
 await writeJson("work/fixture-config.json", {
-  benchmark: "../benchmarks/rc-filter/v1/benchmark.json",
+  benchmark: "../src/evaluation/fixtures/rc-filter.json",
   models: [
     {
       name: "Existing RC fixture",

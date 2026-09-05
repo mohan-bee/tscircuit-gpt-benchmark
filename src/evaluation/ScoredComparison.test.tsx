@@ -4,7 +4,7 @@ import { afterEach, expect, it } from "vitest"
 import { ScoredComparison } from "./ScoredComparison"
 import { makeResult } from "./test-fixtures"
 import { definitionSchema } from "./schema"
-import rawDefinition from "../../benchmarks/rc-filter/v1/benchmark.json"
+import rawDefinition from "./fixtures/rc-filter.json"
 afterEach(cleanup)
 const definitions = [definitionSchema.parse(rawDefinition)]
 it("shows two PCB renders, individual metrics and a regression", () => {

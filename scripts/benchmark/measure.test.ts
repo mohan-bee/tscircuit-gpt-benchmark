@@ -1,6 +1,6 @@
 // @vitest-environment node
 import { describe, expect, it } from "vitest"
-import rawDefinition from "../../benchmarks/rc-filter/v1/benchmark.json"
+import rawDefinition from "../../src/evaluation/fixtures/rc-filter.json"
 import { definitionSchema } from "../../src/evaluation/schema"
 import { boardSchema, drcSchema, measure } from "./measure"
 const definition = definitionSchema.parse(rawDefinition)

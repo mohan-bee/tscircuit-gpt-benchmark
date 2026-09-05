@@ -1,4 +1,4 @@
-import rawDefinition from "../../benchmarks/rc-filter/v1/benchmark.json"
+import rawDefinition from "./fixtures/rc-filter.json"
 import {
   definitionSchema,
   measurementsSchema,
