@@ -17,6 +17,7 @@ button:focus-visible, select:focus-visible, summary:focus-visible { outline: 2px
 .board-sidebar { background: #fafbfa; border-right: 1px solid var(--line); }
 .board-sidebar > header { display: flex; align-items: center; justify-content: space-between; padding: 24px 18px 12px; }
 .board-sidebar h2 { margin: 0; color: var(--muted); font-size: 12px; font-weight: 500; }
+.sidebar-description { margin: 4px 0 0; color: #7b8490; font-size: 12px; }
 .board-sidebar > header strong { color: var(--muted); font-size: 11px; font-weight: 400; }
 .board-sidebar nav { display: grid; gap: 4px; padding: 0 8px 16px; }
 .board-sidebar nav button { display: grid; gap: 6px; width: 100%; padding: 12px 10px; text-align: left; background: transparent; border: 1px solid transparent; border-radius: 5px; }
