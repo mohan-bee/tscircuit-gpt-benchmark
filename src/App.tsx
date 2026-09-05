@@ -173,6 +173,12 @@ function BenchmarkCard({ run }: { run: BenchmarkRun }) {
                     {platform.boardDetails && <div><dt>Board</dt><dd>{platform.boardDetails}</dd></div>}
                   </dl>
                 )}
+                {platform.boardFeatures && (
+                  <details className="prompt-panel board-features" aria-label={`${platform.name} board features`}>
+                    <summary className="prompt-heading">Board features</summary>
+                    <p>{platform.boardFeatures}</p>
+                  </details>
+                )}
                 {platform.name === "KiCad" ? (
                   <KicadWorkspace kind={view} source={view === "pcb" ? platform.pcbSource : platform.schematicSource} />
                 ) : platform.circuitJson ? (

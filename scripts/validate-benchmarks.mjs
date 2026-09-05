@@ -63,7 +63,7 @@ for (const file of files) {
     }
     if (platform.status !== undefined) fail(file, `${platform.name} platform status must be pending or omitted`)
     for (const field of requiredPlatformStrings.slice(1)) requireString(platform, field, file)
-    for (const field of ["activeTime", "boardDetails"]) {
+    for (const field of ["activeTime", "boardDetails", "boardFeatures"]) {
       if (platform[field] !== undefined) requireString(platform, field, file)
     }
 

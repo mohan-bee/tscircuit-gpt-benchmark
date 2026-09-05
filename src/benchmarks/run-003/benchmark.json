@@ -16,7 +16,8 @@
       "schematicSource": "/benchmarks/run-003/kicad/sensor-node.kicad_sch",
       "renderer": "KiCad CLI 10.0.1",
       "activeTime": "35–40 minutes (estimated; excludes interruption)",
-      "boardDetails": "54 × 50 mm · 2 layers · 44 components · 31 nets"
+      "boardDetails": "54 × 50 mm · 2 layers · 44 components · 31 nets · 48 vias",
+      "boardFeatures": "ESP32-C3-WROOM-02U with USB-C power and programming; RFM95W-868S2 LoRa module; TMP102 temperature sensor; LIS3DH motion sensor; one status LED; reset and boot buttons; GPIO headers; TPS63001 power regulation; protected 1S LiPo battery input (external charging required, no onboard charger). Two-layer PCB with a ground plane."
     },
     {
       "name": "tscircuit",

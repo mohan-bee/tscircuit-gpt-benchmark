@@ -15,6 +15,7 @@ export type AvailablePlatformOutput = {
   renderer: string
   activeTime?: string
   boardDetails?: string
+  boardFeatures?: string
 }
 
 export type PendingPlatformOutput = {
@@ -84,6 +85,7 @@ function parsePlatform(value: unknown, file: string): PlatformOutput {
     renderer: requiredString(value, "renderer", file),
     activeTime: value.activeTime === undefined ? undefined : requiredString(value, "activeTime", file),
     boardDetails: value.boardDetails === undefined ? undefined : requiredString(value, "boardDetails", file),
+    boardFeatures: value.boardFeatures === undefined ? undefined : requiredString(value, "boardFeatures", file),
   }
 }
 

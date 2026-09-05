@@ -38,6 +38,7 @@ button:focus-visible, select:focus-visible, summary:focus-visible { outline: 2px
 .prompt-panel { margin-bottom: 20px; border-bottom: 1px solid var(--line); }
 .prompt-heading { width: fit-content; padding: 0 0 12px; color: var(--muted); font-size: 12px; }
 .prompt-heading:hover { color: var(--primary); }
+.board-features { margin: 0; padding: 12px 12px 0; }
 .prompt-panel p { max-width: 90ch; margin: 0; padding: 0 0 16px; color: #59625d; font-size: 13px; line-height: 1.7; white-space: pre-line; }
 .comparison { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
 .comparison--pending { grid-template-columns: minmax(0, 3fr) minmax(200px, 1fr); }
