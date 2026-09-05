@@ -1,7 +1,7 @@
 {
   "$schema": "../../../benchmark.schema.json",
   "id": "run-003",
-  "model": "GPT-6 (Codex)",
+  "model": "GPT-6 Astra",
   "complexity": "Advanced",
   "circuit": "ESP32 LoRa sensor board",
   "prompt": "Build a compact ESP32 LoRa sensor board with USB-C power and programming, a LoRa module, temperature and motion sensors, one status LED, reset and boot buttons, battery input, and a few GPIO headers. Use a 2-layer PCB, keep the RF section clean, place sensors away from noisy power parts, and fully route the board neatly with a ground plane.",
