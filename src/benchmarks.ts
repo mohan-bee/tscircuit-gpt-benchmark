@@ -14,6 +14,7 @@ export type AvailablePlatformOutput = {
   schematicSource: string
   renderer: string
   activeTime?: string
+  timingBreakdown?: Array<{ stage: string; duration: string; elapsed: string }>
   boardDetails?: string
   boardFeatures?: string
 }
@@ -62,6 +63,21 @@ function parsePlatform(value: unknown, file: string): PlatformOutput {
   }
   if (value.status === "pending") return { name, status: "pending" }
 
+  let timingBreakdown: AvailablePlatformOutput["timingBreakdown"]
+  if (value.timingBreakdown !== undefined) {
+    if (!Array.isArray(value.timingBreakdown) || value.timingBreakdown.length === 0) {
+      throw new Error(`${file}: timingBreakdown must be a non-empty array`)
+    }
+    timingBreakdown = value.timingBreakdown.map((item) => {
+      if (!isRecord(item)) throw new Error(`${file}: each timingBreakdown item must be an object`)
+      return {
+        stage: requiredString(item, "stage", file),
+        duration: requiredString(item, "duration", file),
+        elapsed: requiredString(item, "elapsed", file),
+      }
+    })
+  }
+
   let pcbLayers: AvailablePlatformOutput["pcbLayers"]
   if (value.pcbLayers !== undefined) {
     if (name !== "KiCad" || !isRecord(value.pcbLayers)) {
@@ -84,6 +100,7 @@ function parsePlatform(value: unknown, file: string): PlatformOutput {
     schematicSource: requiredString(value, "schematicSource", file),
     renderer: requiredString(value, "renderer", file),
     activeTime: value.activeTime === undefined ? undefined : requiredString(value, "activeTime", file),
+    timingBreakdown,
     boardDetails: value.boardDetails === undefined ? undefined : requiredString(value, "boardDetails", file),
     boardFeatures: value.boardFeatures === undefined ? undefined : requiredString(value, "boardFeatures", file),
   }

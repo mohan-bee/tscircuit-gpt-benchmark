@@ -101,6 +101,13 @@ describe("PCB Bench", () => {
 
     expect(screen.getByLabelText("tscircuit benchmark details")).toHaveTextContent("55 min 32 s measured elapsed wall-clock time")
     expect(screen.getByLabelText("tscircuit benchmark details")).toHaveTextContent("64 × 50 mm · 2 layers · 85 components")
+    const timing = screen.getByLabelText("tscircuit timing breakdown")
+    expect(timing).not.toHaveAttribute("open")
+    expect(within(timing).getByText("Detailed timing · 8 measured intervals")).toBeInTheDocument()
+    fireEvent.click(within(timing).getByText("Detailed timing · 8 measured intervals"))
+    expect(timing).toHaveAttribute("open")
+    expect(timing).toHaveTextContent("Repeated local route repairs until routing and placement checks passed12 min 45.3 s43 min 8.2 s")
+    expect(timing).toHaveTextContent("Package and verify release deliverables2 min 25.9 s55 min 32.2 s")
     expect(screen.getByTitle("tscircuit RunFrame")).toBeInTheDocument()
     expect(new URL((screen.getByTitle("tscircuit RunFrame") as HTMLIFrameElement).src).searchParams.get("circuit")).toBe("/benchmarks/bench-001/tscircuit/release/robot.circuit.json")
     expect(screen.getByLabelText("KiCad output pending")).toBeEmptyDOMElement()

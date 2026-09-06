@@ -43,6 +43,20 @@
               "schematicSource": { "type": "string", "minLength": 1 },
               "renderer": { "type": "string", "minLength": 1 },
               "activeTime": { "type": "string", "minLength": 1 },
+              "timingBreakdown": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["stage", "duration", "elapsed"],
+                  "properties": {
+                    "stage": { "type": "string", "minLength": 1 },
+                    "duration": { "type": "string", "minLength": 1 },
+                    "elapsed": { "type": "string", "minLength": 1 }
+                  }
+                }
+              },
               "boardDetails": { "type": "string", "minLength": 1 },
               "boardFeatures": { "type": "string", "minLength": 1 }
             }

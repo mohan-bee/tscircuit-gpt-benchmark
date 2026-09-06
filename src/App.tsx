@@ -107,6 +107,22 @@ function BenchmarkCard({ run }: { run: BenchmarkRun }) {
                     {platform.boardDetails && <div><dt>Board</dt><dd>{platform.boardDetails}</dd></div>}
                   </dl>
                 )}
+                {platform.timingBreakdown && (
+                  <details className="timing-breakdown" aria-label={`${platform.name} timing breakdown`}>
+                    <summary>Detailed timing · {platform.timingBreakdown.length} measured intervals</summary>
+                    <p>Measured wall-clock intervals include tool execution and retries.</p>
+                    <div className="timing-table-wrap">
+                      <table>
+                        <thead><tr><th>Work completed</th><th>Interval</th><th>Total elapsed</th></tr></thead>
+                        <tbody>
+                          {platform.timingBreakdown.map((item) => (
+                            <tr key={`${item.elapsed}-${item.stage}`}><td>{item.stage}</td><td>{item.duration}</td><td>{item.elapsed}</td></tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </details>
+                )}
                 {platform.boardFeatures && (
                   <details className="prompt-panel board-features" aria-label={`${platform.name} board features`}>
                     <summary className="prompt-heading">Board features</summary>

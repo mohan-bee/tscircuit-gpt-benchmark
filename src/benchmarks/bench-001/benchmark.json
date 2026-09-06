@@ -17,6 +17,16 @@
       "schematicSource": "/benchmarks/bench-001/tscircuit/checked.circuit.tsx",
       "renderer": "tscircuit 0.0.2464 · CLI 0.1.2021 · circuit-to-svg 0.0.410",
       "activeTime": "55 min 32 s measured elapsed wall-clock time; includes research, routing retries, validation and packaging, not isolated active work",
+      "timingBreakdown": [
+        { "stage": "Isolated setup, component selection, first schematic and placement", "duration": "6 min 47.2 s", "elapsed": "6 min 47.2 s" },
+        { "stage": "Placement iteration, ground fanout and local autorouter setup", "duration": "7 min 38.0 s", "elapsed": "14 min 25.1 s" },
+        { "stage": "Placement cleanup and first routing DRC corrections", "duration": "4 min 1.1 s", "elapsed": "18 min 26.3 s" },
+        { "stage": "I²C pin reassignment and GPIO header consolidation", "duration": "10 min 21.3 s", "elapsed": "28 min 47.5 s" },
+        { "stage": "Resume final routing fixes and release verification", "duration": "1 min 35.3 s", "elapsed": "30 min 22.9 s" },
+        { "stage": "Repeated local route repairs until routing and placement checks passed", "duration": "12 min 45.3 s", "elapsed": "43 min 8.2 s" },
+        { "stage": "Final TSX rebuild, ground-island removal and copper checks", "duration": "9 min 58.1 s", "elapsed": "53 min 6.3 s" },
+        { "stage": "Package and verify release deliverables", "duration": "2 min 25.9 s", "elapsed": "55 min 32.2 s" }
+      ],
       "boardDetails": "64 × 50 mm · 2 layers · 85 components · ground pours on both layers",
       "boardFeatures": "RP2040 with 2 MB flash, two DRV8837 motor drivers, two quadrature encoder inputs, LSM6DS3TR-C IMU, four servo headers, USB-C power/programming and GPIO expansion. Motor/power section separated from MCU/sensors. Assumes 5–9 V motors and separate regulated 5 V servo input; USB powers logic only. Initial ground fanout uses autoroutingphase, followed by local routing and local geometry repairs; checked source replays verified routes. Final digital checks: zero routing/placement errors and copper shorts, all ground pads connected. Prototype outputs; motor current, thermal behavior, USB signal integrity and assembly remain unverified."
     },
