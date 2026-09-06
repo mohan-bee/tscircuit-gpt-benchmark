@@ -1,4 +1,4 @@
-# Run 004 provenance
+# Bench 001 provenance
 
 This is the original RP2040 controller design produced in the GPT 6 Astra medium session, using the tscircuit skill. The recorded duration is 3,332.2 seconds of elapsed wall-clock time (displayed as 55 min 32 s). It includes research, tool execution, retries and packaging; it does not isolate active work. The subsequent benchmark submission is excluded. No automatic comparative score is claimed.
 

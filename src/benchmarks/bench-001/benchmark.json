@@ -1,6 +1,6 @@
 {
   "$schema": "../../../benchmark.schema.json",
-  "id": "run-004",
+  "id": "bench-001",
   "model": "GPT 6 Astra medium",
   "complexity": "Advanced",
   "circuit": "RP2040 robot controller",
@@ -10,11 +10,11 @@
   "platforms": [
     {
       "name": "tscircuit",
-      "circuitJson": "/benchmarks/run-004/tscircuit/release/robot.circuit.json",
-      "pcb": "/benchmarks/run-004/tscircuit/release/pcb-top.svg",
-      "schematic": "/benchmarks/run-004/tscircuit/release/schematic.svg",
-      "pcbSource": "/benchmarks/run-004/tscircuit/checked.circuit.tsx",
-      "schematicSource": "/benchmarks/run-004/tscircuit/checked.circuit.tsx",
+      "circuitJson": "/benchmarks/bench-001/tscircuit/release/robot.circuit.json",
+      "pcb": "/benchmarks/bench-001/tscircuit/release/pcb-top.svg",
+      "schematic": "/benchmarks/bench-001/tscircuit/release/schematic.svg",
+      "pcbSource": "/benchmarks/bench-001/tscircuit/checked.circuit.tsx",
+      "schematicSource": "/benchmarks/bench-001/tscircuit/checked.circuit.tsx",
       "renderer": "tscircuit 0.0.2464 · CLI 0.1.2021 · circuit-to-svg 0.0.410",
       "activeTime": "55 min 32 s measured elapsed wall-clock time; includes research, routing retries, validation and packaging, not isolated active work",
       "boardDetails": "64 × 50 mm · 2 layers · 85 components · ground pours on both layers",
