@@ -1,0 +1,54 @@
+{
+  "$schema": "../../../benchmark.schema.json",
+  "id": "bench-001",
+  "model": "GPT 6 Astra medium",
+  "complexity": "Advanced",
+  "circuit": "RP2040 robot controller",
+  "prompt": "Build a compact 2-layer robot controller board using an RP2040. Add two DC motor drivers, encoder inputs, an IMU, a few servo headers, USB-C for power and programming, and basic GPIO expansion.\nKeep the motor and power section separated from the sensor and MCU area, and route the board cleanly with a ground plane.&#x20;\n\n&#x20;use [$tscircuit](/Users/mohan/.agents/skills/tscircuit/SKILL.md)  IMPORTANT you are not allowed to use any kicad tools. . please isolate yourself you are not allowed to take any refrence from kicad files present in machiene&#x20;\n\nsee i want to track the timing of the work done to build this board.",
+  "components": 85,
+  "boardSize": "64 × 50 mm",
+  "platforms": [
+    {
+      "name": "tscircuit",
+      "circuitJson": "/benchmarks/bench-001/tscircuit/release/robot.circuit.json",
+      "pcb": "/benchmarks/bench-001/tscircuit/release/pcb-top.svg",
+      "schematic": "/benchmarks/bench-001/tscircuit/release/schematic.svg",
+      "pcbSource": "/benchmarks/bench-001/tscircuit/checked.circuit.tsx",
+      "schematicSource": "/benchmarks/bench-001/tscircuit/checked.circuit.tsx",
+      "renderer": "tscircuit 0.0.2464 · CLI 0.1.2021 · circuit-to-svg 0.0.410",
+      "activeTime": "55 min 32 s measured elapsed wall-clock time; includes research, routing retries, validation and packaging, not isolated active work",
+      "timingBreakdown": [
+        { "stage": "Isolated setup, component selection, first schematic and placement", "duration": "6 min 47.2 s", "elapsed": "6 min 47.2 s" },
+        { "stage": "Placement iteration, ground fanout and local autorouter setup", "duration": "7 min 38.0 s", "elapsed": "14 min 25.1 s" },
+        { "stage": "Placement cleanup and first routing DRC corrections", "duration": "4 min 1.1 s", "elapsed": "18 min 26.3 s" },
+        { "stage": "I²C pin reassignment and GPIO header consolidation", "duration": "10 min 21.3 s", "elapsed": "28 min 47.5 s" },
+        { "stage": "Resume final routing fixes and release verification", "duration": "1 min 35.3 s", "elapsed": "30 min 22.9 s" },
+        { "stage": "Repeated local route repairs until routing and placement checks passed", "duration": "12 min 45.3 s", "elapsed": "43 min 8.2 s" },
+        { "stage": "Final TSX rebuild, ground-island removal and copper checks", "duration": "9 min 58.1 s", "elapsed": "53 min 6.3 s" },
+        { "stage": "Package and verify release deliverables", "duration": "2 min 25.9 s", "elapsed": "55 min 32.2 s" }
+      ],
+      "boardDetails": "64 × 50 mm · 2 layers · 85 components · ground pours on both layers",
+      "boardFeatures": "RP2040 with 2 MB flash, two DRV8837 motor drivers, two quadrature encoder inputs, LSM6DS3TR-C IMU, four servo headers, USB-C power/programming and GPIO expansion. Motor/power section separated from MCU/sensors. Assumes 5–9 V motors and separate regulated 5 V servo input; USB powers logic only. Initial ground fanout uses autoroutingphase, followed by local routing and local geometry repairs; checked source replays verified routes. Final digital checks: zero routing/placement errors and copper shorts, all ground pads connected. Prototype outputs; motor current, thermal behavior, USB signal integrity and assembly remain unverified."
+    },
+    {
+      "name": "KiCad",
+      "pcb": "/benchmarks/bench-001/kicad/pcb.png",
+      "schematic": "/benchmarks/bench-001/kicad/robot-controller.svg",
+      "pcbSource": "/benchmarks/bench-001/kicad/robot-controller.kicad_pcb",
+      "schematicSource": "/benchmarks/bench-001/kicad/robot-controller.kicad_sch",
+      "renderer": "KiCad 10.0.1",
+      "activeTime": "23 min 6 s measured elapsed wall-clock time; includes setup, routing retries, validation and packaging, not isolated active work. The seven phase intervals are reconstructed from recorded tool checkpoints and rounded to seconds; they are not separately measured active-work timers.",
+      "timingBreakdown": [
+        {"stage": "Tooling setup and reference review", "duration": "2 min 28 s", "elapsed": "2 min 28 s"},
+        {"stage": "Schematic, PCB placement, pin mapping and initial checks", "duration": "6 min 13 s", "elapsed": "8 min 41 s"},
+        {"stage": "Routing setup, first attempt and DSN correction", "duration": "1 min 42 s", "elapsed": "10 min 23 s"},
+        {"stage": "Main routing pass and import preparation", "duration": "1 min 26 s", "elapsed": "11 min 49 s"},
+        {"stage": "Ground pours, reroute attempt and thermal/net-identity corrections", "duration": "2 min 14 s", "elapsed": "14 min 3 s"},
+        {"stage": "QSPI diagnosis and local route repair", "duration": "3 min 18 s", "elapsed": "17 min 21 s"},
+        {"stage": "Final checks, visual review, exports, documentation and packaging", "duration": "5 min 45 s", "elapsed": "23 min 6 s"}
+      ],
+      "boardDetails": "70 × 60 mm · 2 layers · 79 components including mounting holes · ground pours on both layers",
+      "boardFeatures": "RP2040 with 2 MB flash, two DRV8871 motor drivers, two quadrature encoder inputs, LSM6DS3 IMU, three servo headers, USB-C power/programming and GPIO expansion. Motor/power section separated from MCU/sensors. External 7–12 V motor and 5–6 V servo supplies; USB powers logic only. Original complete project: zero DRC violations, unconnected items and schematic parity issues; one intentional ERC warning for the IMU address strap. Prototype; electrical, thermal and USB performance are unverified. The detailed timing panel reconstructs phase intervals from tool checkpoints; the 23 min 6 s total is measured."
+    }
+  ]
+}

@@ -1,0 +1,187 @@
+{
+  "netlist": [],
+  "schematic": [],
+  "placement": [
+    {
+      "type": "pcb_component_missing_courtyard_warning",
+      "pcb_component_missing_courtyard_warning_id": "pcb_component_missing_courtyard_warning_pcb_component_85",
+      "warning_type": "pcb_component_missing_courtyard_warning",
+      "message": "component has no courtyard",
+      "pcb_component_id": "pcb_component_85",
+      "source_component_id": "source_manually_placed_via_0",
+      "subcircuit_id": "subcircuit_source_group_0"
+    },
+    {
+      "type": "pcb_component_missing_courtyard_warning",
+      "pcb_component_missing_courtyard_warning_id": "pcb_component_missing_courtyard_warning_pcb_component_86",
+      "warning_type": "pcb_component_missing_courtyard_warning",
+      "message": "component has no courtyard",
+      "pcb_component_id": "pcb_component_86",
+      "source_component_id": "source_manually_placed_via_1",
+      "subcircuit_id": "subcircuit_source_group_0"
+    },
+    {
+      "type": "pcb_component_missing_courtyard_warning",
+      "pcb_component_missing_courtyard_warning_id": "pcb_component_missing_courtyard_warning_pcb_component_87",
+      "warning_type": "pcb_component_missing_courtyard_warning",
+      "message": "component has no courtyard",
+      "pcb_component_id": "pcb_component_87",
+      "source_component_id": "source_manually_placed_via_2",
+      "subcircuit_id": "subcircuit_source_group_0"
+    },
+    {
+      "type": "pcb_component_missing_courtyard_warning",
+      "pcb_component_missing_courtyard_warning_id": "pcb_component_missing_courtyard_warning_pcb_component_88",
+      "warning_type": "pcb_component_missing_courtyard_warning",
+      "message": "component has no courtyard",
+      "pcb_component_id": "pcb_component_88",
+      "source_component_id": "source_manually_placed_via_3",
+      "subcircuit_id": "subcircuit_source_group_0"
+    },
+    {
+      "type": "pcb_component_missing_courtyard_warning",
+      "pcb_component_missing_courtyard_warning_id": "pcb_component_missing_courtyard_warning_pcb_component_89",
+      "warning_type": "pcb_component_missing_courtyard_warning",
+      "message": "component has no courtyard",
+      "pcb_component_id": "pcb_component_89",
+      "source_component_id": "source_manually_placed_via_4",
+      "subcircuit_id": "subcircuit_source_group_0"
+    },
+    {
+      "type": "pcb_component_missing_courtyard_warning",
+      "pcb_component_missing_courtyard_warning_id": "pcb_component_missing_courtyard_warning_pcb_component_90",
+      "warning_type": "pcb_component_missing_courtyard_warning",
+      "message": "component has no courtyard",
+      "pcb_component_id": "pcb_component_90",
+      "source_component_id": "source_manually_placed_via_5",
+      "subcircuit_id": "subcircuit_source_group_0"
+    },
+    {
+      "type": "pcb_component_missing_courtyard_warning",
+      "pcb_component_missing_courtyard_warning_id": "pcb_component_missing_courtyard_warning_pcb_component_91",
+      "warning_type": "pcb_component_missing_courtyard_warning",
+      "message": "component has no courtyard",
+      "pcb_component_id": "pcb_component_91",
+      "source_component_id": "source_manually_placed_via_6",
+      "subcircuit_id": "subcircuit_source_group_0"
+    },
+    {
+      "type": "pcb_component_missing_courtyard_warning",
+      "pcb_component_missing_courtyard_warning_id": "pcb_component_missing_courtyard_warning_pcb_component_92",
+      "warning_type": "pcb_component_missing_courtyard_warning",
+      "message": "component has no courtyard",
+      "pcb_component_id": "pcb_component_92",
+      "source_component_id": "source_manually_placed_via_7",
+      "subcircuit_id": "subcircuit_source_group_0"
+    },
+    {
+      "type": "pcb_component_missing_courtyard_warning",
+      "pcb_component_missing_courtyard_warning_id": "pcb_component_missing_courtyard_warning_pcb_component_93",
+      "warning_type": "pcb_component_missing_courtyard_warning",
+      "message": "component has no courtyard",
+      "pcb_component_id": "pcb_component_93",
+      "source_component_id": "source_manually_placed_via_8",
+      "subcircuit_id": "subcircuit_source_group_0"
+    },
+    {
+      "type": "pcb_component_missing_courtyard_warning",
+      "pcb_component_missing_courtyard_warning_id": "pcb_component_missing_courtyard_warning_pcb_component_94",
+      "warning_type": "pcb_component_missing_courtyard_warning",
+      "message": "component has no courtyard",
+      "pcb_component_id": "pcb_component_94",
+      "source_component_id": "source_manually_placed_via_9",
+      "subcircuit_id": "subcircuit_source_group_0"
+    },
+    {
+      "type": "pcb_component_missing_courtyard_warning",
+      "pcb_component_missing_courtyard_warning_id": "pcb_component_missing_courtyard_warning_pcb_component_95",
+      "warning_type": "pcb_component_missing_courtyard_warning",
+      "message": "component has no courtyard",
+      "pcb_component_id": "pcb_component_95",
+      "source_component_id": "source_manually_placed_via_10",
+      "subcircuit_id": "subcircuit_source_group_0"
+    },
+    {
+      "type": "pcb_component_missing_courtyard_warning",
+      "pcb_component_missing_courtyard_warning_id": "pcb_component_missing_courtyard_warning_pcb_component_96",
+      "warning_type": "pcb_component_missing_courtyard_warning",
+      "message": "component has no courtyard",
+      "pcb_component_id": "pcb_component_96",
+      "source_component_id": "source_manually_placed_via_11",
+      "subcircuit_id": "subcircuit_source_group_0"
+    },
+    {
+      "type": "pcb_component_missing_courtyard_warning",
+      "pcb_component_missing_courtyard_warning_id": "pcb_component_missing_courtyard_warning_pcb_component_97",
+      "warning_type": "pcb_component_missing_courtyard_warning",
+      "message": "component has no courtyard",
+      "pcb_component_id": "pcb_component_97",
+      "source_component_id": "source_manually_placed_via_12",
+      "subcircuit_id": "subcircuit_source_group_0"
+    },
+    {
+      "type": "pcb_component_missing_courtyard_warning",
+      "pcb_component_missing_courtyard_warning_id": "pcb_component_missing_courtyard_warning_pcb_component_98",
+      "warning_type": "pcb_component_missing_courtyard_warning",
+      "message": "component has no courtyard",
+      "pcb_component_id": "pcb_component_98",
+      "source_component_id": "source_manually_placed_via_13",
+      "subcircuit_id": "subcircuit_source_group_0"
+    },
+    {
+      "type": "pcb_component_missing_courtyard_warning",
+      "pcb_component_missing_courtyard_warning_id": "pcb_component_missing_courtyard_warning_pcb_component_99",
+      "warning_type": "pcb_component_missing_courtyard_warning",
+      "message": "component has no courtyard",
+      "pcb_component_id": "pcb_component_99",
+      "source_component_id": "source_manually_placed_via_14",
+      "subcircuit_id": "subcircuit_source_group_0"
+    },
+    {
+      "type": "pcb_component_missing_courtyard_warning",
+      "pcb_component_missing_courtyard_warning_id": "pcb_component_missing_courtyard_warning_pcb_component_100",
+      "warning_type": "pcb_component_missing_courtyard_warning",
+      "message": "component has no courtyard",
+      "pcb_component_id": "pcb_component_100",
+      "source_component_id": "source_manually_placed_via_15",
+      "subcircuit_id": "subcircuit_source_group_0"
+    },
+    {
+      "type": "pcb_component_missing_courtyard_warning",
+      "pcb_component_missing_courtyard_warning_id": "pcb_component_missing_courtyard_warning_pcb_component_101",
+      "warning_type": "pcb_component_missing_courtyard_warning",
+      "message": "component has no courtyard",
+      "pcb_component_id": "pcb_component_101",
+      "source_component_id": "source_manually_placed_via_16",
+      "subcircuit_id": "subcircuit_source_group_0"
+    },
+    {
+      "type": "pcb_component_missing_courtyard_warning",
+      "pcb_component_missing_courtyard_warning_id": "pcb_component_missing_courtyard_warning_pcb_component_102",
+      "warning_type": "pcb_component_missing_courtyard_warning",
+      "message": "component has no courtyard",
+      "pcb_component_id": "pcb_component_102",
+      "source_component_id": "source_manually_placed_via_17",
+      "subcircuit_id": "subcircuit_source_group_0"
+    },
+    {
+      "type": "pcb_component_missing_courtyard_warning",
+      "pcb_component_missing_courtyard_warning_id": "pcb_component_missing_courtyard_warning_pcb_component_103",
+      "warning_type": "pcb_component_missing_courtyard_warning",
+      "message": "component has no courtyard",
+      "pcb_component_id": "pcb_component_103",
+      "source_component_id": "source_manually_placed_via_18",
+      "subcircuit_id": "subcircuit_source_group_0"
+    },
+    {
+      "type": "pcb_component_missing_courtyard_warning",
+      "pcb_component_missing_courtyard_warning_id": "pcb_component_missing_courtyard_warning_pcb_component_104",
+      "warning_type": "pcb_component_missing_courtyard_warning",
+      "message": "component has no courtyard",
+      "pcb_component_id": "pcb_component_104",
+      "source_component_id": "source_manually_placed_via_19",
+      "subcircuit_id": "subcircuit_source_group_0"
+    }
+  ],
+  "routing": []
+}

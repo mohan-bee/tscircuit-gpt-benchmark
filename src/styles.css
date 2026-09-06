@@ -54,6 +54,14 @@ button:focus-visible, select:focus-visible, summary:focus-visible { outline: 2px
 .board-details { display: flex; flex-wrap: wrap; gap: 12px 28px; margin: 0; padding: 12px; border-bottom: 1px solid var(--line); font-size: 12px; line-height: 1.6; }
 .board-details dt { color: var(--muted); }
 .board-details dd { margin: 2px 0 0; }
+.timing-breakdown { padding: 11px 12px; border-bottom: 1px solid var(--line); font-size: 12px; }
+.timing-breakdown summary { cursor: pointer; font-weight: 700; }
+.timing-breakdown p { margin: 8px 0; color: var(--muted); line-height: 1.5; }
+.timing-table-wrap { overflow-x: auto; }
+.timing-breakdown table { width: 100%; border-collapse: collapse; text-align: left; }
+.timing-breakdown th, .timing-breakdown td { padding: 7px 8px; border-top: 1px solid var(--line); vertical-align: top; }
+.timing-breakdown th { color: var(--muted); font-size: 10px; letter-spacing: .04em; text-transform: uppercase; }
+.timing-breakdown th:nth-child(n+2), .timing-breakdown td:nth-child(n+2) { white-space: nowrap; }
 
 .snapshot-stage {
   display: grid;
@@ -120,9 +128,7 @@ button:focus-visible, select:focus-visible, summary:focus-visible { outline: 2px
   object-fit: contain;
 }
 
-.official-viewer { position: relative; height: 680px; overflow: hidden; background: #101827; }
-.official-viewer--schematic { height: 520px; background: #faf8f5; }
-.official-viewer > * { width: 100%; }
+.runframe-workspace { display: block; width: 100%; height: 720px; min-width: 0; border: 0; background: white; }
 
 .kicanvas-viewer { height: 680px; overflow: hidden; background: #101827; }
 .kicanvas-viewer--schematic { height: 520px; background: #faf8f5; }

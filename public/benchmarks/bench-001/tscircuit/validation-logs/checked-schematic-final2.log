@@ -1,0 +1,8 @@
+<SchematicBoxPositions>
+<SchematicBoxPlacement componentName="J_VM" positionAnchor="center" schX="0" schY="-32" width="0.4" height="0.6" />
+<SchematicBoxPlacement componentName="C_VM" positionAnchor="center" schX="6" schY="-32" width="0.9" height="0.6" />
+</SchematicBoxPositions>
+<SchematicPlacementIssues>
+<TraceCanBeSimplifiedByMovingComponent schematicTraceId="schematic_trace_27" targetComponentName="J_VM" deltaSchX="0" deltaSchY="-0.48" newSchX="0" newSchY="-32.48" currentTurnCount="3" suggestedTurnCount="1" message="move J_VM down by 0.48 (to schX=0, schY=-32.48) to reduce this trace from 3 turns to 1" />
+<TraceCanBeSimplifiedByMovingComponent schematicTraceId="schematic_trace_42" targetComponentName="J_VM" deltaSchX="0" deltaSchY="+0.48" newSchX="0" newSchY="-31.52" currentTurnCount="3" suggestedTurnCount="1" message="move J_VM up by 0.48 (to schX=0, schY=-31.52) to reduce this trace from 3 turns to 1" />
+</SchematicPlacementIssues>

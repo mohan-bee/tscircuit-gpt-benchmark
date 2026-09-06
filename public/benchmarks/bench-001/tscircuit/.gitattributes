@@ -1,0 +1,4 @@
+# Preserve official renderer output and standard CSV line endings.
+*.svg -whitespace
+*.csv whitespace=cr-at-eol
+validation-logs/*.log -whitespace

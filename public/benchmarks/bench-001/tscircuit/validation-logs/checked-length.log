@@ -1,0 +1,26 @@
+<TraceLengthAnalysis requestedTarget="U1.XIN" resolvedTarget="U1.XIN" targetKind="pin" traceCount="1" totalLengthMm="7.59" totalStraightLineDistanceMm="4.90">
+  <Trace id="source_trace_114:source_port_19" label="U1.XIN -&gt; net.XIN" connectionType="via net" lengthMm="7.59" straightLineDistanceMm="4.90">
+    <ConnectedPins>
+      <Pin ref="U1.XIN" />
+      <Pin ref="C_X1.pin1" />
+      <Pin ref="Y1.pin1" />
+    </ConnectedPins>
+    <PinPositions>
+      <Pin ref="U1.XIN" x="6.40" y="0.57" layers="top" />
+      <Pin ref="C_X1.pin1" x="4.49" y="-7.50" layers="top" />
+      <Pin ref="Y1.pin1" x="5.90" y="-5.85" layers="top" />
+    </PinPositions>
+    <Connection kind="via net" target="net.XIN" x="5.60" y="-4.26" layer="top" />
+    <TraceRequirements none />
+    <Path>
+      <Point x="6.40" y="0.57" layer="top" kind="endpoint" />
+      <Point x="6.40" y="0.02" layer="top" kind="track" />
+      <Point x="6.63" y="-0.30" layer="top" kind="track" />
+      <Point x="6.60" y="-0.70" layer="top" kind="track" />
+      <Point x="4.99" y="-2.16" layer="top" kind="track" />
+      <Point x="4.99" y="-2.27" layer="top" kind="track" />
+      <Point x="4.99" y="-4.94" layer="top" kind="track" />
+      <Point x="5.90" y="-5.85" layer="top" kind="endpoint" />
+    </Path>
+  </Trace>
+</TraceLengthAnalysis>

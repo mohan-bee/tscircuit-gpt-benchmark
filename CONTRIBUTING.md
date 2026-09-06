@@ -1,5 +1,7 @@
 # Add a benchmark run
 
+Number visible benchmarks `bench-001`, `bench-002`, and so on. The current order is RP2040 robot controller, ESP32 LoRa sensor board, then ESP32-C3 development board. The hidden RC-filter fixture uses `baseline-rc-filter` and does not consume a benchmark number. Use the same ID for the metadata directory and its public artifact directory.
+
 Each run is one metadata file plus the available native CAD sources and snapshots generated from those sources. The dashboard discovers new runs automatically; do not edit `src/App.tsx`.
 
 ## 1. Copy the template
@@ -29,7 +31,7 @@ public/benchmarks/<run-id>/
     └── schematic.svg
 ```
 
-The metadata paths are public URLs, so `/benchmarks/run-002/kicad/pcb.png` points to `public/benchmarks/run-002/kicad/pcb.png`. If one CAD result is not ready, keep its platform entry with only its `name` and `"status": "pending"`; the dashboard will leave that column empty.
+The metadata paths are public URLs, so `/benchmarks/bench-003/kicad/pcb.png` points to `public/benchmarks/bench-003/kicad/pcb.png`. If one CAD result is not ready, keep its platform entry with only its `name` and `"status": "pending"`; the dashboard will leave that column empty.
 
 Available platform entries may include `activeTime` and `boardDetails` strings, displayed above that platform's viewer. Mark estimated times explicitly and state any excluded interruptions; do not report estimates as measured durations. Keep these details on the platform entry so they are not attributed to a pending comparison.
 

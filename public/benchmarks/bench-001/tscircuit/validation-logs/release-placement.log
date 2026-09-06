@@ -1,0 +1,97 @@
+placement summary: no placement issues
+
+board top-layer utilization:
+- occupied: 32.373% (1035.931mm^2 of 3200mm^2)
+- empty spaces over 5% of board area:
+  - 5.5% (176mm^2); bounds=(minX=28.48mm, maxX=32mm, minY=-25mm, maxY=25mm)
+
+board-edge status:
+- U1: 17.15mm inside bottom edge
+- U2: 7.78mm inside bottom edge
+- Y1: 18.55mm inside top edge
+- R_XTAL: 22.02mm inside top edge
+- C_X1: 17.18mm inside top edge
+- C_X2: 16.18mm inside top edge
+- R_BOOT: 3.68mm inside bottom edge
+- J_BOOT: 3.25mm inside bottom edge
+- R_CS: 4.68mm inside bottom edge
+- R_RUN: 19.22mm inside right edge
+- J_RESET: 15.98mm inside right edge
+- C_FLASH: 13.18mm inside bottom edge
+- C_IO1: 18.22mm inside bottom edge
+- C_IO2: 22.22mm inside bottom edge
+- C_IO3: 20.22mm inside right edge
+- C_IO4: 18.68mm inside right edge
+- C_IO5: 18.22mm inside bottom edge
+- C_IO6: 14.18mm inside bottom edge
+- C_USB: 14.68mm inside bottom edge
+- C_CORE1: 14.18mm inside bottom edge
+- C_CORE2: 20.18mm inside top edge
+- C_REGIN: 16.18mm inside bottom edge
+- C_REGOUT: 15.72mm inside right edge
+- R_AVDD: 15.68mm inside right edge
+- C_AVDD: 15.22mm inside right edge
+- J_SWD: 13.25mm inside top edge
+- J_USB: 1.926mm inside bottom edge
+- R_CC1: 7.22mm inside bottom edge
+- R_CC2: 4.68mm inside right edge
+- U_ESD: 7.784mm inside right edge
+- R_DP: 13.72mm inside bottom edge
+- R_DM: 13.72mm inside bottom edge
+- C_VBUS: 3.775mm inside right edge
+- J_5V: 4.25mm inside bottom edge
+- D_USB: 12.1mm inside bottom edge
+- D_EXT: 4.1mm inside bottom edge
+- U_REG: 9.15mm inside bottom edge
+- C_5LOG: 10.525mm inside bottom edge
+- C_3V3: 10.525mm inside bottom edge
+- C_5SERVO: 12.675mm inside top edge
+- J_VM: 4.25mm inside bottom edge
+- C_VM: 7.975mm inside left edge
+- U_M1: 9.79mm inside left edge
+- J_M1: 3.25mm inside left edge
+- C_M1VM: 7.525mm inside left edge
+- C_M1BULK: 9.575mm inside left edge
+- C_M1LOG: 13.68mm inside left edge
+- U_M2: 9.79mm inside left edge
+- J_M2: 3.25mm inside left edge
+- C_M2VM: 7.525mm inside left edge
+- C_M2BULK: 9.575mm inside left edge
+- C_M2LOG: 13.68mm inside left edge
+- R_SLEEP: 15.68mm inside left edge
+- J_ENC1: 17.25mm inside bottom edge
+- R_E1A: 20.18mm inside bottom edge
+- R_P1A: 20.22mm inside left edge
+- C_E1A: 20.52mm inside bottom edge
+- R_E1B: 20.18mm inside bottom edge
+- R_P1B: 21.98mm inside bottom edge
+- C_E1B: 20.52mm inside bottom edge
+- J_ENC2: 20.44mm inside left edge
+- R_E2A: 20.22mm inside left edge
+- R_P2A: 20.22mm inside left edge
+- C_E2A: 20.92mm inside top edge
+- R_E2B: 22.18mm inside top edge
+- R_P2B: 20.38mm inside top edge
+- C_E2B: 20.92mm inside top edge
+- U_IMU: 8.4mm inside right edge
+- C_IMU1: 12.68mm inside right edge
+- C_IMU2: 6.68mm inside right edge
+- C_IMU3: 8.775mm inside right edge
+- R_SDA: 13.22mm inside right edge
+- R_SCL: 9.22mm inside right edge
+- J_I2C: 5.44mm inside right edge
+- J_S1: 1.71mm inside top edge
+- R_S1: 9.72mm inside top edge
+- J_S2: 1.71mm inside top edge
+- R_S2: 9.72mm inside top edge
+- J_S3: 1.71mm inside top edge
+- R_S3: 9.72mm inside top edge
+- J_S4: 1.71mm inside top edge
+- R_S4: 9.72mm inside top edge
+- J_GPIO: 3.25mm inside top edge
+- R_LED: 13.68mm inside top edge
+- LED1: 10.525mm inside top edge
+
+placement drc:
+Errors: 0
+Warnings: 0

@@ -1,4 +1,5 @@
-import { lazy, Suspense, useEffect, useState, type ComponentProps, type ReactNode } from "react"
+import { useState } from "react"
+import { TscircuitRunFrame } from "./TscircuitRunFrame"
 import { CircuitBoard, Download, Minus, Plus, Workflow } from "lucide-react"
 import { benchmarkRuns, type BenchmarkRun } from "./benchmarks"
 
@@ -7,14 +8,6 @@ type SnapshotKind = "pcb" | "schematic"
 const MIN_ZOOM = 1
 const MAX_ZOOM = 2.5
 const ZOOM_STEP = 0.25
-
-const PCBViewer = lazy(() => import("@tscircuit/pcb-viewer").then((module) => ({ default: module.PCBViewer })))
-const SchematicViewer = lazy(() => import("@tscircuit/schematic-viewer").then((module) => ({ default: module.SchematicViewer })))
-
-type CircuitJsonState =
-  | { status: "loading" }
-  | { status: "ready"; data: Array<Record<string, unknown>> }
-  | { status: "error" }
 
 function SnapshotViewer({ kind, image, platform }: { kind: SnapshotKind; image: string; platform: string }) {
   const [zoom, setZoom] = useState(MIN_ZOOM)
@@ -55,73 +48,14 @@ function KicadWorkspace({ kind, source }: { kind: SnapshotKind; source: string }
   )
 }
 
-function InteractiveViewerFrame({ kind, children }: { kind: SnapshotKind; children: ReactNode }) {
-  return (
-    <section className={`snapshot-viewer snapshot-viewer--${kind}`}>
-      <div className={`official-viewer official-viewer--${kind}`}>{children}</div>
-    </section>
-  )
-}
-
-function ViewerLoader({ kind }: { kind: SnapshotKind }) {
-  return <div className={`viewer-loader viewer-loader--${kind}`} role="status">Loading {kind}…</div>
-}
-
-function TscircuitWorkspace({ kind, circuitJsonUrl, image, platform }: { kind: SnapshotKind; circuitJsonUrl: string; image: string; platform: string }) {
-  const [circuitJson, setCircuitJson] = useState<CircuitJsonState>({ status: "loading" })
-
-  useEffect(() => {
-    const controller = new AbortController()
-    setCircuitJson({ status: "loading" })
-    fetch(circuitJsonUrl, { signal: controller.signal })
-      .then((response) => {
-        if (!response.ok) throw new Error(`Unable to load ${circuitJsonUrl}`)
-        return response.json()
-      })
-      .then((data: unknown) => {
-        if (!Array.isArray(data)) throw new Error("Circuit JSON must be an array")
-        setCircuitJson({ status: "ready", data: data as Array<Record<string, unknown>> })
-      })
-      .catch((error: unknown) => {
-        if (error instanceof DOMException && error.name === "AbortError") return
-        setCircuitJson({ status: "error" })
-      })
-    return () => controller.abort()
-  }, [circuitJsonUrl])
-
-  if (circuitJson.status === "error") {
-    return (
-      <div className="snapshot-stage">
-        <p className="viewer-error" role="alert">Interactive view unavailable.</p>
-        <SnapshotViewer kind={kind} image={image} platform={platform} />
-      </div>
-    )
-  }
-
-  if (circuitJson.status === "loading") {
-    return <div className="snapshot-stage"><ViewerLoader kind={kind} /></div>
-  }
-
-  const pcbCircuitJson = circuitJson.data as unknown as NonNullable<ComponentProps<typeof PCBViewer>["circuitJson"]>
-  const schematicCircuitJson = circuitJson.data as unknown as ComponentProps<typeof SchematicViewer>["circuitJson"]
-
-  return (
-    <div className="snapshot-stage">
-      <InteractiveViewerFrame kind={kind}>
-        <Suspense fallback={<ViewerLoader kind={kind} />}>
-          {kind === "pcb" ? (
-            <PCBViewer circuitJson={pcbCircuitJson} height={680} allowEditing={false} focusOnHover={false} clickToInteractEnabled={false} />
-          ) : (
-            <SchematicViewer circuitJson={schematicCircuitJson} containerStyle={{ width: "100%", height: "100%" }} clickToInteractEnabled={false} searchEnabled />
-          )}
-        </Suspense>
-      </InteractiveViewerFrame>
-    </div>
-  )
-}
 
 function BenchmarkCard({ run }: { run: BenchmarkRun }) {
   const [view, setView] = useState<SnapshotKind>("pcb")
+  const [viewRevision, setViewRevision] = useState(0)
+  const selectSharedView = (kind: SnapshotKind) => {
+    setView(kind)
+    setViewRevision((revision) => revision + 1)
+  }
 
   return (
     <section className="benchmark" aria-label={`${run.model} benchmark`}>
@@ -132,8 +66,8 @@ function BenchmarkCard({ run }: { run: BenchmarkRun }) {
             <p>{run.model} <span>·</span> {run.complexity} <span>·</span> {run.boardSize}</p>
           </div>
           <div className="view-tabs" role="tablist" aria-label={`${run.id} output view`}>
-            <button className={view === "pcb" ? "active" : ""} type="button" role="tab" aria-selected={view === "pcb"} onClick={() => setView("pcb")}>PCB</button>
-            <button className={view === "schematic" ? "active" : ""} type="button" role="tab" aria-selected={view === "schematic"} onClick={() => setView("schematic")}>Schematic</button>
+            <button className={view === "pcb" ? "active" : ""} type="button" role="tab" aria-selected={view === "pcb"} onClick={() => selectSharedView("pcb")}>PCB</button>
+            <button className={view === "schematic" ? "active" : ""} type="button" role="tab" aria-selected={view === "schematic"} onClick={() => selectSharedView("schematic")}>Schematic</button>
           </div>
         </header>
         <details className="prompt-panel" aria-label={`Prompt for ${run.circuit}`}>
@@ -173,6 +107,22 @@ function BenchmarkCard({ run }: { run: BenchmarkRun }) {
                     {platform.boardDetails && <div><dt>Board</dt><dd>{platform.boardDetails}</dd></div>}
                   </dl>
                 )}
+                {platform.timingBreakdown && (
+                  <details className="timing-breakdown" aria-label={`${platform.name} timing breakdown`}>
+                    <summary>Detailed timing · {platform.timingBreakdown.length} intervals</summary>
+                    <p>Wall-clock intervals include tool execution and retries. See the timing description above for measurement details.</p>
+                    <div className="timing-table-wrap">
+                      <table>
+                        <thead><tr><th>Work completed</th><th>Interval</th><th>Total elapsed</th></tr></thead>
+                        <tbody>
+                          {platform.timingBreakdown.map((item) => (
+                            <tr key={`${item.elapsed}-${item.stage}`}><td>{item.stage}</td><td>{item.duration}</td><td>{item.elapsed}</td></tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </details>
+                )}
                 {platform.boardFeatures && (
                   <details className="prompt-panel board-features" aria-label={`${platform.name} board features`}>
                     <summary className="prompt-heading">Board features</summary>
@@ -182,7 +132,7 @@ function BenchmarkCard({ run }: { run: BenchmarkRun }) {
                 {platform.name === "KiCad" ? (
                   <KicadWorkspace kind={view} source={view === "pcb" ? platform.pcbSource : platform.schematicSource} />
                 ) : platform.circuitJson ? (
-                  <TscircuitWorkspace kind={view} circuitJsonUrl={platform.circuitJson} image={image} platform={platform.name} />
+                  <TscircuitRunFrame key={viewRevision} defaultView={view} onViewChange={setView} circuitJsonUrl={platform.circuitJson} projectName={run.id} />
                 ) : (
                   <div className="snapshot-stage">
                     <SnapshotViewer kind={view} image={image} platform={platform.name} />

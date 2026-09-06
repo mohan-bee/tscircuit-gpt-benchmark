@@ -1,0 +1,10 @@
+{
+  "method": "Independent Shapely polygon intersections of copper pads, tracks, vias and regenerated ground pours; 32-segment circle approximation",
+  "shorts": [],
+  "ground_connected_regions": 1,
+  "disconnected_ground_pads": [],
+  "floating_pour_ids": [],
+  "ground_region_areas_mm2": [
+    4876.3194857160715
+  ]
+}

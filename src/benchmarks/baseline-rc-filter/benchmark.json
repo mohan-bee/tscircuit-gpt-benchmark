@@ -1,6 +1,6 @@
 {
   "$schema": "../../../benchmark.schema.json",
-  "id": "run-001",
+  "id": "baseline-rc-filter",
   "model": "GPT-5",
   "complexity": "Basic",
   "circuit": "RC filter",
