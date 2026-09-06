@@ -1,23 +1,8 @@
 import "@testing-library/jest-dom/vitest"
 import { cleanup, fireEvent, render, screen, within } from "@testing-library/react"
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
+import { afterEach, describe, expect, it, vi } from "vitest"
 import { App } from "./App"
 import { benchmarkRuns, type AvailablePlatformOutput } from "./benchmarks"
-
-vi.mock("@tscircuit/pcb-viewer", () => ({
-  PCBViewer: () => <div data-testid="tscircuit-pcb-viewer">Interactive PCB</div>,
-}))
-
-vi.mock("@tscircuit/schematic-viewer", () => ({
-  SchematicViewer: () => <div data-testid="tscircuit-schematic-viewer">Interactive schematic</div>,
-}))
-
-beforeEach(() => {
-  vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
-    ok: true,
-    json: async () => [{ type: "pcb_board", pcb_board_id: "board" }],
-  }))
-})
 
 afterEach(() => {
   cleanup()
@@ -25,6 +10,27 @@ afterEach(() => {
 })
 
 describe("PCB Bench", () => {
+  it("syncs trusted RunFrame tabs and returns from 3D through the shared controls", () => {
+    render(<App />)
+    const frame = screen.getByTitle("tscircuit RunFrame") as HTMLIFrameElement
+    const tabs = within(screen.getByRole("tablist", { name: "bench-001 output view" }))
+    const sendTab = (tab: string, origin = window.location.origin, source = frame.contentWindow) => {
+      fireEvent(window, new MessageEvent("message", { origin, source, data: { type: "benchmark:runframe-tab", tab } }))
+    }
+    sendTab("schematic", "https://untrusted.example")
+    sendTab("schematic", window.location.origin, window)
+    expect(tabs.getByRole("tab", { name: "PCB" })).toHaveAttribute("aria-selected", "true")
+    sendTab("schematic")
+    expect(tabs.getByRole("tab", { name: "Schematic" })).toHaveAttribute("aria-selected", "true")
+    expect(screen.getByTitle("tscircuit RunFrame")).toBe(frame)
+    sendTab("cad")
+    expect(tabs.getByRole("tab", { name: "Schematic" })).toHaveAttribute("aria-selected", "true")
+    fireEvent.click(tabs.getByRole("tab", { name: "Schematic" }))
+    const nextFrame = screen.getByTitle("tscircuit RunFrame") as HTMLIFrameElement
+    expect(nextFrame).not.toBe(frame)
+    expect(new URL(nextFrame.src).searchParams.get("view")).toBe("schematic")
+  })
+
   it("switches PCB and schematic in one tabbed frame without stacking", async () => {
     render(<App />)
     fireEvent.click(within(screen.getByLabelText("Select a board")).getByRole("button", { name: /ESP32-C3 development board/ }))
@@ -34,8 +40,7 @@ describe("PCB Bench", () => {
     const staticOutputs = availableOutputs.filter(({ circuitJson, name }) => !circuitJson && name !== "KiCad")
     expect(screen.queryAllByAltText(/pcb snapshot/i)).toHaveLength(staticOutputs.length)
     expect(screen.queryAllByAltText(/schematic snapshot/i)).toHaveLength(0)
-    expect(await screen.findByTestId("tscircuit-pcb-viewer")).toBeInTheDocument()
-    expect(screen.queryByTestId("tscircuit-schematic-viewer")).not.toBeInTheDocument()
+    expect(screen.getByTitle("tscircuit RunFrame")).toBeInTheDocument()
     const kicanvasPcbViewers = screen.getAllByLabelText("KiCanvas KiCad pcb viewer")
     expect(kicanvasPcbViewers).toHaveLength(1)
     expect(screen.getByText("KiCanvas · KiCad 10.0.1")).toBeInTheDocument()
@@ -48,8 +53,7 @@ describe("PCB Bench", () => {
 
     const developmentBoardTabs = within(screen.getByRole("tablist", { name: "bench-003 output view" }))
     fireEvent.click(developmentBoardTabs.getByRole("tab", { name: "Schematic" }))
-    expect(await screen.findByTestId("tscircuit-schematic-viewer")).toBeInTheDocument()
-    expect(screen.queryByTestId("tscircuit-pcb-viewer")).not.toBeInTheDocument()
+    expect(screen.getByTitle("tscircuit RunFrame")).toBeInTheDocument()
     const kicanvasSchematicViewer = screen.getByLabelText("KiCanvas KiCad schematic viewer")
     expect(kicanvasSchematicViewer).toHaveAttribute("src", "/benchmarks/bench-003/kicad/esp32-c3-compact.kicad_sch")
     expect(kicanvasSchematicViewer).not.toBe(kicanvasPcbViewers[0])
@@ -97,13 +101,13 @@ describe("PCB Bench", () => {
 
     expect(screen.getByLabelText("tscircuit benchmark details")).toHaveTextContent("55 min 32 s measured elapsed wall-clock time")
     expect(screen.getByLabelText("tscircuit benchmark details")).toHaveTextContent("64 × 50 mm · 2 layers · 85 components")
-    expect(await screen.findByTestId("tscircuit-pcb-viewer")).toBeInTheDocument()
-    expect(fetch).toHaveBeenCalledWith("/benchmarks/bench-001/tscircuit/release/robot.circuit.json", expect.any(Object))
+    expect(screen.getByTitle("tscircuit RunFrame")).toBeInTheDocument()
+    expect(new URL((screen.getByTitle("tscircuit RunFrame") as HTMLIFrameElement).src).searchParams.get("circuit")).toBe("/benchmarks/bench-001/tscircuit/release/robot.circuit.json")
     expect(screen.getByLabelText("KiCad output pending")).toBeEmptyDOMElement()
     expect(screen.queryByRole("link", { name: "Download KiCad PCB" })).not.toBeInTheDocument()
 
     fireEvent.click(within(screen.getByRole("tablist", { name: "bench-001 output view" })).getByRole("tab", { name: "Schematic" }))
-    expect(await screen.findByTestId("tscircuit-schematic-viewer")).toBeInTheDocument()
+    expect(screen.getByTitle("tscircuit RunFrame")).toBeInTheDocument()
     expect(screen.getByLabelText("KiCad output pending")).toBeEmptyDOMElement()
   })
 
@@ -130,15 +134,15 @@ describe("PCB Bench", () => {
     expect(screen.getByLabelText("tscircuit benchmark details")).toHaveTextContent("60 × 44 mm · 2 layers · 41 components · 27 nets · 106 vias")
     expect(screen.getByLabelText("tscircuit benchmark details")).toHaveTextContent("final autorouting phase: 17.7 s")
     expect(screen.getByText("tscircuit 0.0.2463 · CLI 0.1.2021")).toBeInTheDocument()
-    expect(await screen.findByTestId("tscircuit-pcb-viewer")).toBeInTheDocument()
-    expect(fetch).toHaveBeenCalledWith("/benchmarks/bench-002/tscircuit/circuit.json", expect.any(Object))
+    expect(screen.getByTitle("tscircuit RunFrame")).toBeInTheDocument()
+    expect(new URL((screen.getByTitle("tscircuit RunFrame") as HTMLIFrameElement).src).searchParams.get("circuit")).toBe("/benchmarks/bench-002/tscircuit/circuit.json")
 
     fireEvent.click(within(screen.getByRole("tablist", { name: "bench-002 output view" })).getByRole("tab", { name: "Schematic" }))
     expect(screen.getByLabelText("KiCanvas KiCad schematic viewer")).toHaveAttribute("src", "/benchmarks/bench-002/kicad/sensor-node.kicad_sch")
     expect(screen.getByRole("link", { name: "Download KiCad schematic" })).toHaveAttribute("href", "/benchmarks/bench-002/kicad/sensor-node.kicad_sch")
     expect(screen.getByRole("link", { name: "Download KiCad schematic" })).toHaveAttribute("download")
     expect(screen.queryByRole("link", { name: "Download KiCad PCB" })).not.toBeInTheDocument()
-    expect(await screen.findByTestId("tscircuit-schematic-viewer")).toBeInTheDocument()
+    expect(screen.getByTitle("tscircuit RunFrame")).toBeInTheDocument()
 
     fireEvent.change(screen.getByLabelText("Filter by model"), { target: { value: "GPT-5.6 SOL Medium" } })
     expect(screen.queryByLabelText("KiCad benchmark details")).not.toBeInTheDocument()

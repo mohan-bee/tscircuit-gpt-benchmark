@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@tscircuit/pcb-viewer": "^1.11.393",
+    "@tscircuit/runframe": "0.0.2623",
     "@tscircuit/schematic-viewer": "^2.0.89",
     "@vitejs/plugin-react": "latest",
     "circuit-json": "0.0.479",
