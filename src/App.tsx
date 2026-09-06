@@ -116,7 +116,7 @@ function BenchmarkCard({ run }: { run: BenchmarkRun }) {
                 {platform.name === "KiCad" ? (
                   <KicadWorkspace kind={view} source={view === "pcb" ? platform.pcbSource : platform.schematicSource} />
                 ) : platform.circuitJson ? (
-                  <TscircuitRunFrame key={viewRevision} defaultView={view} onViewChange={setView} circuitJsonUrl={platform.circuitJson} sourceUrl={platform.pcbSource} projectName={run.id} />
+                  <TscircuitRunFrame key={viewRevision} defaultView={view} onViewChange={setView} circuitJsonUrl={platform.circuitJson} projectName={run.id} />
                 ) : (
                   <div className="snapshot-stage">
                     <SnapshotViewer kind={view} image={image} platform={platform.name} />

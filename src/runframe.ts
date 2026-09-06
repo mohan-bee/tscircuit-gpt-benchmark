@@ -12,29 +12,23 @@ declare global {
 async function startRunFrame() {
   const params = new URLSearchParams(window.location.search)
   const circuitPath = params.get("circuit")
-  const sourcePath = params.get("source")
-  if (!circuitPath || !sourcePath) throw new Error("Missing benchmark files")
+  if (!circuitPath) throw new Error("Missing benchmark file")
   const circuitUrl = new URL(circuitPath, window.location.origin)
-  const sourceUrl = new URL(sourcePath, window.location.origin)
-  if (circuitUrl.origin !== window.location.origin || sourceUrl.origin !== window.location.origin) {
-    throw new Error("Benchmark files must be hosted on this site")
-  }
-  const [circuitResponse, sourceResponse] = await Promise.all([fetch(circuitUrl), fetch(sourceUrl)])
-  if (!circuitResponse.ok || !sourceResponse.ok) throw new Error("Unable to load benchmark files")
+  if (circuitUrl.origin !== window.location.origin) throw new Error("Benchmark file must be hosted on this site")
+  const circuitResponse = await fetch(circuitUrl)
+  if (!circuitResponse.ok) throw new Error("Unable to load benchmark file")
   const circuitJson: CircuitJson = await circuitResponse.json()
   if (!Array.isArray(circuitJson)) throw new Error("Circuit JSON must be an array")
-  const code = await sourceResponse.text()
   let defaultActiveTab: PreviewContentProps["defaultActiveTab"] = "pcb"
   if (params.get("view") === "schematic") defaultActiveTab = "schematic"
   window.CIRCUIT_JSON = circuitJson
   window.CIRCUIT_JSON_PREVIEW_PROPS = {
     circuitJson,
-    code,
     projectName: params.get("project") || "benchmark",
     defaultActiveTab,
-    availableTabs: ["pcb", "schematic", "cad", "code", "assembly", "pinout", "bom", "circuit_json", "errors"],
+    availableTabs: ["pcb", "schematic", "cad", "assembly", "pinout", "bom", "circuit_json", "errors"],
     showRightHeaderContent: true,
-    showCodeTab: true,
+    showCodeTab: false,
     showJsonTab: true,
     showFileMenu: true,
     showToggleFullScreen: true,

@@ -2,7 +2,7 @@
 
 A minimal benchmark viewer for comparing the same AI-generated circuit across tscircuit and KiCad. Filter by model and complexity, then switch both tool columns between PCB and schematic snapshots.
 
-The tscircuit column embeds the full RunFrame preview with PCB, schematic, 3D, source code, assembly, pinout, BOM, Circuit JSON, and error tabs, plus its File menu and fullscreen control. It loads the saved benchmark output and displays source code read-only. PCB and schematic selections stay synchronized with the comparison tabs; other RunFrame views stay within the tscircuit column.
+The tscircuit column embeds the RunFrame preview with PCB, schematic, 3D, assembly, pinout, BOM, Circuit JSON, and error tabs, plus its File menu and fullscreen control. It loads the saved benchmark output without exposing a code tab. PCB and schematic selections stay synchronized with the comparison tabs; other RunFrame views stay within the tscircuit column.
 
 ## Run locally
 

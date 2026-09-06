@@ -2,16 +2,15 @@ import { useEffect, useRef, useState } from "react"
 
 type SnapshotKind = "pcb" | "schematic"
 
-export function TscircuitRunFrame({ defaultView, onViewChange, circuitJsonUrl, sourceUrl, projectName }: {
+export function TscircuitRunFrame({ defaultView, onViewChange, circuitJsonUrl, projectName }: {
   defaultView: SnapshotKind
   onViewChange: (view: SnapshotKind) => void
   circuitJsonUrl: string
-  sourceUrl: string
   projectName: string
 }) {
   const frame = useRef<HTMLIFrameElement>(null)
   const [source] = useState(() => {
-    const params = new URLSearchParams({ circuit: circuitJsonUrl, source: sourceUrl, project: projectName, view: defaultView })
+    const params = new URLSearchParams({ circuit: circuitJsonUrl, project: projectName, view: defaultView })
     return `/runframe.html?${params}`
   })
 
