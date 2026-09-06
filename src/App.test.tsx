@@ -95,7 +95,7 @@ describe("PCB Bench", () => {
     expect(screen.queryByLabelText("Benchmark visualization for GPT-5")).not.toBeInTheDocument()
   })
 
-  it("shows the robot controller with measured time and an empty KiCad comparison", async () => {
+  it("shows both robot controller outputs and switches the KiCad source with the shared tabs", async () => {
     render(<App />)
     fireEvent.click(within(screen.getByLabelText("Select a board")).getByRole("button", { name: /RP2040 robot controller/ }))
 
@@ -110,12 +110,17 @@ describe("PCB Bench", () => {
     expect(timing).toHaveTextContent("Package and verify release deliverables2 min 25.9 s55 min 32.2 s")
     expect(screen.getByTitle("tscircuit RunFrame")).toBeInTheDocument()
     expect(new URL((screen.getByTitle("tscircuit RunFrame") as HTMLIFrameElement).src).searchParams.get("circuit")).toBe("/benchmarks/bench-001/tscircuit/release/robot.circuit.json")
-    expect(screen.getByLabelText("KiCad output pending")).toBeEmptyDOMElement()
-    expect(screen.queryByRole("link", { name: "Download KiCad PCB" })).not.toBeInTheDocument()
+    expect(screen.queryByLabelText("KiCad output pending")).not.toBeInTheDocument()
+    expect(screen.getByLabelText("KiCad benchmark details")).toHaveTextContent("23 min 6 s measured elapsed wall-clock time")
+    expect(screen.getByLabelText("KiCad benchmark details")).toHaveTextContent("70 × 60 mm · 2 layers · 79 components")
+    expect(screen.getByLabelText("KiCanvas KiCad pcb viewer")).toHaveAttribute("src", "/benchmarks/bench-001/kicad/robot-controller.kicad_pcb")
+    expect(screen.getByRole("link", { name: "Download KiCad PCB" })).toHaveAttribute("href", "/benchmarks/bench-001/kicad/robot-controller.kicad_pcb")
 
     fireEvent.click(within(screen.getByRole("tablist", { name: "bench-001 output view" })).getByRole("tab", { name: "Schematic" }))
     expect(screen.getByTitle("tscircuit RunFrame")).toBeInTheDocument()
-    expect(screen.getByLabelText("KiCad output pending")).toBeEmptyDOMElement()
+    expect(screen.queryByLabelText("KiCad output pending")).not.toBeInTheDocument()
+    expect(screen.getByLabelText("KiCanvas KiCad schematic viewer")).toHaveAttribute("src", "/benchmarks/bench-001/kicad/robot-controller.kicad_sch")
+    expect(screen.getByRole("link", { name: "Download KiCad schematic" })).toHaveAttribute("href", "/benchmarks/bench-001/kicad/robot-controller.kicad_sch")
   })
 
   it("shows both LoRa outputs with platform-specific details and versions", async () => {

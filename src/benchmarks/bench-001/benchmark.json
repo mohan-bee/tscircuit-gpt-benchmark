@@ -32,7 +32,14 @@
     },
     {
       "name": "KiCad",
-      "status": "pending"
+      "pcb": "/benchmarks/bench-001/kicad/pcb.png",
+      "schematic": "/benchmarks/bench-001/kicad/robot-controller.svg",
+      "pcbSource": "/benchmarks/bench-001/kicad/robot-controller.kicad_pcb",
+      "schematicSource": "/benchmarks/bench-001/kicad/robot-controller.kicad_sch",
+      "renderer": "KiCad 10.0.1",
+      "activeTime": "23 min 6 s measured elapsed wall-clock time; includes setup, routing retries, validation and packaging, not isolated active work",
+      "boardDetails": "70 × 60 mm · 2 layers · 79 components including mounting holes · ground pours on both layers",
+      "boardFeatures": "RP2040 with 2 MB flash, two DRV8871 motor drivers, two quadrature encoder inputs, LSM6DS3 IMU, three servo headers, USB-C power/programming and GPIO expansion. Motor/power section separated from MCU/sensors. External 7–12 V motor and 5–6 V servo supplies; USB powers logic only. Original complete project: zero DRC violations, unconnected items and schematic parity issues; one intentional ERC warning for the IMU address strap. Prototype; electrical, thermal and USB performance are unverified. Detailed phase timing is reconstructed from tool checkpoints in PR #11; the 23 min 6 s total is measured."
     }
   ]
 }
