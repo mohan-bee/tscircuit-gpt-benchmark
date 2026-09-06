@@ -37,9 +37,18 @@
       "pcbSource": "/benchmarks/bench-001/kicad/robot-controller.kicad_pcb",
       "schematicSource": "/benchmarks/bench-001/kicad/robot-controller.kicad_sch",
       "renderer": "KiCad 10.0.1",
-      "activeTime": "23 min 6 s measured elapsed wall-clock time; includes setup, routing retries, validation and packaging, not isolated active work",
+      "activeTime": "23 min 6 s measured elapsed wall-clock time; includes setup, routing retries, validation and packaging, not isolated active work. The seven phase intervals are reconstructed from recorded tool checkpoints and rounded to seconds; they are not separately measured active-work timers.",
+      "timingBreakdown": [
+        {"stage": "Tooling setup and reference review", "duration": "2 min 28 s", "elapsed": "2 min 28 s"},
+        {"stage": "Schematic, PCB placement, pin mapping and initial checks", "duration": "6 min 13 s", "elapsed": "8 min 41 s"},
+        {"stage": "Routing setup, first attempt and DSN correction", "duration": "1 min 42 s", "elapsed": "10 min 23 s"},
+        {"stage": "Main routing pass and import preparation", "duration": "1 min 26 s", "elapsed": "11 min 49 s"},
+        {"stage": "Ground pours, reroute attempt and thermal/net-identity corrections", "duration": "2 min 14 s", "elapsed": "14 min 3 s"},
+        {"stage": "QSPI diagnosis and local route repair", "duration": "3 min 18 s", "elapsed": "17 min 21 s"},
+        {"stage": "Final checks, visual review, exports, documentation and packaging", "duration": "5 min 45 s", "elapsed": "23 min 6 s"}
+      ],
       "boardDetails": "70 × 60 mm · 2 layers · 79 components including mounting holes · ground pours on both layers",
-      "boardFeatures": "RP2040 with 2 MB flash, two DRV8871 motor drivers, two quadrature encoder inputs, LSM6DS3 IMU, three servo headers, USB-C power/programming and GPIO expansion. Motor/power section separated from MCU/sensors. External 7–12 V motor and 5–6 V servo supplies; USB powers logic only. Original complete project: zero DRC violations, unconnected items and schematic parity issues; one intentional ERC warning for the IMU address strap. Prototype; electrical, thermal and USB performance are unverified. Detailed phase timing is reconstructed from tool checkpoints in PR #11; the 23 min 6 s total is measured."
+      "boardFeatures": "RP2040 with 2 MB flash, two DRV8871 motor drivers, two quadrature encoder inputs, LSM6DS3 IMU, three servo headers, USB-C power/programming and GPIO expansion. Motor/power section separated from MCU/sensors. External 7–12 V motor and 5–6 V servo supplies; USB powers logic only. Original complete project: zero DRC violations, unconnected items and schematic parity issues; one intentional ERC warning for the IMU address strap. Prototype; electrical, thermal and USB performance are unverified. The detailed timing panel reconstructs phase intervals from tool checkpoints; the 23 min 6 s total is measured."
     }
   ]
 }

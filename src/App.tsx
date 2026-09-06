@@ -109,8 +109,8 @@ function BenchmarkCard({ run }: { run: BenchmarkRun }) {
                 )}
                 {platform.timingBreakdown && (
                   <details className="timing-breakdown" aria-label={`${platform.name} timing breakdown`}>
-                    <summary>Detailed timing · {platform.timingBreakdown.length} measured intervals</summary>
-                    <p>Measured wall-clock intervals include tool execution and retries.</p>
+                    <summary>Detailed timing · {platform.timingBreakdown.length} intervals</summary>
+                    <p>Wall-clock intervals include tool execution and retries. See the timing description above for measurement details.</p>
                     <div className="timing-table-wrap">
                       <table>
                         <thead><tr><th>Work completed</th><th>Interval</th><th>Total elapsed</th></tr></thead>
