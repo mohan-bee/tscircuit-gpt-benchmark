@@ -66,7 +66,7 @@ describe("PCB Bench", () => {
     expect(screen.getByLabelText("Filter by complexity")).toHaveValue("all")
     expect(screen.queryByRole("option", { name: /^GPT-5$/ })).not.toBeInTheDocument()
     expect(screen.getByLabelText("Board list")).toBeInTheDocument()
-    expect(within(screen.getByLabelText("Select a board")).getAllByRole("button")).toHaveLength(2)
+    expect(within(screen.getByLabelText("Select a board")).getAllByRole("button")).toHaveLength(benchmarkRuns.filter((run) => run.visible).length)
     expect(screen.getByText("Board prompt")).toBeInTheDocument()
     expect(screen.getByLabelText("Prompt for ESP32-C3 development board")).toHaveTextContent("USB-C for power and programming")
     expect(screen.queryByText("Connect a 1 kΩ resistor and 100 nF capacitor as an RC filter.")).not.toBeInTheDocument()
@@ -76,14 +76,30 @@ describe("PCB Bench", () => {
   it("renders only dashboard-visible benchmark metadata", () => {
     render(<App />)
 
-    expect(benchmarkRuns).toHaveLength(3)
+    expect(benchmarkRuns).toHaveLength(4)
     const visibleRuns = benchmarkRuns.filter((run) => run.visible)
-    expect(visibleRuns).toHaveLength(2)
+    expect(visibleRuns).toHaveLength(3)
     for (const run of visibleRuns) {
       fireEvent.click(within(screen.getByLabelText("Select a board")).getByRole("button", { name: new RegExp(run.circuit) }))
       expect(screen.getByLabelText(`Benchmark visualization for ${run.model}`)).toBeInTheDocument()
     }
     expect(screen.queryByLabelText("Benchmark visualization for GPT-5")).not.toBeInTheDocument()
+  })
+
+  it("shows the robot controller with measured time and an empty KiCad comparison", async () => {
+    render(<App />)
+    fireEvent.click(within(screen.getByLabelText("Select a board")).getByRole("button", { name: /RP2040 robot controller/ }))
+
+    expect(screen.getByLabelText("tscircuit benchmark details")).toHaveTextContent("55 min 32 s measured elapsed wall-clock time")
+    expect(screen.getByLabelText("tscircuit benchmark details")).toHaveTextContent("64 × 50 mm · 2 layers · 85 components")
+    expect(await screen.findByTestId("tscircuit-pcb-viewer")).toBeInTheDocument()
+    expect(fetch).toHaveBeenCalledWith("/benchmarks/run-004/tscircuit/release/robot.circuit.json", expect.any(Object))
+    expect(screen.getByLabelText("KiCad output pending")).toBeEmptyDOMElement()
+    expect(screen.queryByRole("link", { name: "Download KiCad PCB" })).not.toBeInTheDocument()
+
+    fireEvent.click(within(screen.getByRole("tablist", { name: "run-004 output view" })).getByRole("tab", { name: "Schematic" }))
+    expect(await screen.findByTestId("tscircuit-schematic-viewer")).toBeInTheDocument()
+    expect(screen.getByLabelText("KiCad output pending")).toBeEmptyDOMElement()
   })
 
   it("shows both LoRa outputs with platform-specific details and versions", async () => {

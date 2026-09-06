@@ -1,0 +1,10 @@
+Milestone,UTC,IST,Elapsed seconds,Seconds since previous milestone
+Start / isolated setup,2026-09-05T18:31:30+00:00,2026-09-06 00:01:30 IST,0.0,0.0
+Component selection complete; first schematic and placement generated,2026-09-05T18:38:17.150122+00:00,2026-09-06 00:08:17 IST,407.2,407.2
+Routing begins after placement iteration; ground fanout plus local autorouter,2026-09-05T18:45:55.130415+00:00,2026-09-06 00:15:55 IST,865.1,458.0
+Placement clean; routing DRC correction in progress,2026-09-05T18:49:56.251495+00:00,2026-09-06 00:19:56 IST,1106.3,241.1
+I2C pins reassigned toward IMU; auxiliary header consolidated into main GPIO expansion,2026-09-05T19:00:17.541204+00:00,2026-09-06 00:30:17 IST,1727.5,621.3
+Continued: final routing fixes and release verification,2026-09-05T19:01:52.884768+00:00,2026-09-06 00:31:52 IST,1822.9,95.3
+All independent routing and PCB placement checks pass after local route repairs,2026-09-05T19:14:38.184554+00:00,2026-09-06 00:44:38 IST,2588.2,765.3
+Final TSX rebuild verified; ground islands removed; independent copper checks pass,2026-09-05T19:24:36.321584+00:00,2026-09-06 00:54:36 IST,3186.3,598.1
+Deliverables packaged and verified,2026-09-05T19:27:02.225498+00:00,2026-09-06 00:57:02 IST,3332.2,145.9

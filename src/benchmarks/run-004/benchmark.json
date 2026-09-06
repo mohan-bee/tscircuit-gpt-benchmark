@@ -1,0 +1,28 @@
+{
+  "$schema": "../../../benchmark.schema.json",
+  "id": "run-004",
+  "model": "GPT-6",
+  "complexity": "Advanced",
+  "circuit": "RP2040 robot controller",
+  "prompt": "Build a compact 2-layer robot controller board using an RP2040. Add two DC motor drivers, encoder inputs, an IMU, a few servo headers, USB-C for power and programming, and basic GPIO expansion.\nKeep the motor and power section separated from the sensor and MCU area, and route the board cleanly with a ground plane.&#x20;\n\n&#x20;use [$tscircuit](/Users/mohan/.agents/skills/tscircuit/SKILL.md)  IMPORTANT you are not allowed to use any kicad tools. . please isolate yourself you are not allowed to take any refrence from kicad files present in machiene&#x20;\n\nsee i want to track the timing of the work done to build this board.",
+  "components": 85,
+  "boardSize": "64 × 50 mm",
+  "platforms": [
+    {
+      "name": "tscircuit",
+      "circuitJson": "/benchmarks/run-004/tscircuit/release/robot.circuit.json",
+      "pcb": "/benchmarks/run-004/tscircuit/release/pcb-top.svg",
+      "schematic": "/benchmarks/run-004/tscircuit/release/schematic.svg",
+      "pcbSource": "/benchmarks/run-004/tscircuit/checked.circuit.tsx",
+      "schematicSource": "/benchmarks/run-004/tscircuit/checked.circuit.tsx",
+      "renderer": "tscircuit 0.0.2464 · CLI 0.1.2021 · circuit-to-svg 0.0.410",
+      "activeTime": "55 min 32 s measured elapsed wall-clock time; includes research, routing retries, validation and packaging, not isolated active work",
+      "boardDetails": "64 × 50 mm · 2 layers · 85 components · ground pours on both layers",
+      "boardFeatures": "RP2040 with 2 MB flash, two DRV8837 motor drivers, two quadrature encoder inputs, LSM6DS3TR-C IMU, four servo headers, USB-C power/programming and GPIO expansion. Motor/power section separated from MCU/sensors. Assumes 5–9 V motors and separate regulated 5 V servo input; USB powers logic only. Initial ground fanout uses autoroutingphase, followed by local routing and local geometry repairs; checked source replays verified routes. Final digital checks: zero routing/placement errors and copper shorts, all ground pads connected. Prototype outputs; motor current, thermal behavior, USB signal integrity and assembly remain unverified."
+    },
+    {
+      "name": "KiCad",
+      "status": "pending"
+    }
+  ]
+}

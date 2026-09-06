@@ -1,0 +1,1330 @@
+{
+  "board_mm": [
+    64,
+    50
+  ],
+  "layers": 2,
+  "gpio": {
+    "0": "M1_IN1",
+    "1": "M1_IN2",
+    "2": "M2_IN1",
+    "3": "M2_IN2",
+    "4": "ENC1_A",
+    "5": "ENC1_B",
+    "6": "ENC2_A",
+    "7": "ENC2_B",
+    "8": "GP8",
+    "9": "GP9",
+    "10": null,
+    "11": "MOTOR_EN",
+    "12": "SERVO1",
+    "13": "SERVO2",
+    "14": "SERVO3",
+    "15": "SERVO4",
+    "16": "GP16",
+    "17": "GP17",
+    "18": "GP18",
+    "19": "GP19",
+    "20": "I2C_SDA",
+    "21": "I2C_SCL",
+    "22": "IMU_INT",
+    "23": null,
+    "24": null,
+    "25": "STATUS",
+    "26": "ADC0",
+    "27": "ADC1",
+    "28": null,
+    "29": null
+  },
+  "nets": {
+    "V3V3": [
+      ".U1 > .pin1",
+      ".U1 > .pin10",
+      ".U1 > .pin22",
+      ".U1 > .pin33",
+      ".U1 > .pin42",
+      ".U1 > .pin44",
+      ".U1 > .pin48",
+      ".U1 > .pin49",
+      ".U2 > .pin8",
+      ".R_CS > .pin1",
+      ".R_RUN > .pin1",
+      ".C_FLASH > .pin1",
+      ".C_IO1 > .pin1",
+      ".C_IO2 > .pin1",
+      ".C_IO3 > .pin1",
+      ".C_IO4 > .pin1",
+      ".C_IO5 > .pin1",
+      ".C_IO6 > .pin1",
+      ".C_USB > .pin1",
+      ".C_REGIN > .pin1",
+      ".R_AVDD > .pin1",
+      ".J_SWD > .pin1",
+      ".U_REG > .pin5",
+      ".C_3V3 > .pin1",
+      ".U_M1 > .pin8",
+      ".C_M1LOG > .pin1",
+      ".U_M2 > .pin8",
+      ".C_M2LOG > .pin1",
+      ".J_ENC1 > .pin1",
+      ".R_P1A > .pin1",
+      ".R_P1B > .pin1",
+      ".J_ENC2 > .pin1",
+      ".R_P2A > .pin1",
+      ".R_P2B > .pin1",
+      ".U_IMU > .pin5",
+      ".U_IMU > .pin8",
+      ".U_IMU > .pin12",
+      ".C_IMU1 > .pin1",
+      ".C_IMU2 > .pin1",
+      ".C_IMU3 > .pin1",
+      ".R_SDA > .pin1",
+      ".R_SCL > .pin1",
+      ".J_I2C > .pin1",
+      ".J_GPIO > .pin2"
+    ],
+    "GND": [
+      ".U1 > .pin19",
+      ".U1 > .pin57",
+      ".U2 > .pin4",
+      ".Y1 > .pin2",
+      ".Y1 > .pin4",
+      ".C_X1 > .pin2",
+      ".C_X2 > .pin2",
+      ".J_BOOT > .pin2",
+      ".J_RESET > .pin2",
+      ".C_FLASH > .pin2",
+      ".C_IO1 > .pin2",
+      ".C_IO2 > .pin2",
+      ".C_IO3 > .pin2",
+      ".C_IO4 > .pin2",
+      ".C_IO5 > .pin2",
+      ".C_IO6 > .pin2",
+      ".C_USB > .pin2",
+      ".C_CORE1 > .pin2",
+      ".C_CORE2 > .pin2",
+      ".C_REGIN > .pin2",
+      ".C_REGOUT > .pin2",
+      ".C_AVDD > .pin2",
+      ".J_SWD > .pin4",
+      ".J_USB > .GND1",
+      ".J_USB > .GND2",
+      ".J_USB > .SHELL1",
+      ".J_USB > .SHELL2",
+      ".J_USB > .SHELL3",
+      ".J_USB > .SHELL4",
+      ".R_CC1 > .pin2",
+      ".R_CC2 > .pin2",
+      ".U_ESD > .pin2",
+      ".C_VBUS > .pin2",
+      ".J_5V > .pin2",
+      ".U_REG > .pin2",
+      ".C_5LOG > .pin2",
+      ".C_3V3 > .pin2",
+      ".C_5SERVO > .pin2",
+      ".J_VM > .pin2",
+      ".C_VM > .pin2",
+      ".U_M1 > .pin4",
+      ".U_M1 > .pin9",
+      ".C_M1VM > .pin2",
+      ".C_M1BULK > .pin2",
+      ".C_M1LOG > .pin2",
+      ".U_M2 > .pin4",
+      ".U_M2 > .pin9",
+      ".C_M2VM > .pin2",
+      ".C_M2BULK > .pin2",
+      ".C_M2LOG > .pin2",
+      ".R_SLEEP > .pin2",
+      ".J_ENC1 > .pin2",
+      ".C_E1A > .pin2",
+      ".C_E1B > .pin2",
+      ".J_ENC2 > .pin2",
+      ".C_E2A > .pin2",
+      ".C_E2B > .pin2",
+      ".U_IMU > .pin1",
+      ".U_IMU > .pin6",
+      ".U_IMU > .pin7",
+      ".C_IMU1 > .pin2",
+      ".C_IMU2 > .pin2",
+      ".C_IMU3 > .pin2",
+      ".J_I2C > .pin2",
+      ".J_S1 > .pin1",
+      ".J_S2 > .pin1",
+      ".J_S3 > .pin1",
+      ".J_S4 > .pin1",
+      ".J_GPIO > .pin1",
+      ".LED1 > .cathode"
+    ],
+    "XIN": [
+      ".U1 > .pin20",
+      ".Y1 > .pin1",
+      ".C_X1 > .pin1"
+    ],
+    "XOUT": [
+      ".U1 > .pin21",
+      ".R_XTAL > .pin1"
+    ],
+    "V1V1": [
+      ".U1 > .pin23",
+      ".U1 > .pin45",
+      ".U1 > .pin50",
+      ".C_CORE1 > .pin1",
+      ".C_CORE2 > .pin1",
+      ".C_REGOUT > .pin1"
+    ],
+    "SWCLK": [
+      ".U1 > .pin24",
+      ".J_SWD > .pin3"
+    ],
+    "SWDIO": [
+      ".U1 > .pin25",
+      ".J_SWD > .pin2"
+    ],
+    "RUN": [
+      ".U1 > .pin26",
+      ".R_RUN > .pin2",
+      ".J_RESET > .pin1"
+    ],
+    "AVDD": [
+      ".U1 > .pin43",
+      ".R_AVDD > .pin2",
+      ".C_AVDD > .pin1"
+    ],
+    "USB_DM_MCU": [
+      ".U1 > .pin46",
+      ".R_DM > .pin1"
+    ],
+    "USB_DP_MCU": [
+      ".U1 > .pin47",
+      ".R_DP > .pin1"
+    ],
+    "QSPI_D3": [
+      ".U1 > .pin51",
+      ".U2 > .pin7"
+    ],
+    "QSPI_CLK": [
+      ".U1 > .pin52",
+      ".U2 > .pin6"
+    ],
+    "QSPI_D0": [
+      ".U1 > .pin53",
+      ".U2 > .pin5"
+    ],
+    "QSPI_D2": [
+      ".U1 > .pin54",
+      ".U2 > .pin3"
+    ],
+    "QSPI_D1": [
+      ".U1 > .pin55",
+      ".U2 > .pin2"
+    ],
+    "QSPI_CS": [
+      ".U1 > .pin56",
+      ".U2 > .pin1",
+      ".R_BOOT > .pin1",
+      ".R_CS > .pin2"
+    ],
+    "M1_IN1": [
+      ".U1 > .pin2",
+      ".U_M1 > .pin6"
+    ],
+    "M1_IN2": [
+      ".U1 > .pin3",
+      ".U_M1 > .pin5"
+    ],
+    "M2_IN1": [
+      ".U1 > .pin4",
+      ".U_M2 > .pin6"
+    ],
+    "M2_IN2": [
+      ".U1 > .pin5",
+      ".U_M2 > .pin5"
+    ],
+    "ENC1_A": [
+      ".U1 > .pin6",
+      ".R_E1A > .pin2",
+      ".R_P1A > .pin2",
+      ".C_E1A > .pin1"
+    ],
+    "ENC1_B": [
+      ".U1 > .pin7",
+      ".R_E1B > .pin2",
+      ".R_P1B > .pin2",
+      ".C_E1B > .pin1"
+    ],
+    "ENC2_A": [
+      ".U1 > .pin8",
+      ".R_E2A > .pin2",
+      ".R_P2A > .pin2",
+      ".C_E2A > .pin1"
+    ],
+    "ENC2_B": [
+      ".U1 > .pin9",
+      ".R_E2B > .pin2",
+      ".R_P2B > .pin2",
+      ".C_E2B > .pin1"
+    ],
+    "GP8": [
+      ".U1 > .pin11",
+      ".J_GPIO > .pin7"
+    ],
+    "GP9": [
+      ".U1 > .pin12",
+      ".J_GPIO > .pin8"
+    ],
+    "MOTOR_EN": [
+      ".U1 > .pin14",
+      ".U_M1 > .pin7",
+      ".U_M2 > .pin7",
+      ".R_SLEEP > .pin1"
+    ],
+    "SERVO1": [
+      ".U1 > .pin15",
+      ".R_S1 > .pin1"
+    ],
+    "SERVO2": [
+      ".U1 > .pin16",
+      ".R_S2 > .pin1"
+    ],
+    "SERVO3": [
+      ".U1 > .pin17",
+      ".R_S3 > .pin1"
+    ],
+    "SERVO4": [
+      ".U1 > .pin18",
+      ".R_S4 > .pin1"
+    ],
+    "GP16": [
+      ".U1 > .pin27",
+      ".J_GPIO > .pin3"
+    ],
+    "GP17": [
+      ".U1 > .pin28",
+      ".J_GPIO > .pin4"
+    ],
+    "GP18": [
+      ".U1 > .pin29",
+      ".J_GPIO > .pin5"
+    ],
+    "GP19": [
+      ".U1 > .pin30",
+      ".J_GPIO > .pin6"
+    ],
+    "I2C_SDA": [
+      ".U1 > .pin31",
+      ".U_IMU > .pin14",
+      ".R_SDA > .pin2",
+      ".J_I2C > .pin3"
+    ],
+    "I2C_SCL": [
+      ".U1 > .pin32",
+      ".U_IMU > .pin13",
+      ".R_SCL > .pin2",
+      ".J_I2C > .pin4"
+    ],
+    "IMU_INT": [
+      ".U1 > .pin34",
+      ".U_IMU > .pin4"
+    ],
+    "STATUS": [
+      ".U1 > .pin37",
+      ".R_LED > .pin1"
+    ],
+    "ADC0": [
+      ".U1 > .pin38",
+      ".J_GPIO > .pin9"
+    ],
+    "ADC1": [
+      ".U1 > .pin39",
+      ".J_GPIO > .pin10"
+    ],
+    "XTAL_OUT": [
+      ".Y1 > .pin3",
+      ".R_XTAL > .pin2",
+      ".C_X2 > .pin1"
+    ],
+    "BOOT_SW": [
+      ".R_BOOT > .pin2",
+      ".J_BOOT > .pin1"
+    ],
+    "VBUS": [
+      ".J_USB > .VBUS1",
+      ".J_USB > .VBUS2",
+      ".U_ESD > .pin5",
+      ".C_VBUS > .pin1",
+      ".D_USB > .anode"
+    ],
+    "CC1": [
+      ".J_USB > .CC1",
+      ".R_CC1 > .pin1"
+    ],
+    "CC2": [
+      ".J_USB > .CC2",
+      ".R_CC2 > .pin1"
+    ],
+    "USB_DP": [
+      ".J_USB > .DP1",
+      ".J_USB > .DP2",
+      ".U_ESD > .pin1",
+      ".U_ESD > .pin6",
+      ".R_DP > .pin2"
+    ],
+    "USB_DM": [
+      ".J_USB > .DM1",
+      ".J_USB > .DM2",
+      ".U_ESD > .pin3",
+      ".U_ESD > .pin4",
+      ".R_DM > .pin2"
+    ],
+    "V5_SERVO": [
+      ".J_5V > .pin1",
+      ".D_EXT > .anode",
+      ".C_5SERVO > .pin1",
+      ".J_S1 > .pin2",
+      ".J_S2 > .pin2",
+      ".J_S3 > .pin2",
+      ".J_S4 > .pin2"
+    ],
+    "V5_LOGIC": [
+      ".D_USB > .cathode",
+      ".D_EXT > .cathode",
+      ".U_REG > .pin1",
+      ".U_REG > .pin3",
+      ".C_5LOG > .pin1"
+    ],
+    "VM": [
+      ".J_VM > .pin1",
+      ".C_VM > .pin1",
+      ".U_M1 > .pin1",
+      ".C_M1VM > .pin1",
+      ".C_M1BULK > .pin1",
+      ".U_M2 > .pin1",
+      ".C_M2VM > .pin1",
+      ".C_M2BULK > .pin1"
+    ],
+    "M1_A": [
+      ".U_M1 > .pin2",
+      ".J_M1 > .pin1"
+    ],
+    "M1_B": [
+      ".U_M1 > .pin3",
+      ".J_M1 > .pin2"
+    ],
+    "M2_A": [
+      ".U_M2 > .pin2",
+      ".J_M2 > .pin1"
+    ],
+    "M2_B": [
+      ".U_M2 > .pin3",
+      ".J_M2 > .pin2"
+    ],
+    "ENC1_A_RAW": [
+      ".J_ENC1 > .pin3",
+      ".R_E1A > .pin1"
+    ],
+    "ENC1_B_RAW": [
+      ".J_ENC1 > .pin4",
+      ".R_E1B > .pin1"
+    ],
+    "ENC2_A_RAW": [
+      ".J_ENC2 > .pin3",
+      ".R_E2A > .pin1"
+    ],
+    "ENC2_B_RAW": [
+      ".J_ENC2 > .pin4",
+      ".R_E2B > .pin1"
+    ],
+    "SERVO1_OUT": [
+      ".J_S1 > .pin3",
+      ".R_S1 > .pin2"
+    ],
+    "SERVO2_OUT": [
+      ".J_S2 > .pin3",
+      ".R_S2 > .pin2"
+    ],
+    "SERVO3_OUT": [
+      ".J_S3 > .pin3",
+      ".R_S3 > .pin2"
+    ],
+    "SERVO4_OUT": [
+      ".J_S4 > .pin3",
+      ".R_S4 > .pin2"
+    ],
+    "LED_A": [
+      ".R_LED > .pin2",
+      ".LED1 > .anode"
+    ]
+  },
+  "parts": [
+    {
+      "reference": "U1",
+      "element": "RP2040",
+      "x": 7,
+      "y": 4,
+      "section": "MCU",
+      "schHeight": 5.8
+    },
+    {
+      "reference": "U2",
+      "element": "W25Q16JVSSIQ",
+      "x": 7,
+      "y": 15,
+      "section": "MCU",
+      "pcbRotation": 90
+    },
+    {
+      "reference": "Y1",
+      "element": "ABM8_272_T3",
+      "x": 7,
+      "y": -5,
+      "section": "MCU"
+    },
+    {
+      "reference": "R_XTAL",
+      "element": "resistor",
+      "x": 6.8,
+      "y": -2.2,
+      "section": "MCU",
+      "resistance": "1k",
+      "footprint": "0402",
+      "pcbRotation": 90
+    },
+    {
+      "reference": "C_X1",
+      "element": "capacitor",
+      "x": 5,
+      "y": -7.5,
+      "section": "MCU",
+      "capacitance": "15pF",
+      "footprint": "0402",
+      "pcbRotation": 0,
+      "schOrientation": "vertical"
+    },
+    {
+      "reference": "C_X2",
+      "element": "capacitor",
+      "x": 9,
+      "y": -8.5,
+      "section": "MCU",
+      "capacitance": "15pF",
+      "footprint": "0402",
+      "pcbRotation": 0,
+      "schOrientation": "vertical"
+    },
+    {
+      "reference": "R_BOOT",
+      "element": "resistor",
+      "x": 8,
+      "y": 21,
+      "section": "MCU",
+      "resistance": "1k",
+      "footprint": "0402",
+      "pcbRotation": 0
+    },
+    {
+      "reference": "J_BOOT",
+      "element": "pinheader",
+      "x": 12.5,
+      "y": 21,
+      "section": "MCU",
+      "pinCount": 2,
+      "footprint": "pinrow2_p2.54mm",
+      "pcbRotation": 0
+    },
+    {
+      "reference": "R_CS",
+      "element": "resistor",
+      "x": 3.8,
+      "y": 20,
+      "section": "MCU",
+      "resistance": "10k",
+      "footprint": "0402",
+      "pcbRotation": 0
+    },
+    {
+      "reference": "R_RUN",
+      "element": "resistor",
+      "x": 12,
+      "y": -3,
+      "section": "MCU",
+      "resistance": "10k",
+      "footprint": "0402",
+      "pcbRotation": 0
+    },
+    {
+      "reference": "J_RESET",
+      "element": "pinheader",
+      "x": 14,
+      "y": -7,
+      "section": "MCU",
+      "pinCount": 2,
+      "footprint": "pinrow2_p2.54mm",
+      "pcbRotation": 0
+    },
+    {
+      "reference": "C_FLASH",
+      "element": "capacitor",
+      "x": 1,
+      "y": 11.5,
+      "section": "MCU",
+      "capacitance": "100nF",
+      "footprint": "0402",
+      "pcbRotation": 0,
+      "schOrientation": "vertical"
+    },
+    {
+      "reference": "C_IO1",
+      "element": "capacitor",
+      "x": 2,
+      "y": 6,
+      "section": "MCU",
+      "capacitance": "100nF",
+      "footprint": "0402",
+      "pcbRotation": 90,
+      "schOrientation": "vertical"
+    },
+    {
+      "reference": "C_IO2",
+      "element": "capacitor",
+      "x": 2,
+      "y": 2,
+      "section": "MCU",
+      "capacitance": "100nF",
+      "footprint": "0402",
+      "pcbRotation": 90,
+      "schOrientation": "vertical"
+    },
+    {
+      "reference": "C_IO3",
+      "element": "capacitor",
+      "x": 11,
+      "y": -1.5,
+      "section": "MCU",
+      "capacitance": "100nF",
+      "footprint": "0402",
+      "pcbRotation": 0,
+      "schOrientation": "vertical"
+    },
+    {
+      "reference": "C_IO4",
+      "element": "capacitor",
+      "x": 13,
+      "y": 2,
+      "section": "MCU",
+      "capacitance": "100nF",
+      "footprint": "0402",
+      "pcbRotation": 90,
+      "schOrientation": "vertical"
+    },
+    {
+      "reference": "C_IO5",
+      "element": "capacitor",
+      "x": 13,
+      "y": 6,
+      "section": "MCU",
+      "capacitance": "100nF",
+      "footprint": "0402",
+      "pcbRotation": 90,
+      "schOrientation": "vertical"
+    },
+    {
+      "reference": "C_IO6",
+      "element": "capacitor",
+      "x": 6.2,
+      "y": 10.5,
+      "section": "MCU",
+      "capacitance": "100nF",
+      "footprint": "0402",
+      "pcbRotation": 0,
+      "schOrientation": "vertical"
+    },
+    {
+      "reference": "C_USB",
+      "element": "capacitor",
+      "x": 11.5,
+      "y": 10,
+      "section": "MCU",
+      "capacitance": "100nF",
+      "footprint": "0402",
+      "pcbRotation": 0,
+      "schOrientation": "vertical"
+    },
+    {
+      "reference": "C_CORE1",
+      "element": "capacitor",
+      "x": 4,
+      "y": 10.5,
+      "section": "MCU",
+      "capacitance": "100nF",
+      "footprint": "0402",
+      "pcbRotation": 0,
+      "schOrientation": "vertical"
+    },
+    {
+      "reference": "C_CORE2",
+      "element": "capacitor",
+      "x": 11,
+      "y": -4.5,
+      "section": "MCU",
+      "capacitance": "100nF",
+      "footprint": "0402",
+      "pcbRotation": 0,
+      "schOrientation": "vertical"
+    },
+    {
+      "reference": "C_REGIN",
+      "element": "capacitor",
+      "x": 15,
+      "y": 8.5,
+      "section": "MCU",
+      "capacitance": "1uF",
+      "footprint": "0402",
+      "pcbRotation": 0,
+      "schOrientation": "vertical"
+    },
+    {
+      "reference": "C_REGOUT",
+      "element": "capacitor",
+      "x": 15.5,
+      "y": 6,
+      "section": "MCU",
+      "capacitance": "1uF",
+      "footprint": "0402",
+      "pcbRotation": 0,
+      "schOrientation": "vertical"
+    },
+    {
+      "reference": "R_AVDD",
+      "element": "resistor",
+      "x": 16,
+      "y": 2,
+      "section": "MCU",
+      "resistance": "200",
+      "footprint": "0402",
+      "pcbRotation": 90
+    },
+    {
+      "reference": "C_AVDD",
+      "element": "capacitor",
+      "x": 16,
+      "y": 0,
+      "section": "MCU",
+      "capacitance": "100nF",
+      "footprint": "0402",
+      "pcbRotation": 0,
+      "schOrientation": "vertical"
+    },
+    {
+      "reference": "J_SWD",
+      "element": "pinheader",
+      "x": 5,
+      "y": -11,
+      "section": "Expansion",
+      "pinCount": 4,
+      "footprint": "pinrow4_p2.54mm",
+      "pcbRotation": 0
+    },
+    {
+      "reference": "J_USB",
+      "element": "UsbC",
+      "x": 21,
+      "y": 19.4,
+      "section": "USB",
+      "pcbRotation": 180
+    },
+    {
+      "reference": "R_CC1",
+      "element": "resistor",
+      "x": 15,
+      "y": 17,
+      "section": "USB",
+      "resistance": "5.1k",
+      "footprint": "0402",
+      "pcbRotation": 90
+    },
+    {
+      "reference": "R_CC2",
+      "element": "resistor",
+      "x": 27,
+      "y": 17,
+      "section": "USB",
+      "resistance": "5.1k",
+      "footprint": "0402",
+      "pcbRotation": 90
+    },
+    {
+      "reference": "U_ESD",
+      "element": "USBLC6_2SC6",
+      "x": 23,
+      "y": 11,
+      "section": "USB"
+    },
+    {
+      "reference": "R_DP",
+      "element": "resistor",
+      "x": 8,
+      "y": 10.5,
+      "section": "USB",
+      "resistance": "27",
+      "footprint": "0402",
+      "pcbRotation": 90
+    },
+    {
+      "reference": "R_DM",
+      "element": "resistor",
+      "x": 9.2,
+      "y": 10.5,
+      "section": "USB",
+      "resistance": "27",
+      "footprint": "0402",
+      "pcbRotation": 90
+    },
+    {
+      "reference": "C_VBUS",
+      "element": "capacitor",
+      "x": 27,
+      "y": 11,
+      "section": "USB",
+      "capacitance": "1uF",
+      "footprint": "0603",
+      "pcbRotation": 0,
+      "schOrientation": "vertical"
+    },
+    {
+      "reference": "J_5V",
+      "element": "pinheader",
+      "x": -11,
+      "y": 20,
+      "section": "Power",
+      "pinCount": 2,
+      "footprint": "pinrow2_p2.54mm",
+      "pcbRotation": 0
+    },
+    {
+      "reference": "D_USB",
+      "element": "diode",
+      "x": 16,
+      "y": 12,
+      "section": "Power",
+      "footprint": "sma",
+      "manufacturerPartNumber": "SS14",
+      "supplierPartNumbers": {
+        "jlcpcb": [
+          "C2480"
+        ]
+      }
+    },
+    {
+      "reference": "D_EXT",
+      "element": "diode",
+      "x": -4,
+      "y": 20,
+      "section": "Power",
+      "footprint": "sma",
+      "manufacturerPartNumber": "SS14",
+      "supplierPartNumbers": {
+        "jlcpcb": [
+          "C2480"
+        ]
+      }
+    },
+    {
+      "reference": "U_REG",
+      "element": "AP2112K_3_3TRG1",
+      "x": -4,
+      "y": 14,
+      "section": "Power",
+      "schHeight": 0.6
+    },
+    {
+      "reference": "C_5LOG",
+      "element": "capacitor",
+      "x": -7.5,
+      "y": 14,
+      "section": "Power",
+      "capacitance": "1uF",
+      "footprint": "0603",
+      "pcbRotation": 0,
+      "schOrientation": "vertical"
+    },
+    {
+      "reference": "C_3V3",
+      "element": "capacitor",
+      "x": -0.5,
+      "y": 14,
+      "section": "Power",
+      "capacitance": "4.7uF",
+      "footprint": "0603",
+      "pcbRotation": 0,
+      "schOrientation": "vertical"
+    },
+    {
+      "reference": "C_5SERVO",
+      "element": "capacitor",
+      "x": -14,
+      "y": -11,
+      "section": "Power",
+      "capacitance": "100uF",
+      "footprint": "1210",
+      "pcbRotation": 0,
+      "schOrientation": "vertical"
+    },
+    {
+      "reference": "J_VM",
+      "element": "pinheader",
+      "x": -22,
+      "y": 20,
+      "section": "Motors",
+      "pinCount": 2,
+      "footprint": "pinrow2_p3.5mm",
+      "pcbRotation": 0
+    },
+    {
+      "reference": "C_VM",
+      "element": "capacitor",
+      "x": -22,
+      "y": 15,
+      "section": "Motors",
+      "capacitance": "100uF",
+      "footprint": "1210",
+      "pcbRotation": 0,
+      "schOrientation": "vertical"
+    },
+    {
+      "reference": "U_M1",
+      "element": "DRV8837DSGR",
+      "x": -21,
+      "y": 8,
+      "section": "Motors",
+      "schHeight": 1.0
+    },
+    {
+      "reference": "J_M1",
+      "element": "pinheader",
+      "x": -28,
+      "y": 8,
+      "section": "Motors",
+      "pinCount": 2,
+      "footprint": "pinrow2_p3.5mm",
+      "pcbRotation": 90
+    },
+    {
+      "reference": "C_M1VM",
+      "element": "capacitor",
+      "x": -24,
+      "y": 10,
+      "section": "Motors",
+      "capacitance": "100nF",
+      "footprint": "0603",
+      "pcbRotation": 90,
+      "schOrientation": "vertical"
+    },
+    {
+      "reference": "C_M1BULK",
+      "element": "capacitor",
+      "x": -21,
+      "y": 12,
+      "section": "Motors",
+      "capacitance": "10uF",
+      "footprint": "0805",
+      "pcbRotation": 0,
+      "schOrientation": "vertical"
+    },
+    {
+      "reference": "C_M1LOG",
+      "element": "capacitor",
+      "x": -18,
+      "y": 9,
+      "section": "Motors",
+      "capacitance": "100nF",
+      "footprint": "0402",
+      "pcbRotation": 90,
+      "schOrientation": "vertical"
+    },
+    {
+      "reference": "U_M2",
+      "element": "DRV8837DSGR",
+      "x": -21,
+      "y": -4,
+      "section": "Motors",
+      "schHeight": 1.0
+    },
+    {
+      "reference": "J_M2",
+      "element": "pinheader",
+      "x": -28,
+      "y": -4,
+      "section": "Motors",
+      "pinCount": 2,
+      "footprint": "pinrow2_p3.5mm",
+      "pcbRotation": 90
+    },
+    {
+      "reference": "C_M2VM",
+      "element": "capacitor",
+      "x": -24,
+      "y": -2,
+      "section": "Motors",
+      "capacitance": "100nF",
+      "footprint": "0603",
+      "pcbRotation": 90,
+      "schOrientation": "vertical"
+    },
+    {
+      "reference": "C_M2BULK",
+      "element": "capacitor",
+      "x": -21,
+      "y": 0,
+      "section": "Motors",
+      "capacitance": "10uF",
+      "footprint": "0805",
+      "pcbRotation": 0,
+      "schOrientation": "vertical"
+    },
+    {
+      "reference": "C_M2LOG",
+      "element": "capacitor",
+      "x": -18,
+      "y": -3,
+      "section": "Motors",
+      "capacitance": "100nF",
+      "footprint": "0402",
+      "pcbRotation": 90,
+      "schOrientation": "vertical"
+    },
+    {
+      "reference": "R_SLEEP",
+      "element": "resistor",
+      "x": -16,
+      "y": 2,
+      "section": "Motors",
+      "resistance": "100k",
+      "footprint": "0402",
+      "pcbRotation": 90
+    },
+    {
+      "reference": "J_ENC1",
+      "element": "pinheader",
+      "x": -7,
+      "y": 7,
+      "section": "Encoders",
+      "pinCount": 4,
+      "footprint": "pinrow4_p2.54mm",
+      "pcbRotation": 0
+    },
+    {
+      "reference": "R_E1A",
+      "element": "resistor",
+      "x": -11,
+      "y": 4.5,
+      "section": "Encoders",
+      "resistance": "1k",
+      "footprint": "0402",
+      "pcbRotation": 0
+    },
+    {
+      "reference": "R_P1A",
+      "element": "resistor",
+      "x": -11,
+      "y": 2.7,
+      "section": "Encoders",
+      "resistance": "10k",
+      "footprint": "0402",
+      "pcbRotation": 0
+    },
+    {
+      "reference": "C_E1A",
+      "element": "capacitor",
+      "x": -5,
+      "y": 3.7,
+      "section": "Encoders",
+      "capacitance": "100pF",
+      "footprint": "0402",
+      "pcbRotation": 90,
+      "schOrientation": "vertical"
+    },
+    {
+      "reference": "R_E1B",
+      "element": "resistor",
+      "x": -8,
+      "y": 4.5,
+      "section": "Encoders",
+      "resistance": "1k",
+      "footprint": "0402",
+      "pcbRotation": 0
+    },
+    {
+      "reference": "R_P1B",
+      "element": "resistor",
+      "x": -8,
+      "y": 2.7,
+      "section": "Encoders",
+      "resistance": "10k",
+      "footprint": "0402",
+      "pcbRotation": 0
+    },
+    {
+      "reference": "C_E1B",
+      "element": "capacitor",
+      "x": -2,
+      "y": 3.7,
+      "section": "Encoders",
+      "capacitance": "100pF",
+      "footprint": "0402",
+      "pcbRotation": 90,
+      "schOrientation": "vertical"
+    },
+    {
+      "reference": "J_ENC2",
+      "element": "pinheader",
+      "x": -7,
+      "y": 0,
+      "section": "Encoders",
+      "pinCount": 4,
+      "footprint": "pinrow4_p2.54mm",
+      "pcbRotation": 0
+    },
+    {
+      "reference": "R_E2A",
+      "element": "resistor",
+      "x": -11,
+      "y": -2.5,
+      "section": "Encoders",
+      "resistance": "1k",
+      "footprint": "0402",
+      "pcbRotation": 0
+    },
+    {
+      "reference": "R_P2A",
+      "element": "resistor",
+      "x": -11,
+      "y": -4.3,
+      "section": "Encoders",
+      "resistance": "10k",
+      "footprint": "0402",
+      "pcbRotation": 0
+    },
+    {
+      "reference": "C_E2A",
+      "element": "capacitor",
+      "x": -5,
+      "y": -3.3,
+      "section": "Encoders",
+      "capacitance": "100pF",
+      "footprint": "0402",
+      "pcbRotation": 90,
+      "schOrientation": "vertical"
+    },
+    {
+      "reference": "R_E2B",
+      "element": "resistor",
+      "x": -8,
+      "y": -2.5,
+      "section": "Encoders",
+      "resistance": "1k",
+      "footprint": "0402",
+      "pcbRotation": 0
+    },
+    {
+      "reference": "R_P2B",
+      "element": "resistor",
+      "x": -8,
+      "y": -4.3,
+      "section": "Encoders",
+      "resistance": "10k",
+      "footprint": "0402",
+      "pcbRotation": 0
+    },
+    {
+      "reference": "C_E2B",
+      "element": "capacitor",
+      "x": -2,
+      "y": -3.3,
+      "section": "Encoders",
+      "capacitance": "100pF",
+      "footprint": "0402",
+      "pcbRotation": 90,
+      "schOrientation": "vertical"
+    },
+    {
+      "reference": "U_IMU",
+      "element": "LSM6DS3TR_C",
+      "x": 22,
+      "y": -7,
+      "section": "IMU",
+      "pcbRotation": 180
+    },
+    {
+      "reference": "C_IMU1",
+      "element": "capacitor",
+      "x": 19,
+      "y": -7,
+      "section": "IMU",
+      "capacitance": "100nF",
+      "footprint": "0402",
+      "pcbRotation": 90,
+      "schOrientation": "vertical"
+    },
+    {
+      "reference": "C_IMU2",
+      "element": "capacitor",
+      "x": 25,
+      "y": -7,
+      "section": "IMU",
+      "capacitance": "100nF",
+      "footprint": "0402",
+      "pcbRotation": 90,
+      "schOrientation": "vertical"
+    },
+    {
+      "reference": "C_IMU3",
+      "element": "capacitor",
+      "x": 22,
+      "y": -10,
+      "section": "IMU",
+      "capacitance": "1uF",
+      "footprint": "0603",
+      "pcbRotation": 0,
+      "schOrientation": "vertical"
+    },
+    {
+      "reference": "R_SDA",
+      "element": "resistor",
+      "x": 18,
+      "y": -3,
+      "section": "IMU",
+      "resistance": "4.7k",
+      "footprint": "0402",
+      "pcbRotation": 0
+    },
+    {
+      "reference": "R_SCL",
+      "element": "resistor",
+      "x": 22,
+      "y": -3,
+      "section": "IMU",
+      "resistance": "4.7k",
+      "footprint": "0402",
+      "pcbRotation": 0
+    },
+    {
+      "reference": "J_I2C",
+      "element": "pinheader",
+      "x": 22,
+      "y": -16,
+      "section": "IMU",
+      "pinCount": 4,
+      "footprint": "pinrow4_p2.54mm",
+      "pcbRotation": 0
+    },
+    {
+      "reference": "J_S1",
+      "element": "pinheader",
+      "x": -23.5,
+      "y": -20,
+      "section": "Servos",
+      "pinCount": 3,
+      "footprint": "pinrow3_p2.54mm",
+      "pcbRotation": 90
+    },
+    {
+      "reference": "R_S1",
+      "element": "resistor",
+      "x": -21.7,
+      "y": -14.5,
+      "section": "Servos",
+      "resistance": "220",
+      "footprint": "0402",
+      "pcbRotation": 90
+    },
+    {
+      "reference": "J_S2",
+      "element": "pinheader",
+      "x": -19,
+      "y": -20,
+      "section": "Servos",
+      "pinCount": 3,
+      "footprint": "pinrow3_p2.54mm",
+      "pcbRotation": 90
+    },
+    {
+      "reference": "R_S2",
+      "element": "resistor",
+      "x": -17.2,
+      "y": -14.5,
+      "section": "Servos",
+      "resistance": "220",
+      "footprint": "0402",
+      "pcbRotation": 90
+    },
+    {
+      "reference": "J_S3",
+      "element": "pinheader",
+      "x": -14,
+      "y": -20,
+      "section": "Servos",
+      "pinCount": 3,
+      "footprint": "pinrow3_p2.54mm",
+      "pcbRotation": 90
+    },
+    {
+      "reference": "R_S3",
+      "element": "resistor",
+      "x": -12.2,
+      "y": -14.5,
+      "section": "Servos",
+      "resistance": "220",
+      "footprint": "0402",
+      "pcbRotation": 90
+    },
+    {
+      "reference": "J_S4",
+      "element": "pinheader",
+      "x": -9,
+      "y": -20,
+      "section": "Servos",
+      "pinCount": 3,
+      "footprint": "pinrow3_p2.54mm",
+      "pcbRotation": 90
+    },
+    {
+      "reference": "R_S4",
+      "element": "resistor",
+      "x": -7.2,
+      "y": -14.5,
+      "section": "Servos",
+      "resistance": "220",
+      "footprint": "0402",
+      "pcbRotation": 90
+    },
+    {
+      "reference": "J_GPIO",
+      "element": "pinheader",
+      "x": 13,
+      "y": -21,
+      "section": "Expansion",
+      "pinCount": 10,
+      "footprint": "pinrow10_p2.54mm",
+      "pcbRotation": 0
+    },
+    {
+      "reference": "R_LED",
+      "element": "resistor",
+      "x": 14,
+      "y": -11,
+      "section": "Expansion",
+      "resistance": "1k",
+      "footprint": "0402",
+      "pcbRotation": 0
+    },
+    {
+      "reference": "LED1",
+      "element": "led",
+      "x": 14,
+      "y": -14,
+      "section": "Expansion",
+      "footprint": "0603",
+      "color": "green"
+    }
+  ]
+}

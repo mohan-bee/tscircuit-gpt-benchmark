@@ -1,0 +1,97 @@
+Building 1 file(s)...
+Building checked.circuit.tsx...
+Generating circuit JSON...
+Circuit JSON written to dist/checked/circuit.json
+The "Y" prefix is being used with a <chip />, try using it with a <crystal />
+Port pin5 on J_USB is missing a trace
+Port pin11 on J_USB is missing a trace
+No <schematicsheet> was found. Add a <schematicsheet> to define the schematic drawing area.
+component has no courtyard
+component has no courtyard
+component has no courtyard
+component has no courtyard
+component has no courtyard
+component has no courtyard
+component has no courtyard
+component has no courtyard
+component has no courtyard
+component has no courtyard
+component has no courtyard
+component has no courtyard
+component has no courtyard
+component has no courtyard
+component has no courtyard
+component has no courtyard
+component has no courtyard
+component has no courtyard
+component has no courtyard
+component has no courtyard
+All pins on U_ESD are underspecified (no pinAttributes set)
+U1 has no pin with requires_power=true
+Y1 has no pin with requires_power=true
+U_ESD has no pin with requires_power=true
+U_ESD has no pin with requires_ground=true
+<capacitor#491 name=".C_CORE2" /> footprint "0402" does not match supplier footprint jlcpcb:C1525 (copper IoU 0.7249).
+<capacitor#1217 name=".C_IMU2" /> footprint "0402" does not match supplier footprint jlcpcb:C1525 (copper IoU 0.7249).
+<led#1428 name=".LED1" /> footprint "0603" does not match supplier footprint jlcpcb:C965799 (copper IoU 0.7966).
+<capacitor#431 name=".C_IO4" /> footprint "0402" does not match supplier footprint jlcpcb:C1525 (copper IoU 0.7249).
+<capacitor#938 name=".C_M2LOG" /> footprint "0402" does not match supplier footprint jlcpcb:C1525 (copper IoU 0.7249).
+<capacitor#515 name=".C_REGOUT" /> footprint "0402" does not match supplier footprint jlcpcb:C52923 (copper IoU 0.7249).
+<capacitor#383 name=".C_FLASH" /> footprint "0402" does not match supplier footprint jlcpcb:C1525 (copper IoU 0.7249).
+<resistor#1241 name=".R_SDA" /> footprint "0402" does not match supplier footprint jlcpcb:C25900 (copper IoU 0.7741).
+<resistor#1294 name=".R_S1" /> footprint "0402" does not match supplier footprint jlcpcb:C25091 (copper IoU 0.7741).
+<resistor#361 name=".R_RUN" /> footprint "0402" does not match supplier footprint jlcpcb:C25744 (copper IoU 0.7741).
+<capacitor#314 name=".C_X2" /> footprint "0402" does not match supplier footprint jlcpcb:C1548 (copper IoU 0.7249).
+<capacitor#1095 name=".C_E2A" /> footprint "0402" does not match supplier footprint jlcpcb:C1546 (copper IoU 0.7249).
+<resistor#991 name=".R_P1A" /> footprint "0402" does not match supplier footprint jlcpcb:C25744 (copper IoU 0.7741).
+<capacitor#455 name=".C_IO6" /> footprint "0402" does not match supplier footprint jlcpcb:C1525 (copper IoU 0.7249).
+<capacitor#1133 name=".C_E2B" /> footprint "0402" does not match supplier footprint jlcpcb:C1546 (copper IoU 0.7249).
+<resistor#1319 name=".R_S2" /> footprint "0402" does not match supplier footprint jlcpcb:C25091 (copper IoU 0.7741).
+<capacitor#540 name=".C_AVDD" /> footprint "0402" does not match supplier footprint jlcpcb:C1525 (copper IoU 0.7249).
+<capacitor#407 name=".C_IO2" /> footprint "0402" does not match supplier footprint jlcpcb:C1525 (copper IoU 0.7249).
+<resistor#326 name=".R_BOOT" /> footprint "0402" does not match supplier footprint jlcpcb:C11702 (copper IoU 0.7741).
+<resistor#289 name=".R_XTAL" /> footprint "0402" does not match supplier footprint jlcpcb:C11702 (copper IoU 0.7741).
+<capacitor#1205 name=".C_IMU1" /> footprint "0402" does not match supplier footprint jlcpcb:C1525 (copper IoU 0.7249).
+<capacitor#419 name=".C_IO3" /> footprint "0402" does not match supplier footprint jlcpcb:C1525 (copper IoU 0.7249).
+<resistor#1120 name=".R_P2B" /> footprint "0402" does not match supplier footprint jlcpcb:C25744 (copper IoU 0.7741).
+<resistor#1254 name=".R_SCL" /> footprint "0402" does not match supplier footprint jlcpcb:C25900 (copper IoU 0.7741).
+<capacitor#1042 name=".C_E1B" /> footprint "0402" does not match supplier footprint jlcpcb:C1546 (copper IoU 0.7249).
+<capacitor#1004 name=".C_E1A" /> footprint "0402" does not match supplier footprint jlcpcb:C1546 (copper IoU 0.7249).
+<pinheader#1382 name=".J_GPIO" /> footprint "pinrow10_p2.54mm" does not match supplier footprint jlcpcb:C492422 (copper IoU 0.2577).
+<resistor#621 name=".R_DM" /> footprint "0402" does not match supplier footprint jlcpcb:C25100 (copper IoU 0.7741).
+<resistor#1069 name=".R_E2A" /> footprint "0402" does not match supplier footprint jlcpcb:C11702 (copper IoU 0.7741).
+<capacitor#302 name=".C_X1" /> footprint "0402" does not match supplier footprint jlcpcb:C1548 (copper IoU 0.7249).
+<diode#671 name=".D_EXT" /> footprint "sma" does not match supplier footprint jlcpcb:C2480 (copper IoU 0.7825).
+<resistor#348 name=".R_CS" /> footprint "0402" does not match supplier footprint jlcpcb:C25744 (copper IoU 0.7741).
+<resistor#950 name=".R_SLEEP" /> footprint "0402" does not match supplier footprint jlcpcb:C25741 (copper IoU 0.7741).
+<resistor#1415 name=".R_LED" /> footprint "0402" does not match supplier footprint jlcpcb:C11702 (copper IoU 0.7741).
+<resistor#978 name=".R_E1A" /> footprint "0402" does not match supplier footprint jlcpcb:C11702 (copper IoU 0.7741).
+<pinheader#339 name=".J_BOOT" /> footprint "pinrow2_p2.54mm" does not match supplier footprint jlcpcb:C492401 (copper IoU 0.6674).
+<resistor#608 name=".R_DP" /> footprint "0402" does not match supplier footprint jlcpcb:C25100 (copper IoU 0.7741).
+<resistor#581 name=".R_CC2" /> footprint "0402" does not match supplier footprint jlcpcb:C25905 (copper IoU 0.7741).
+<capacitor#503 name=".C_REGIN" /> footprint "0402" does not match supplier footprint jlcpcb:C52923 (copper IoU 0.7249).
+<resistor#1016 name=".R_E1B" /> footprint "0402" does not match supplier footprint jlcpcb:C11702 (copper IoU 0.7741).
+<resistor#1029 name=".R_P1B" /> footprint "0402" does not match supplier footprint jlcpcb:C25744 (copper IoU 0.7741).
+<resistor#1344 name=".R_S3" /> footprint "0402" does not match supplier footprint jlcpcb:C25091 (copper IoU 0.7741).
+<resistor#527 name=".R_AVDD" /> footprint "0402" does not match supplier footprint jlcpcb:C25087 (copper IoU 0.7741).
+<resistor#568 name=".R_CC1" /> footprint "0402" does not match supplier footprint jlcpcb:C25905 (copper IoU 0.7741).
+<resistor#1082 name=".R_P2A" /> footprint "0402" does not match supplier footprint jlcpcb:C25744 (copper IoU 0.7741).
+<diode#655 name=".D_USB" /> footprint "sma" does not match supplier footprint jlcpcb:C2480 (copper IoU 0.7825).
+<resistor#1107 name=".R_E2B" /> footprint "0402" does not match supplier footprint jlcpcb:C11702 (copper IoU 0.7741).
+<capacitor#849 name=".C_M1LOG" /> footprint "0402" does not match supplier footprint jlcpcb:C1525 (copper IoU 0.7249).
+<capacitor#443 name=".C_IO5" /> footprint "0402" does not match supplier footprint jlcpcb:C1525 (copper IoU 0.7249).
+<capacitor#467 name=".C_USB" /> footprint "0402" does not match supplier footprint jlcpcb:C1525 (copper IoU 0.7249).
+<capacitor#395 name=".C_IO1" /> footprint "0402" does not match supplier footprint jlcpcb:C1525 (copper IoU 0.7249).
+<resistor#1369 name=".R_S4" /> footprint "0402" does not match supplier footprint jlcpcb:C25091 (copper IoU 0.7741).
+<capacitor#479 name=".C_CORE1" /> footprint "0402" does not match supplier footprint jlcpcb:C1525 (copper IoU 0.7249).
+<pinheader#374 name=".J_RESET" /> footprint "pinrow2_p2.54mm" does not match supplier footprint jlcpcb:C492401 (copper IoU 0.6674).
+<pinheader#646 name=".J_5V" /> footprint "pinrow2_p2.54mm" does not match supplier footprint jlcpcb:C492401 (copper IoU 0.6674).
+<chip#594 name=".U_ESD" /> footprint "dfn6_p0.95mm_w3.3702mm_pw0.532mm_pl1.072mm_pin1location(leftside,bottom)" does not match supplier footprint jlcpcb:C7519 (copper IoU 0.7706).
+<chip#687 name=".U_REG" /> footprint "dfn6_missing(5)_p0.95mm_w3.7mm_pw0.62mm_pl1.1mm_pin1location(leftside,bottom)" does not match supplier footprint jlcpcb:C51118 (copper IoU 0.7461).
+
+Build complete
+  Circuits  1 passed
+  Output    dist
+
+✓ Done
+Build exiting with code 0: build finished successfully

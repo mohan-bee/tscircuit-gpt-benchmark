@@ -1,0 +1,25 @@
+{
+  "name": "robot-controller",
+  "module": "checked.circuit.tsx",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@tscircuit/cli": "0.1.2021",
+    "circuit-json": "^0.0.485",
+    "circuit-json-to-gerber": "^0.0.104",
+    "tscircuit": "0.0.2464"
+  },
+  "scripts": {
+    "dev": "tsci dev checked.circuit.tsx",
+    "build": "tsci build checked.circuit.tsx",
+    "export:prepare": "bun finalize.ts",
+    "export:final": "bun finalize.ts --existing",
+    "check": "tsc --noEmit"
+  }
+}

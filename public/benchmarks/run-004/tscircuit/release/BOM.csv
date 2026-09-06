@@ -1,0 +1,86 @@
+Reference,Qty,Value or MPN,Footprint / package,JLC reference (verify),Specification / assembly note
+U1,1,RP2040,RP2040,C2040,Verify imported land pattern and assembly rotation
+U2,1,W25Q16JVSSIQ,W25Q16JVSSIQ,C131025,Verify imported land pattern and assembly rotation
+Y1,1,ABM8-272-T3,ABM8_272_T3,C20625731,Verify imported land pattern and assembly rotation
+R_XTAL,1,1k,0402,,"1%, thick film; generic specification, source matching package"
+C_X1,1,15pF,0402,,"C0G/NP0, >=25V; generic specification"
+C_X2,1,15pF,0402,,"C0G/NP0, >=25V; generic specification"
+R_BOOT,1,1k,0402,,"1%, thick film; generic specification, source matching package"
+J_BOOT,1,pinheader,pinrow2_p2.54mm,,Through-hole; select connector matching pad pitch and available body clearance
+R_CS,1,10k,0402,,"1%, thick film; generic specification, source matching package"
+R_RUN,1,10k,0402,,"1%, thick film; generic specification, source matching package"
+J_RESET,1,pinheader,pinrow2_p2.54mm,,Through-hole; select connector matching pad pitch and available body clearance
+C_FLASH,1,100nF,0402,,X7R/X5R; >=6.3V; generic specification
+C_IO1,1,100nF,0402,,X7R/X5R; >=6.3V; generic specification
+C_IO2,1,100nF,0402,,X7R/X5R; >=6.3V; generic specification
+C_IO3,1,100nF,0402,,X7R/X5R; >=6.3V; generic specification
+C_IO4,1,100nF,0402,,X7R/X5R; >=6.3V; generic specification
+C_IO5,1,100nF,0402,,X7R/X5R; >=6.3V; generic specification
+C_IO6,1,100nF,0402,,X7R/X5R; >=6.3V; generic specification
+C_USB,1,100nF,0402,,X7R/X5R; >=6.3V; generic specification
+C_CORE1,1,100nF,0402,,X7R/X5R; >=6.3V; generic specification
+C_CORE2,1,100nF,0402,,X7R/X5R; >=6.3V; generic specification
+C_REGIN,1,1uF,0402,,X7R/X5R; >=6.3V; generic specification
+C_REGOUT,1,1uF,0402,,X7R/X5R; >=6.3V; generic specification
+R_AVDD,1,200,0402,,"1%, thick film; generic specification, source matching package"
+C_AVDD,1,100nF,0402,,X7R/X5R; >=6.3V; generic specification
+J_SWD,1,pinheader,pinrow4_p2.54mm,,Through-hole; select connector matching pad pitch and available body clearance
+J_USB,1,TYPE-C-31-M-12,UsbC,C165948,Verify imported land pattern and assembly rotation
+R_CC1,1,5.1k,0402,,"1%, thick film; generic specification, source matching package"
+R_CC2,1,5.1k,0402,,"1%, thick film; generic specification, source matching package"
+U_ESD,1,USBLC6-2SC6,USBLC6_2SC6,C7519,Verify imported land pattern and assembly rotation
+R_DP,1,27,0402,,"1%, thick film; generic specification, source matching package"
+R_DM,1,27,0402,,"1%, thick film; generic specification, source matching package"
+C_VBUS,1,1uF,0603,,X7R/X5R; >=6.3V; generic specification
+J_5V,1,pinheader,pinrow2_p2.54mm,,Through-hole; select connector matching pad pitch and available body clearance
+D_USB,1,SS14,sma,C2480,Verify imported land pattern and assembly rotation
+D_EXT,1,SS14,sma,C2480,Verify imported land pattern and assembly rotation
+U_REG,1,AP2112K-3.3TRG1,AP2112K_3_3TRG1,C51118,Verify imported land pattern and assembly rotation
+C_5LOG,1,1uF,0603,,X7R/X5R; >=6.3V; generic specification
+C_3V3,1,4.7uF,0603,,X7R/X5R; >=6.3V; generic specification
+C_5SERVO,1,100uF,1210,,>=10V; verify effective capacitance and servo transient response
+J_VM,1,pinheader,pinrow2_p3.5mm,,Through-hole; select connector matching pad pitch and available body clearance
+C_VM,1,100uF,1210,,>=16V; verify effective capacitance at 9V and motor transient response
+U_M1,1,DRV8837DSGR,DRV8837DSGR,C39159,Verify imported land pattern and assembly rotation
+J_M1,1,pinheader,pinrow2_p3.5mm,,Through-hole; select connector matching pad pitch and available body clearance
+C_M1VM,1,100nF,0603,,>=16V; verify effective capacitance at 9V and motor transient response
+C_M1BULK,1,10uF,0805,,>=16V; verify effective capacitance at 9V and motor transient response
+C_M1LOG,1,100nF,0402,,X7R/X5R; >=6.3V; generic specification
+U_M2,1,DRV8837DSGR,DRV8837DSGR,C39159,Verify imported land pattern and assembly rotation
+J_M2,1,pinheader,pinrow2_p3.5mm,,Through-hole; select connector matching pad pitch and available body clearance
+C_M2VM,1,100nF,0603,,>=16V; verify effective capacitance at 9V and motor transient response
+C_M2BULK,1,10uF,0805,,>=16V; verify effective capacitance at 9V and motor transient response
+C_M2LOG,1,100nF,0402,,X7R/X5R; >=6.3V; generic specification
+R_SLEEP,1,100k,0402,,"1%, thick film; generic specification, source matching package"
+J_ENC1,1,pinheader,pinrow4_p2.54mm,,Through-hole; select connector matching pad pitch and available body clearance
+R_E1A,1,1k,0402,,"1%, thick film; generic specification, source matching package"
+R_P1A,1,10k,0402,,"1%, thick film; generic specification, source matching package"
+C_E1A,1,100pF,0402,,"C0G/NP0, >=25V; generic specification"
+R_E1B,1,1k,0402,,"1%, thick film; generic specification, source matching package"
+R_P1B,1,10k,0402,,"1%, thick film; generic specification, source matching package"
+C_E1B,1,100pF,0402,,"C0G/NP0, >=25V; generic specification"
+J_ENC2,1,pinheader,pinrow4_p2.54mm,,Through-hole; select connector matching pad pitch and available body clearance
+R_E2A,1,1k,0402,,"1%, thick film; generic specification, source matching package"
+R_P2A,1,10k,0402,,"1%, thick film; generic specification, source matching package"
+C_E2A,1,100pF,0402,,"C0G/NP0, >=25V; generic specification"
+R_E2B,1,1k,0402,,"1%, thick film; generic specification, source matching package"
+R_P2B,1,10k,0402,,"1%, thick film; generic specification, source matching package"
+C_E2B,1,100pF,0402,,"C0G/NP0, >=25V; generic specification"
+U_IMU,1,LSM6DS3TR-C,LSM6DS3TR_C,C967633,Verify imported land pattern and assembly rotation
+C_IMU1,1,100nF,0402,,X7R/X5R; >=6.3V; generic specification
+C_IMU2,1,100nF,0402,,X7R/X5R; >=6.3V; generic specification
+C_IMU3,1,1uF,0603,,X7R/X5R; >=6.3V; generic specification
+R_SDA,1,4.7k,0402,,"1%, thick film; generic specification, source matching package"
+R_SCL,1,4.7k,0402,,"1%, thick film; generic specification, source matching package"
+J_I2C,1,pinheader,pinrow4_p2.54mm,,Through-hole; select connector matching pad pitch and available body clearance
+J_S1,1,pinheader,pinrow3_p2.54mm,,Through-hole; select connector matching pad pitch and available body clearance
+R_S1,1,220,0402,,"1%, thick film; generic specification, source matching package"
+J_S2,1,pinheader,pinrow3_p2.54mm,,Through-hole; select connector matching pad pitch and available body clearance
+R_S2,1,220,0402,,"1%, thick film; generic specification, source matching package"
+J_S3,1,pinheader,pinrow3_p2.54mm,,Through-hole; select connector matching pad pitch and available body clearance
+R_S3,1,220,0402,,"1%, thick film; generic specification, source matching package"
+J_S4,1,pinheader,pinrow3_p2.54mm,,Through-hole; select connector matching pad pitch and available body clearance
+R_S4,1,220,0402,,"1%, thick film; generic specification, source matching package"
+J_GPIO,1,pinheader,pinrow10_p2.54mm,,Through-hole; select connector matching pad pitch and available body clearance
+R_LED,1,1k,0402,,"1%, thick film; generic specification, source matching package"
+LED1,1,led,0603,,"Green LED, 0603; verify polarity"
